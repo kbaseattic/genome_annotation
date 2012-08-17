@@ -1,40 +1,39 @@
-
-
 # This is a simple script to test the annotation service.  The commands 
 # are based on the tutorial 
 # http://www.kbase.us/developer-zone/tutorials/getting-started/annotating-a-genome-using-kbase-tools/
 
-#from subprocess import call
-#from subprocess import Popen, PIPE
 from os import system
+import json
 import sys
 
-TEST_DIR = "g.2860"
+def check_columns(file_name, num_of_col):
+    for line in open(file_name):
+        row_entities = line.split('\t')
+        assert len(row_entities) == num_of_col
 
-class Functional_Test():
+def verify_json_file(file_name):
+    json_file = open(file_name)
+    try:
+        data = json.load(json_file)
+    except:
+        print >> sys.stderr, file_name, "is not in json format!"
 
+
+class FunctionalTest():
     def __init__(self):
         pass
 
     def build_project(self):
         system('mkdir g.2860')
 
-
     def obtain_contigs(self):
         cmd = "echo 'kb|g.2860' | genomes_to_contigs | contigs_to_sequences > g.2860.contigs"
         system(cmd)
-#        p1 = Popen(["echo", "\'kb|g.2860\'", '-c'], stdout=PIPE)
-#        p2 = Popen(['genomes_to_contigs'], stdin=p1.stdout, stdout=PIPE)
-#        p3 = Popen(['contigs_to_sequences', '>', 'g.2860/g.2860.contigs'], stdin=p2.stdout, stdout=PIPE)
-#        p1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-#        output = p3.communicate()
-#        print output
 
     def fasta_to_genome(self):
         cmd = "fasta_to_genome 'Geobacter sulfurreducens KN400' Bacteria 11 < g.2860.contigs \
                 > genome"
         system(cmd)
-
 
     def annotate_genome(self):
         cmd = "annotate_genome < genome > annotated.genome"
@@ -85,9 +84,8 @@ class Functional_Test():
 
 
 
-
 if __name__ == "__main__":
-    test = Functional_Test()
+    test = FunctionalTest()
     
     print "\nObtaining contigs..."
     test.obtain_contigs()
@@ -132,6 +130,33 @@ if __name__ == "__main__":
     print "\nRoles not in new annotation..."
     test.roles_not_in_new_annotation()
     print 'Done.'
+    print '***'
+
+    # Verify files
+    print "\nChecking columns features.txt..."
+    check_columns('features.txt', 6)
+    print 'Done.'
+
+    print "\nVerifying reconstruction json..."
+    verify_json_file('reconstruction')
+    print 'Done.'
+
+    print "\nChecking columns for roles..."
+    check_columns('roles', 1)
+    print 'Done.'
+
+    print "\nChecking columns for subsytems..."
+    check_columns('subsystems', 2)
+    print 'Done.'
+
+    print "\nChecking columns for roles.in.g.9032..."
+    check_columns('roles.in.g.9032', 1)
+    print 'Done.'
+
+    print "\nChecking columns for subsytems..."
+    check_columns('roles.to.search.for', 1)
+    print 'Done.'
+
 
     print '\nTearing down poject...'
     test.tear_down_project()
