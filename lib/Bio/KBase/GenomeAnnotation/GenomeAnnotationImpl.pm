@@ -941,9 +941,9 @@ sub annotate_genome
     # Create features for PEGs
     #
     my $n_pegs = @$protein_locations;
-    my $protein_prefix = "$genome->{id}.peg";
+    my $protein_prefix = "$genome->{id}.CDS";
     my $peg_id_start = $id_server->allocate_id_range($protein_prefix, $n_pegs) + 0;
-    print STDERR "allocated peg id start $peg_id_start for $n_pegs pegs\n";
+    print STDERR "allocated CDS id start $peg_id_start for $n_pegs CDSs\n";
 
     open($prot_fh, "<", \$fasta_proteins) or die "Cannot open the fasta string as a filehandle: $!";
     my $next_id = $peg_id_start;
@@ -964,7 +964,7 @@ sub annotate_genome
 	my $feature = {
 	    id => $kb_id,
 	    location => [$loc],
-	    type => 'peg',
+	    type => 'CDS',
 	    protein_translation => $seq,
 	    aliases => [],
 	    $feature_func{$id} ? (function => $feature_func{$id}) : (),
@@ -1178,11 +1178,11 @@ sub call_selenoproteins
     # Allocate IDs for PEGs
     #
     my $n_pegs = @results;
-    my $protein_prefix = "$genomeTO->{id}.peg";
+    my $protein_prefix = "$genomeTO->{id}.CDS";
     my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
     my $peg_id_start = $id_server->allocate_id_range($protein_prefix, $n_pegs) + 0;
     my $next_id = $peg_id_start;
-    print STDERR "allocated peg id start $peg_id_start for $n_pegs pegs\n";
+    print STDERR "allocated CDS id start $peg_id_start for $n_pegs CDSs\n";
     
     #
     # Create features for PEGs
@@ -1216,7 +1216,7 @@ sub call_selenoproteins
 	my $feature = {
 	    id => $kb_id,
 	    location => [[ $contig, $start, $strand, $len ]],
-	    type => 'peg',
+	    type => 'CDS',
 	    protein_translation => $seq,
 	    aliases => [],
 	    $func ? (function => $func) : (),
@@ -1402,11 +1402,11 @@ sub call_pyrrolysoproteins
     # Allocate IDs for PEGs
     #
     my $n_pegs = @results;
-    my $protein_prefix = "$genomeTO->{id}.peg";
+    my $protein_prefix = "$genomeTO->{id}.CDS";
     my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
     my $peg_id_start = $id_server->allocate_id_range($protein_prefix, $n_pegs) + 0;
     my $next_id = $peg_id_start;
-    print STDERR "allocated peg id start $peg_id_start for $n_pegs pegs\n";
+    print STDERR "allocated CDS id start $peg_id_start for $n_pegs CDSs\n";
     
     #
     # Create features for PEGs
@@ -1440,7 +1440,7 @@ sub call_pyrrolysoproteins
 	my $feature = {
 	    id => $kb_id,
 	    location => [[ $contig, $start, $strand, $len ]],
-	    type => 'peg',
+	    type => 'CDS',
 	    protein_translation => $seq,
 	    aliases => [],
 	    $func ? (function => $func) : (),
@@ -1833,98 +1833,8 @@ sub call_CDSs
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_CDSs
-    my $genome = $genomeTO;
-    my $anno = ANNOserver->new();
-
-    #
-    # Reformat the contigs for use with the ANNOserver.
-    #
-    my @contigs;
-    foreach my $gctg (@{$genome->{contigs}})
-    {
-	push(@contigs, [$gctg->{id}, undef, $gctg->{dna}]);
-    }
-
-    #
-    # Call genes.
-    #
-    print STDERR "Call genes...\n";
-    my $peg_calls = $anno->call_genes(-input => \@contigs, -geneticCode => $genome->{genetic_code});
-    print STDERR "Call genes...done\n";
-    my($fasta_proteins, $protein_locations) = @$peg_calls;
     
-    my %feature_loc;
-    my %feature_func;
-    my %feature_anno;
-    my $features = $genome->{features};
-    if (!$features)
-    {
-	$features = [];
-	$genome->{features} = $features;
-    }
-
-    #
-    # Assign functions for proteins.
-    #
-    my $prot_fh;
-    open($prot_fh, "<", \$fasta_proteins) or die "Cannot open the fasta string as a filehandle: $!";
-    my $handle = $anno->assign_function_to_prot(-input => $prot_fh,
-						-kmer => 8,
-						-scoreThreshold => 3,
-						-seqHitThreshold => 3);
-    while (my $res = $handle->get_next())
-    {
-	my($id, $function, $otu, $score, $nonoverlap_hits, $overlap_hits, $details, $fam) = @$res;
-	$feature_func{$id} = $function;
-	$feature_anno{$id} = "Set function to\n$function\nby assign_function_to_prot with otu=$otu score=$score nonoverlap=$nonoverlap_hits hits=$overlap_hits figfam=$fam";
-    }
-    close($prot_fh);
-    
-    for my $ent (@$protein_locations)
-    {
-	my($loc_id, $contig, $start, $stop) = @$ent;
-	my $len = abs($stop - $start) + 1;
-	my $strand = ($stop > $start) ? '+' : '-';
-	$feature_loc{$loc_id} = [$contig, $start, $strand, $len];
-    }
-
-    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
-
-    #
-    # Create features for PEGs
-    #
-    my $n_pegs = @$protein_locations;
-    my $protein_prefix = "$genome->{id}.peg";
-    my $peg_id_start = $id_server->allocate_id_range($protein_prefix, $n_pegs) + 0;
-    print STDERR "allocated peg id start $peg_id_start for $n_pegs pegs\n";
-
-    open($prot_fh, "<", \$fasta_proteins) or die "Cannot open the fasta string as a filehandle: $!";
-    my $next_id = $peg_id_start;
-    while (my($id, $def, $seq) = read_next_fasta_seq($prot_fh))
-    {
-	my $loc = $feature_loc{$id};
-	my $kb_id = "$protein_prefix.$next_id";
-	$next_id++;
-	my $annos = [];
-	push(@$annos, ['Initial gene call performed by call_genes', 'genome annotation service', time]);
-	if ($feature_anno{$id})
-	{
-	    push(@$annos, [$feature_anno{$id}, 'genome annotation service', time]);
-	}
-	my $feature = {
-	    id => $kb_id,
-	    location => [$loc],
-	    type => 'peg',
-	    protein_translation => $seq,
-	    aliases => [],
-	    $feature_func{$id} ? (function => $feature_func{$id}) : (),
-	    annotations => $annos,
-	};
-	push(@$features, $feature);
-    }
-    close($prot_fh);
-    $return = $genomeTO;
-#   print STDERR (ref($return), qq(\n), Dumper($return));
+    my $return = $self->call_CDSs_by_glimmer($genomeTO);
     
     #END call_CDSs
     my @_bad_returns;
@@ -2441,6 +2351,256 @@ sub annotate_proteins
 
 
 
+=head2 call_CDSs_by_glimmer
+
+  $return = $obj->call_CDSs_by_glimmer($genomeTO)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genomeTO is a genomeTO
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	close_genomes has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: a genome_id
+	1: a float
+
+	DNA_kmer_data has a value which is a reference to a list where each element is a reference to a list containing 5 items:
+	0: a string
+	1: an int
+	2: an int
+	3: an int
+	4: a string
+
+	contigs has a value which is a reference to a list where each element is a contig
+	features has a value which is a reference to a list where each element is a feature
+genome_id is a string
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+contig_id is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: an int
+	2: a string
+	3: an int
+feature_type is a string
+annotation is a reference to a list containing 3 items:
+	0: a string
+	1: a string
+	2: an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$genomeTO is a genomeTO
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	close_genomes has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: a genome_id
+	1: a float
+
+	DNA_kmer_data has a value which is a reference to a list where each element is a reference to a list containing 5 items:
+	0: a string
+	1: an int
+	2: an int
+	3: an int
+	4: a string
+
+	contigs has a value which is a reference to a list where each element is a contig
+	features has a value which is a reference to a list where each element is a feature
+genome_id is a string
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+contig_id is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: an int
+	2: a string
+	3: an int
+feature_type is a string
+annotation is a reference to a list containing 3 items:
+	0: a string
+	1: a string
+	2: an int
+
+
+=end text
+
+
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub call_CDSs_by_glimmer
+{
+    my $self = shift;
+    my($genomeTO) = @_;
+
+    my @_bad_arguments;
+    (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to call_CDSs_by_glimmer:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'call_CDSs_by_glimmer');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($return);
+    #BEGIN call_CDSs_by_glimmer
+    
+    my $genome = $genomeTO;
+    my $anno = ANNOserver->new();
+
+    #
+    # Reformat the contigs for use with the ANNOserver.
+    #
+    my @contigs;
+    foreach my $gctg (@{$genome->{contigs}})
+    {
+	push(@contigs, [$gctg->{id}, undef, $gctg->{dna}]);
+    }
+
+    #
+    # Call genes.
+    #
+    print STDERR "Call genes...\n";
+    my $peg_calls = $anno->call_genes(-input => \@contigs, -geneticCode => $genome->{genetic_code});
+    print STDERR "Call genes...done\n";
+    my($fasta_proteins, $protein_locations) = @$peg_calls;
+    
+    my %feature_loc;
+    my %feature_func;
+    my %feature_anno;
+    my $features = $genome->{features};
+    if (!$features)
+    {
+	$features = [];
+	$genome->{features} = $features;
+    }
+
+    #
+    # Assign functions for proteins.
+    #
+    my $prot_fh;
+    open($prot_fh, "<", \$fasta_proteins) or die "Cannot open the fasta string as a filehandle: $!";
+    my $handle = $anno->assign_function_to_prot(-input => $prot_fh,
+						-kmer => 8,
+						-scoreThreshold => 3,
+						-seqHitThreshold => 3);
+    while (my $res = $handle->get_next())
+    {
+	my($id, $function, $otu, $score, $nonoverlap_hits, $overlap_hits, $details, $fam) = @$res;
+	$feature_func{$id} = $function;
+	$feature_anno{$id} = "Set function to\n$function\nby assign_function_to_prot with otu=$otu score=$score nonoverlap=$nonoverlap_hits hits=$overlap_hits figfam=$fam";
+    }
+    close($prot_fh);
+    
+    for my $ent (@$protein_locations)
+    {
+	my($loc_id, $contig, $start, $stop) = @$ent;
+	my $len = abs($stop - $start) + 1;
+	my $strand = ($stop > $start) ? '+' : '-';
+	$feature_loc{$loc_id} = [$contig, $start, $strand, $len];
+    }
+
+    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+
+    #
+    # Create features for PEGs
+    #
+    my $n_pegs = @$protein_locations;
+    my $protein_prefix = "$genome->{id}.CDS";
+    my $peg_id_start = $id_server->allocate_id_range($protein_prefix, $n_pegs) + 0;
+    print STDERR "allocated CDS id start $peg_id_start for $n_pegs CDSs\n";
+
+    open($prot_fh, "<", \$fasta_proteins) or die "Cannot open the fasta string as a filehandle: $!";
+    my $next_id = $peg_id_start;
+    while (my($id, $def, $seq) = read_next_fasta_seq($prot_fh))
+    {
+	my $loc = $feature_loc{$id};
+	my $kb_id = "$protein_prefix.$next_id";
+	$next_id++;
+	my $annos = [];
+	push(@$annos, ['Initial gene call performed by call_CDSs_by_glimmer', 'genome annotation service', time]);
+	if ($feature_anno{$id})
+	{
+	    push(@$annos, [$feature_anno{$id}, 'genome annotation service', time]);
+	}
+	my $feature = {
+	    id => $kb_id,
+	    location => [$loc],
+	    type => 'CDS',
+	    protein_translation => $seq,
+	    aliases => [],
+	    $feature_func{$id} ? (function => $feature_func{$id}) : (),
+	    annotations => $annos,
+	};
+	push(@$features, $feature);
+    }
+    close($prot_fh);
+    $return = $genomeTO;
+#   print STDERR (ref($return), qq(\n), Dumper($return));
+    
+    #END call_CDSs_by_glimmer
+    my @_bad_returns;
+    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to call_CDSs_by_glimmer:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'call_CDSs_by_glimmer');
+    }
+    return($return);
+}
+
+
+
+
 =head2 call_CDSs_by_projection
 
   $return = $obj->call_CDSs_by_projection($genomeTO)
@@ -2621,19 +2781,22 @@ sub call_CDSs_by_projection
     {
 	my($contig,undef,undef) = split(":",$hit);
 	my $tuple = $calls->{$hit};
-	my($b,$e,$trans,$func,$close_fid) = @$tuple;
+	my($b,$e,$trans,$func,$close_fid,$num_kmers) = @$tuple;
 	my $len = abs($e-$b)+1;
 	my $strand = ($b < $e) ? '+' : '-';
 
-	my $anno_type = $calls->{$hit} ? ["called by projection using kmers from $close_fid",'genome annotation service',time] :
-	                                 ["called by projextion based on neighbors from $close_fid",'genome annotation service',time];
+	my $anno_type = $calls->{$hit} ? ["called by projection using kmers from $close_fid (kmers=$num_kmers)",'genome annotation service',time] :
+	                                 ["called by projection based on pinned neighbors from $close_fid",'genome annotation service',time];
+	my $anno_func = $calls->{$hit} ? ["Set function to\n$func\nby call_CDSs_by_projection",'genome annotation service',time] :
+	                                 ["Set function to\n$func\nby pinned neighbors",'genome annotation service',time];
+
 	my $kb_id = "$cds_prefix.$next_id";
-	my $fidH = { location => [$contig,$b,$strand,$len],
+	my $fidH = { location => [[$contig,$b,$strand,$len]],
 		     id => $kb_id,
 		     type => 'CDS',
 		     function => $func,
 		     aliases => [],
-		     annotations => [$anno_type] 
+		     annotations => [$anno_type,$anno_func] 
                    };
 	push(@$features, $fidH);
  	$next_id++;
