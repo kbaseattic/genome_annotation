@@ -18,11 +18,15 @@ our %return_counts = (
         'reconstructionTO_to_roles' => 1,
         'reconstructionTO_to_subsystems' => 1,
         'annotate_genome' => 1,
+        'call_selenoproteins' => 1,
+        'call_pyrrolysoproteins' => 1,
         'call_RNAs' => 1,
         'call_CDSs' => 1,
         'find_close_neighbors' => 1,
         'assign_functions_to_CDSs' => 1,
         'annotate_proteins' => 1,
+        'call_CDSs_by_glimmer' => 1,
+        'call_CDSs_by_projection' => 1,
 );
 
 sub _build_valid_methods
@@ -34,11 +38,15 @@ sub _build_valid_methods
         'reconstructionTO_to_roles' => 1,
         'reconstructionTO_to_subsystems' => 1,
         'annotate_genome' => 1,
+        'call_selenoproteins' => 1,
+        'call_pyrrolysoproteins' => 1,
         'call_RNAs' => 1,
         'call_CDSs' => 1,
         'find_close_neighbors' => 1,
         'assign_functions_to_CDSs' => 1,
         'annotate_proteins' => 1,
+        'call_CDSs_by_glimmer' => 1,
+        'call_CDSs_by_projection' => 1,
     };
     return $methods;
 }

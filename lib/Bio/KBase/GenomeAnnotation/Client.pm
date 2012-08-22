@@ -287,6 +287,106 @@ sub annotate_genome
 
 
 
+=head2 $result = call_selenoproteins(genomeTO)
+
+
+
+=cut
+
+sub call_selenoproteins
+{
+    my($self, @args) = @_;
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function call_selenoproteins (received $n, expecting 1)");
+    }
+    {
+	my($genomeTO) = @args;
+
+	my @_bad_arguments;
+        (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genomeTO\" (value was \"$genomeTO\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to call_selenoproteins:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'call_selenoproteins');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.call_selenoproteins",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{code},
+					       method_name => 'call_selenoproteins',
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method call_selenoproteins",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'call_selenoproteins',
+				       );
+    }
+}
+
+
+
+=head2 $result = call_pyrrolysoproteins(genomeTO)
+
+
+
+=cut
+
+sub call_pyrrolysoproteins
+{
+    my($self, @args) = @_;
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function call_pyrrolysoproteins (received $n, expecting 1)");
+    }
+    {
+	my($genomeTO) = @args;
+
+	my @_bad_arguments;
+        (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genomeTO\" (value was \"$genomeTO\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to call_pyrrolysoproteins:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'call_pyrrolysoproteins');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.call_pyrrolysoproteins",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{code},
+					       method_name => 'call_pyrrolysoproteins',
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method call_pyrrolysoproteins",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'call_pyrrolysoproteins',
+				       );
+    }
+}
+
+
+
 =head2 $result = call_RNAs(genomeTO)
 
 
@@ -533,6 +633,106 @@ sub annotate_proteins
         Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method annotate_proteins",
 					    status_line => $self->{client}->status_line,
 					    method_name => 'annotate_proteins',
+				       );
+    }
+}
+
+
+
+=head2 $result = call_CDSs_by_glimmer(genomeTO)
+
+
+
+=cut
+
+sub call_CDSs_by_glimmer
+{
+    my($self, @args) = @_;
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function call_CDSs_by_glimmer (received $n, expecting 1)");
+    }
+    {
+	my($genomeTO) = @args;
+
+	my @_bad_arguments;
+        (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genomeTO\" (value was \"$genomeTO\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to call_CDSs_by_glimmer:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'call_CDSs_by_glimmer');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.call_CDSs_by_glimmer",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{code},
+					       method_name => 'call_CDSs_by_glimmer',
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method call_CDSs_by_glimmer",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'call_CDSs_by_glimmer',
+				       );
+    }
+}
+
+
+
+=head2 $result = call_CDSs_by_projection(genomeTO)
+
+
+
+=cut
+
+sub call_CDSs_by_projection
+{
+    my($self, @args) = @_;
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function call_CDSs_by_projection (received $n, expecting 1)");
+    }
+    {
+	my($genomeTO) = @args;
+
+	my @_bad_arguments;
+        (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genomeTO\" (value was \"$genomeTO\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to call_CDSs_by_projection:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'call_CDSs_by_projection');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.call_CDSs_by_projection",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{code},
+					       method_name => 'call_CDSs_by_projection',
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method call_CDSs_by_projection",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'call_CDSs_by_projection',
 				       );
     }
 }
