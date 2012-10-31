@@ -39,7 +39,7 @@ class FunctionalTest():
         cmd = "annotate_genome < genome > annotated.genome"
         system(cmd)
 
-    def gemome_to_features(self):
+    def genome_to_features(self):
         cmd = "genomeTO_to_feature_data < annotated.genome > features.txt"
         system(cmd)
 
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     print 'Done.'
 
     print "\nGenome to features file..."
-    test.gemome_to_features() 
+    test.genome_to_features() 
     print 'Done.'
 
     print "\nGenome to reconstruction..."
