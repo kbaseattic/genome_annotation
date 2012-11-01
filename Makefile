@@ -11,7 +11,20 @@ SERVICE_PORT = 7050
 TPAGE_ARGS = --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --define kb_service_name=$(SERVICE) \
 	--define kb_service_port=$(SERVICE_PORT)
 
+TESTS = $(wildcard t/*.t)
+
 all: bin server
+
+test:
+	# run each test
+	for t in $(TESTS) ; do \
+		if [ -f $$t ] ; then \
+			$(DEPLOY_RUNTIME)/bin/perl $$t ; \
+			if [ $$? -ne 0 ] ; then \
+				exit 1 ; \
+			fi \
+		fi \
+	done
 
 server: $(SERVICE_MODULE)
 
