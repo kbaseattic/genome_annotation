@@ -49,7 +49,7 @@ my %results;
 note("Test the happy cases for gene calling methods");
 
 #
-#	Must return all_CDSs and all_RNAs must return features for this genome
+#	all_CDSs and all_RNAs must return features for this genome
 #a
 foreach my $method (@genecall_methods) {
 	eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
@@ -68,9 +68,9 @@ note("Test the unhappy cases for gene calling methods");
 
 foreach my $method (@genecall_methods) {
 	eval {$results{$method} = $annotation_server->$method($genome_to); };
-	ok($@, "Test $method Bad Inputs (must fail to pass the test)");
+	isnt($@,'', "Test $method Bad Inputs (must fail to pass the test)");
 	eval {$results{$method} = $annotation_server->$method(); };
-	ok($@, "Test $method No Inputs (must fail to pass the test)");
+	isnt($@,'', "Test $method No Inputs (must fail to pass the test)");
 }
 
 my $empty = [];
