@@ -17,6 +17,7 @@ all: bin server
 
 test:
 	# run each test
+	echo "RUNTIME=$(DEPLOY_RUNTIME)\n"
 	for t in $(TESTS) ; do \
 		if [ -f $$t ] ; then \
 			$(DEPLOY_RUNTIME)/bin/perl $$t ; \

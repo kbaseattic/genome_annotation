@@ -1,0 +1,28 @@
+NIGHTLY TESTING DIRECTORY
+
+This directory has the same scripts as the t directory but these assume that a 
+server is up and running.  These are not used as part of the make test TARGET.  
+Due to the time they take, they are better suited to nightly build, deploy, and test.
+
+Test the tutorial functions:
+	functional_test.py
+
+Test of boundary conditions
+	annotation.t
+		assign_functions_to_CDSs
+		annotate_proteins
+		annotate_genome
+	gene_callers.t
+	        call_selenoproteins
+        	call_pyrrolysoproteins
+        	call_RNAs
+        	call_CDSs
+        	call_CDSs_by_projection
+	misc.t
+	        genomeTO_to_reconstructionTO
+	        genomeTO_to_feature_data
+	        find_close_neighbors
+	reconstruction.t
+	        reconstructionTO_to_roles
+	        reconstructionTO_to_subsystems
+

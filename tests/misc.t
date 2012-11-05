@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 11;
+use Test::More tests => 34;
 use Data::Dumper;
 
 use Bio::KBase::GenomeAnnotation::Client;
@@ -18,17 +18,14 @@ ok( defined $obj, "Did an object get defined" );
 #  Test 2 - Is the object in the right class?
 isa_ok( $obj, 'Bio::KBase::GenomeAnnotation::Client', "Is it in the right class" );   
 
-# Gene calling methods that takes a genomeTO as input
-my @genecall_methods = qw(
-	call_selenoproteins
-	call_pyrrolysoproteins
-	call_RNAs
-	call_CDSs
-	call_CDSs_by_projection
+#  Test 3 - Can the object do all of the misc_methods
+# misc_methods that take a genomeTO as input and return something else
+my @misc_methods = qw(
+        genomeTO_to_reconstructionTO
+        genomeTO_to_feature_data
+        find_close_neighbors
 );
-
-#  Test 3 - Can the object do all of the methods
-can_ok($obj, @genecall_methods);    
+can_ok($obj, @misc_methods);    
 
 #  Test 4 - Can a new object be created with valid parameter? 
 my $annotation_server = Bio::KBase::GenomeAnnotation::Client->new($url);
@@ -38,59 +35,41 @@ ok( defined $annotation_server, "Did an object get defined" );
 isa_ok( $annotation_server, 'Bio::KBase::GenomeAnnotation::Client', "Is it in the right class" );   
 
 #  Test 6 - Download test data
-unlink "MIT9313.genomeTO" if -e "MIT9313.genomeTO";
-eval { !system("wget --quiet http://www.kbase.us/docs/build/MIT9313.genomeTO") or die $!; };
+unlink "MIT9313.genomeTO.annotated" if -e "MIT9313.genomeTO.annotated";
+eval { !system("wget --quiet http://www.kbase.us/docs/build/MIT9313.genomeTO.annotated") or die $!; };
 ok(!$@, "Downloaded test data");
 
 # Create a genome typed object
-my $genome_to = GenomeTO->new("MIT9313.genomeTO");
+my $genome_to = GenomeTO->new("MIT9313.genomeTO.annotated");
 my %results;
+$genome_to->{'decode'}->{'contigs'}->[0]->{'dna'} = substr($genome_to->{'decode'}->{'contigs'}->[0]->{'dna'},0,10000);
 
-note("Test the happy cases for gene calling methods");
+note("Test the happy cases for misc misc_methods");
 
-#
-#	all_CDSs and all_RNAs must return features for this genome
-#
-foreach my $method (@genecall_methods) {
+foreach my $method (@misc_methods) {
+
 	eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
-	is($@,'', "Test $method $@");
-	if ($method eq 'call_RNAs' || $method eq 'call_CDSs')
-	{
-		if (ref($results{$method}->{'features'}) eq 'ARRAY'  )
-		{
-			my @ary = @{$results{$method}->{'features'}};
-			isnt($#ary,0,"Non-zero number of features returned for this genome");
-		}
-	}
+	ok(!$@, "Test $method");
 }
 
 note("Test the unhappy cases for gene calling methods");
 
-foreach my $method (@genecall_methods) {
-	eval {$results{$method} = $annotation_server->$method($genome_to); };
-	isnt($@,'', "Test $method Bad Inputs (must fail to pass the test)");
-	eval {$results{$method} = $annotation_server->$method(); };
-	isnt($@,'', "Test $method No Inputs (must fail to pass the test)");
+foreach my $method (@misc_methods) {
+        eval {$results{$method} = $annotation_server->$method($genome_to); };
+        isnt($@,'', "Test $method Bad Inputs (must fail to pass the test)");
+        eval {$results{$method} = $annotation_server->$method(); };
+        isnt($@,'', "Test $method No Inputs (must fail to pass the test)");
 }
+
 
 my $empty = [];
 my %bad_value = (
-	'genetic_code' => 'A',
-	'baddata'      => 'A',
-	'domain'       => 'A',
-	'contigs'      => $empty,
-	'features'     => $empty,
-	'id'           => 'A',
+        'contigs'      => $empty,
+        'features'     => $empty,
 );
 my %bad_struct = (
-	'genetic_code' => $empty,
-	'domain'       => $empty,
-	'contigs'      => 'A',
-	'features'     => 'A',
-	'id'           => $empty,
-	'scientific_name'  => $empty,
-	'source'       => $empty,
-	'source_id'    => $empty,
+        'contigs'      => 'A',
+        'features'     => 'A',
 );
 
 $genome_to->{'decode'}->{'contigs'}->[0]->{'dna'} = substr($genome_to->{'decode'}->{'contigs'}->[0]->{'dna'},0,5000);
@@ -107,7 +86,7 @@ foreach my $key (keys(%bad_struct))
 #       Then test the bad structure (should fail)
 #       Finally test for missing value (should pass)
 
-        foreach my $method (@genecall_methods) {
+        foreach my $method (@misc_methods) {
                 if (exists $bad_value{$key})
                 {
                         note("\nTesting $key=$bad_value{$key} and method $method\n");
@@ -118,7 +97,7 @@ foreach my $key (keys(%bad_struct))
                 note("\nTesting $key=$bad_struct{$key}  and method $method\n");
                 $bad_genome_to{$key} = $bad_struct{$key};
                 eval {$results{$method} = $annotation_server->$method(\%bad_genome_to); };
-                isnt($@,'', "Test $method with bad structure for $key (must fail to pass the test) ");
+                is($@,'', "Test $method with bad structure for $key (must okay to pass the test) ");
                 delete $bad_genome_to{$key};
                 eval {$results{$method} = $annotation_server->$method(\%bad_genome_to); };
                 is($@,'', "Test $method with missing key $key  (must be okay to pass the test)");
@@ -126,9 +105,12 @@ foreach my $key (keys(%bad_struct))
 }
 
 
+
 done_testing();
 #Server::stop($pid);
-unlink "MIT9313.genomeTO" if -e "MIT9313.genomeTO";
+unlink "MIT9313.genomeTO.annotated";
+
+
 
 
 
@@ -210,21 +192,20 @@ sub dump {
 	print Dumper $self->{'decode'};
 }
 
+
 =pod
 
 =head1 NAME
 
-gene_caller.t
+misc.t
 
 =head1 DESCRIPTION
 
 Test the following methods 
 
-	call_selenoproteins
-	call_pyrrolysoproteins
-	call_RNAs
-	call_CDSs
-	call_CDSs_by_projection
+        genomeTO_to_reconstructionTO
+        genomeTO_to_feature_data
+        find_close_neighbors
 
 All methods take a Genome Token Object (genomeTO) as input and return a genomeTO
 
@@ -248,7 +229,6 @@ All methods take a Genome Token Object (genomeTO) as input and return a genomeTO
 
 =item * Test all methods with the valid genomeTO
 
-=item * For call_RNAs and call_CDSs, verify that a non-zero number of rows were returned.
 
 =back
 
@@ -262,27 +242,18 @@ All methods take a Genome Token Object (genomeTO) as input and return a genomeTO
 
 =item * Test all methods with invalid IDs or empty array for the following fields, one at a time (expect no failures):
 
-	'genetic_code' => 'A'
-	'baddata'      => 'A'   (not a valid field in a genomeTO struct)
-	'domain'       => 'A'
-	'contigs'      => $empty
-	'features'     => $empty
-	'id'           => 'A'
+        'contigs'      => $empty,
+        'features'     => $empty,
 
 =item * Test all methods with the wrong field type (e.g. array for string and visa versa) for the following fields, one at a time (expect failures):
 
-	'genetic_code' => $empty
-	'domain'       => $empty
-	'contigs'      => 'A'
-	'features'     => 'A'
-	'id'           => $empty
-	'scientific_name'  => $empty
-	'source'       => $empty
-	'source_id'    => $empty
+        'contigs'      => 'A',
+        'features'     => 'A',
 
 =item * Test all methods with null values for each of the fields above, one at a time.  Expect no failures.
 
 =back
  
 =cut
+
 
