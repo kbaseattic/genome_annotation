@@ -49,6 +49,7 @@ deploy-monit:
 	$(TPAGE) $(TPAGE_ARGS) service/process.$(SERVICE).tt > $(TARGET)/services/$(SERVICE)/process.$(SERVICE)
 
 deploy-doc:
+	mkdir -p doc
 	$(DEPLOY_RUNTIME)/bin/pod2html -t "Genome Annotation Service API" lib/Bio/KBase/GenomeAnnotation/Impl.pm > doc/genomeanno_impl.html
 	cp doc/*html $(SERVICE_DIR)/webroot/.
 
