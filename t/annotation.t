@@ -60,7 +60,7 @@ foreach my $method (@annotation_methods) {
 		print STDERR "TEST GENOME ANNOTATION se: ERROR";
 		print "\nso ".$annotation_server->$method($genome_to->{decode}); 
 	        print "\n";
-                print "\nso ".$annotation_server->$method($genome_to->{decode});
+                print STDERR "\nse ".$annotation_server->$method($genome_to->{decode});
                 print "\n";  
 	}; 
   } 
