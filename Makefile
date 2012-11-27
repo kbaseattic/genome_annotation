@@ -1,6 +1,7 @@
 TOP_DIR = ../..
 include $(TOP_DIR)/tools/Makefile.common
 
+DEPLOY_RUNTIME ?= /kb/runtime
 SERVER_SPEC = GenomeAnnotation.spec
 
 SERVICE_MODULE = lib/Bio/KBase/GenomeAnnotation/Service.pm
