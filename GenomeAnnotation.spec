@@ -1,3 +1,9 @@
+/*
+  API Access to the Genome Annotation Service.
+
+  Provides support for gene calling, functional annotation, re-annotation. Use to extract annotation information about an existing genome, or to create new annotations.
+
+ */
 module GenomeAnnotation
 {
     typedef string md5;
