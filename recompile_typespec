@@ -6,7 +6,6 @@ compile_typespec \
 	-psgi GenomeAnnotation.psgi \
 	-client Bio::KBase::GenomeAnnotation::Client \
 	-js GenomeAnnotation \
-	-cs GenomeAnnotation \
 	-py GenomeAnnotation \
 	-url http://bio-data-1.mcs.anl.gov/services/genome_annotation \
 	GenomeAnnotation.spec .
