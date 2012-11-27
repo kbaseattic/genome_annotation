@@ -47,10 +47,16 @@ note("Test the happy cases for annotation methods");
 
 # Call genes
 eval { $genome_to->{decode} = $annotation_server->call_CDSs($genome_to->{decode}); };
+
 ok(!$@, "Test call_CDSs");
 
 foreach my $method (@annotation_methods) {
   eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
+  if ($@) 
+  {
+        print STDERR $annotation_server->$method($genome_to->{decode};
+        print STDERR "\n";
+  }
   ok(!$@, "Test $method" );
 }
 
