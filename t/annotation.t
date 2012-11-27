@@ -56,11 +56,14 @@ foreach my $method (@annotation_methods) {
   if($@)
   { 
     eval { 
-		print $annotation_server->$method($genome_to->{decode}); 
-	        print "\n"; 
+		print "\nTEST GENOME ANNOTATION so: ERROR";
+		print STDERR "TEST GENOME ANNOTATION se: ERROR";
+		print "\nso ".$annotation_server->$method($genome_to->{decode}); 
+	        print "\n";
+                print "\nso ".$annotation_server->$method($genome_to->{decode});
+                print "\n";  
 	}; 
   } 
-
 }
 
 done_testing();
