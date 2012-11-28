@@ -37,8 +37,8 @@ bin: $(BIN_PERL)
 
 deploy: deploy-service
 
-deploy-service: deploy-dir-service deploy-scripts deploy-libs deploy-services deploy-monit deploy-doc
-deploy-client: deploy-scripts deploy-libs  deploy-doc
+deploy-service: deploy-dir-service deploy-scripts deploy-libs deploy-services deploy-monit deploy-docs
+deploy-client: deploy-scripts deploy-libs  deploy-docs
 
 deploy-services:
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
