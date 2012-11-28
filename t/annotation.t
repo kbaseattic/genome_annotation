@@ -53,6 +53,11 @@ ok(!$@, "Test call_CDSs");
 foreach my $method (@annotation_methods) {
   eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
   ok(!$@, "Test $method" );
+  if ($@)
+  {
+	print STDERR "ERROR: $method : ".annotation_server->$method($genome_to->{decode});
+	print "ERROR: $method : ".annotation_server->$method($genome_to->{decode});
+  }
 }
 
 done_testing();
