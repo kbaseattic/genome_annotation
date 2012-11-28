@@ -1,6 +1,7 @@
 TOP_DIR = ../..
 include $(TOP_DIR)/tools/Makefile.common
 
+TARGET ?= /kb/deployment
 DEPLOY_RUNTIME ?= /kb/runtime
 SERVER_SPEC = GenomeAnnotation.spec
 
@@ -14,7 +15,7 @@ TPAGE_ARGS = --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --d
 
 TESTS = $(wildcard t/*.t)
 
-all: bin server
+all: bin service
 
 test:
 	# run each test
@@ -28,19 +29,18 @@ test:
 		fi \
 	done
 
-server: $(SERVICE_MODULE)
+service: $(SERVICE_MODULE)
 
 $(SERVICE_MODULE): $(SERVER_SPEC)
 	./recompile_typespec 
 
 bin: $(BIN_PERL)
 
-deploy: deploy-service
+deploy: deploy-client
+deploy-all: deploy-client deploy-service
+deploy-client: deploy-docs
 
-deploy-service: deploy-dir-service deploy-scripts deploy-libs deploy-services deploy-monit deploy-docs
-deploy-client: deploy-scripts deploy-libs  deploy-docs
-
-deploy-services:
+deploy-service: deploy-monit
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
 	chmod +x $(TARGET)/services/$(SERVICE)/start_service
 	$(TPAGE) $(TPAGE_ARGS) service/stop_service.tt > $(TARGET)/services/$(SERVICE)/stop_service
