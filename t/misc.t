@@ -56,8 +56,14 @@ note("Test the happy cases for misc misc_methods");
 
 foreach my $method (@misc_methods) {
 
-	eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
-	ok(!$@, "Test $method");
+	if ($debug)
+	{
+		ok($results{$method} = $annotation_server->$method($genome_to->{decode}),
+			"Test $method");
+	} else {
+		eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
+		ok(!$@, "Test $method");
+	}
 }
 
 done_testing();

@@ -58,9 +58,14 @@ my %results;
 note("Test the happy cases for gene calling methods");
 
 foreach my $method (@genecall_methods) {
-
-	eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
-	ok(!$@, "Test $method");
+	if ($debug)
+	{
+		ok($results{$method} = $annotation_server->$method($genome_to->{decode}),
+			"Test $method");
+	} else {
+		eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
+		ok(!$@, "Test $method");
+	}
 }
 
 done_testing();
