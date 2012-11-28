@@ -3,11 +3,21 @@ use warnings;
 
 use Test::More;
 use Data::Dumper;
+use Getopt::Long;
 
 use Bio::KBase::GenomeAnnotation::Client;
 
-# Start a server on localhost
-my ($pid, $url) = Server::start('GenomeAnnotation');
+my $debug=0;
+my $localServer=0;
+my $getoptResult=GetOptions(
+        'debug' =>      \$debug,
+        'localServer'   =>      \$localServer,
+);
+
+my ($url,$pid);
+$url='http://localhost:7050' unless ($localServer);
+# Start a server on localhost if desired
+($pid, $url) = Server::start('GenomeAnnotation') unless ($url);
 my $obj;
 
 #  Test 1 - Can a new object be created without parameters? 
@@ -55,7 +65,7 @@ foreach my $method (@reconstruction_methods) {
 }
 
 done_testing();
-Server::stop($pid);
+Server::stop($pid) if ($pid);
 unlink "MIT9313.genome.annotated.reconstructionTO";
 
 
