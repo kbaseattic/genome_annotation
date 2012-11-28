@@ -8,4 +8,4 @@ compile_typespec \
 	-js GenomeAnnotation \
 	-py GenomeAnnotation \
 	-url http://bio-data-1.mcs.anl.gov/services/genome_annotation \
-	GenomeAnnotation.spec .
+	GenomeAnnotation.spec lib
