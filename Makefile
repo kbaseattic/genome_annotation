@@ -1,6 +1,8 @@
 TOP_DIR = ../..
 include $(TOP_DIR)/tools/Makefile.common
 
+DEPLOY_RUNTIME ?= /kb/runtime
+
 SERVER_SPEC = GenomeAnnotation.spec
 
 SERVICE_MODULE = lib/Bio/KBase/GenomeAnnotation/Service.pm
@@ -11,7 +13,7 @@ SERVICE_PORT = 7050
 TPAGE_ARGS = --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --define kb_service_name=$(SERVICE) \
 	--define kb_service_port=$(SERVICE_PORT)
 
-TESTS = $(wildcard t/*.t)
+TESTS = $(wildcard t/client-tests/*.t)
 
 all: bin server
 
