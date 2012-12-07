@@ -1,8 +1,13 @@
 TOP_DIR = ../..
 include $(TOP_DIR)/tools/Makefile.common
 
+<<<<<<< HEAD
 DEPLOY_RUNTIME ?= /kb/runtime
 
+=======
+TARGET ?= /kb/deployment
+DEPLOY_RUNTIME ?= /kb/runtime
+>>>>>>> ac733063006ff661eb0f487342da9ce9909da339
 SERVER_SPEC = GenomeAnnotation.spec
 
 SERVICE_MODULE = lib/Bio/KBase/GenomeAnnotation/Service.pm
@@ -15,10 +20,11 @@ TPAGE_ARGS = --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --d
 
 TESTS = $(wildcard t/client-tests/*.t)
 
-all: bin server
+all: bin service
 
 test:
 	# run each test
+	echo "RUNTIME=$(DEPLOY_RUNTIME)\n"
 	for t in $(TESTS) ; do \
 		if [ -f $$t ] ; then \
 			$(DEPLOY_RUNTIME)/bin/perl $$t ; \
@@ -28,19 +34,18 @@ test:
 		fi \
 	done
 
-server: $(SERVICE_MODULE)
+service: $(SERVICE_MODULE)
 
 $(SERVICE_MODULE): $(SERVER_SPEC)
 	./recompile_typespec 
 
 bin: $(BIN_PERL)
 
-deploy: deploy-service
+deploy: deploy-client
+deploy-all: deploy-client deploy-service
+deploy-client: deploy-docs
 
-deploy-service: deploy-dir-service deploy-scripts deploy-libs deploy-services deploy-monit deploy-doc
-deploy-client: deploy-scripts deploy-libs  deploy-doc
-
-deploy-services:
+deploy-service: deploy-monit
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
 	chmod +x $(TARGET)/services/$(SERVICE)/start_service
 	$(TPAGE) $(TPAGE_ARGS) service/stop_service.tt > $(TARGET)/services/$(SERVICE)/stop_service
@@ -49,8 +54,9 @@ deploy-services:
 deploy-monit:
 	$(TPAGE) $(TPAGE_ARGS) service/process.$(SERVICE).tt > $(TARGET)/services/$(SERVICE)/process.$(SERVICE)
 
-deploy-doc:
-	$(DEPLOY_RUNTIME)/bin/pod2html -t "Genome Annotation Service API" lib/Bio/KBase/GenomeAnnotation/Impl.pm > doc/genomeanno_impl.html
+deploy-docs:
+	mkdir -p doc
+	$(DEPLOY_RUNTIME)/bin/pod2html -t "Genome Annotation Service API" lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm > doc/genomeanno_impl.html
 	cp doc/*html $(SERVICE_DIR)/webroot/.
 
 include $(TOP_DIR)/tools/Makefile.common.rules

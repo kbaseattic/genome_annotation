@@ -3,16 +3,26 @@ use warnings;
 
 use Test::More;
 use Data::Dumper;
+use Getopt::Long;
 
 use Bio::KBase::GenomeAnnotation::Client;
 
-# Start a server on localhost
-my ($pid, $url) = Server::start('GenomeAnnotation');
+my $debug=0;
+my $localServer=0;
+my $getoptResult=GetOptions(
+        'debug' =>      \$debug,
+        'localServer'   =>      \$localServer,
+);
+
+my ($url,$pid);
+$url='http://localhost:7050' unless ($localServer);
+# Start a server on localhost if desired
+($pid, $url) = Server::start('GenomeAnnotation') unless ($url);
 my $obj;
 
 #  Test 1 - Can a new object be created without parameters? 
 $obj = Bio::KBase::GenomeAnnotation::Client->new();
-ok( defined $obj, "Did an object get defined" );               
+ok( defined $obj, "Did an object get defined" );
 
 #  Test 2 - Is the object in the right class?
 isa_ok( $obj, 'Bio::KBase::GenomeAnnotation::Client', "Is it in the right class" );   
@@ -46,12 +56,18 @@ note("Test the happy cases for misc misc_methods");
 
 foreach my $method (@misc_methods) {
 
-	eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
-	ok(!$@, "Test $method");
+	if ($debug)
+	{
+		ok($results{$method} = $annotation_server->$method($genome_to->{decode}),
+			"Test $method");
+	} else {
+		eval {$results{$method} = $annotation_server->$method($genome_to->{decode}); };
+		ok(!$@, "Test $method");
+	}
 }
 
 done_testing();
-Server::stop($pid);
+Server::stop($pid) if ($pid);
 unlink "MIT9313.genomeTO.annotated";
 
 

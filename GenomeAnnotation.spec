@@ -1,3 +1,9 @@
+/*
+  API Access to the Genome Annotation Service.
+
+  Provides support for gene calling, functional annotation, re-annotation. Use to extract annotation information about an existing genome, or to create new annotations.
+
+ */
 module GenomeAnnotation
 {
     typedef string md5;
@@ -26,6 +32,12 @@ module GenomeAnnotation
     
     typedef tuple<string comment, string annotator, int annotation_time> annotation;
 
+    /* represents a feature on the genome
+       location on the contig with a type,
+       and if a protein has translation,
+       any aliases associated
+       current history of annoation in style of SEED
+    */
     typedef structure {
 	feature_id id;
 	location location;
@@ -36,11 +48,13 @@ module GenomeAnnotation
 	list<annotation> annotations;
     } feature;
 
+    /* Data for DNA contig */
     typedef structure {
 	contig_id id;
 	string dna;
     } contig;
 
+    /* All of the information about particular genome */
     typedef structure {
 	genome_id id;
 	string scientific_name;
@@ -65,6 +79,9 @@ module GenomeAnnotation
     typedef tuple<fid,function> fid_function_pair;
     typedef list<fid_function_pair> fid_function_pairs;
 
+    /* Metabolic reconstruction
+       represents the set of subsystems that we infer are present in this genome
+    */
     typedef structure {
 	variant_subsystem_pairs subsystems;
 	fid_role_pairs bindings;
