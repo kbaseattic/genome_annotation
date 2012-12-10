@@ -1,13 +1,8 @@
 TOP_DIR = ../..
 include $(TOP_DIR)/tools/Makefile.common
 
-<<<<<<< HEAD
-DEPLOY_RUNTIME ?= /kb/runtime
-
-=======
 TARGET ?= /kb/deployment
 DEPLOY_RUNTIME ?= /kb/runtime
->>>>>>> ac733063006ff661eb0f487342da9ce9909da339
 SERVER_SPEC = GenomeAnnotation.spec
 
 SERVICE_MODULE = lib/Bio/KBase/GenomeAnnotation/Service.pm
