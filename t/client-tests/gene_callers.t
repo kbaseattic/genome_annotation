@@ -4,6 +4,7 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 use Getopt::Long;
+use LWP::UserAgent;
 
 use Bio::KBase::GenomeAnnotation::Client;
 
@@ -33,8 +34,12 @@ my @genecall_methods = qw(
 	call_pyrrolysoproteins
 	call_RNAs
 	call_CDSs
-	call_CDSs_by_projection
 );
+
+# the call_CDSs_by_projection needs data that isn't yet computable by a service - it
+# comes from the genomeOT_to_coding_regions script. See
+# http://kbase.science.energy.gov/developer-zone/tutorials/iris/constructing-rast2-in-the-iris-environment/
+
 
 #  Test 3 - Can the object do all of the methods
 can_ok($obj, @genecall_methods);    
@@ -48,8 +53,12 @@ isa_ok( $annotation_server, 'Bio::KBase::GenomeAnnotation::Client', "Is it in th
 
 #  Test 6 - Download test data
 unlink "MIT9313.genomeTO" if -e "MIT9313.genomeTO";
-eval { !system("wget --quiet http://www.kbase.us/docs/build/MIT9313.genomeTO") or die $!; };
-ok(!$@, "Downloaded test data");
+my $ua = LWP::UserAgent->new();
+my $res = $ua->get("http://www.kbase.us/docs/build/MIT9313.genomeTO",
+                   ":content_file" => "MIT9313.genomeTO");
+
+ok($res->is_success, "Downloaded test data");
+
 
 # Create a genome typed object
 my $genome_to = GenomeTO->new("MIT9313.genomeTO");

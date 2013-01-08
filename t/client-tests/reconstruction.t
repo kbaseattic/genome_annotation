@@ -4,6 +4,7 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 use Getopt::Long;
+use LWP::UserAgent;
 
 use Bio::KBase::GenomeAnnotation::Client;
 
@@ -44,10 +45,12 @@ isa_ok( $annotation_server, 'Bio::KBase::GenomeAnnotation::Client', "Is it in th
 
 #  Test 6 - Download test data
 unlink "MIT9313.genome.annotated.reconstructionTO" if -e "MIT9313.genome.annotated.reconstructionTO";
-my $command = "wget --quiet http://www.kbase.us/docs/build/MIT9313.genome.annotated.reconstructionTO";
-eval { !system($command) or die $!; };
-ok(!$@, "Downloaded test data");
-diag("unable to run $command") if $@;
+
+my $ua = LWP::UserAgent->new();
+my $res = $ua->get("http://www.kbase.us/docs/build/MIT9313.genome.annotated.reconstructionTO",
+                   ":content_file" => "MIT9313.genome.annotated.reconstructionTO");
+
+ok($res->is_success, "Downloaded test data");
 
 # Create a genome typed object
 my $genome_to = ReconstructionTO->new("MIT9313.genome.annotated.reconstructionTO");

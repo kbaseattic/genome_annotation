@@ -4,6 +4,7 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 use Getopt::Long;
+use LWP::UserAgent;
 
 use Bio::KBase::GenomeAnnotation::Client;
 
@@ -32,7 +33,6 @@ isa_ok( $obj, 'Bio::KBase::GenomeAnnotation::Client', "Is it in the right class"
 my @misc_methods = qw(
         genomeTO_to_reconstructionTO
         genomeTO_to_feature_data
-        find_close_neighbors
 );
 can_ok($obj, @misc_methods);    
 
@@ -45,8 +45,12 @@ isa_ok( $annotation_server, 'Bio::KBase::GenomeAnnotation::Client', "Is it in th
 
 #  Test 6 - Download test data
 unlink "MIT9313.genomeTO.annotated" if -e "MIT9313.genomeTO.annotated";
-eval { !system("wget --quiet http://www.kbase.us/docs/build/MIT9313.genomeTO.annotated") or die $!; };
-ok(!$@, "Downloaded test data");
+
+my $ua = LWP::UserAgent->new();
+my $res = $ua->get("http://www.kbase.us/docs/build/MIT9313.genomeTO.annotated",
+                   ":content_file" => "MIT9313.genomeTO.annotated");
+
+ok($res->is_success, "Downloaded test data");
 
 # Create a genome typed object
 my $genome_to = GenomeTO->new("MIT9313.genomeTO.annotated");
