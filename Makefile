@@ -38,9 +38,9 @@ bin: $(BIN_PERL)
 
 deploy: deploy-client
 deploy-all: deploy-client deploy-service
-deploy-client: deploy-docs
+deploy-client: deploy-docs deploy-libs deploy-scripts
 
-deploy-service: deploy-monit
+deploy-service: deploy-monit deploy-libs
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
 	chmod +x $(TARGET)/services/$(SERVICE)/start_service
 	$(TPAGE) $(TPAGE_ARGS) service/stop_service.tt > $(TARGET)/services/$(SERVICE)/stop_service
