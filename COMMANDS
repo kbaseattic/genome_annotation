@@ -1,0 +1,2 @@
+#group-name	genome_annotation	Genome Annotation Scripts
+#command-set	scripts/(.*).pl	genome_annotation
