@@ -25,8 +25,10 @@ our %return_counts = (
         'find_close_neighbors' => 1,
         'assign_functions_to_CDSs' => 1,
         'annotate_proteins' => 1,
-        'call_CDSs_by_glimmer' => 1,
         'call_CDSs_by_projection' => 1,
+        'get_strep_suis_repeats' => 1,
+        'get_strep_pneumo_repeats' => 1,
+        'version' => 1,
 );
 
 sub _build_valid_methods
@@ -45,8 +47,10 @@ sub _build_valid_methods
         'find_close_neighbors' => 1,
         'assign_functions_to_CDSs' => 1,
         'annotate_proteins' => 1,
-        'call_CDSs_by_glimmer' => 1,
         'call_CDSs_by_projection' => 1,
+        'get_strep_suis_repeats' => 1,
+        'get_strep_pneumo_repeats' => 1,
+        'version' => 1,
     };
     return $methods;
 }

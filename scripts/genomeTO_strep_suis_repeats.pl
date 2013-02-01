@@ -33,7 +33,7 @@ my $usage = "genomeTO_to_strep_suis_repeats [--input genome-file] [--output geno
 
 @ARGV == 0 or die "Usage: $usage\n";
 
-my $anno_server = Bio::KBase::GenomeAnnotation::Client->new($url);
+my $kbase_server = Bio::KBase::GenomeAnnotation::Client->new($url);
 
 my $in_fh;
 if ($input_file)
@@ -56,23 +56,18 @@ else
 }
 my $json = JSON::XS->new;
 
-my $input_genome;
+my $genomeTO;
 {
     local $/;
     undef $/;
     my $input_genome_txt = <$in_fh>;
-    $input_genome = $json->decode($input_genome_txt);
+    $genomeTO = $json->decode($input_genome_txt);
 }
-
-use CloseGenomes;
-
 use JSON::XS;
-my $tmp = $input_genome->{contigs};
-my @raw_contigs = map { [$_->{id},'',$_->{dna}] }  @$tmp;
-my $contigs = \@raw_contigs;
-my $close = &StrepRepeats::get_strep_suis_repeats($contigs, {});
 
-$input_genome->{DNA_kmer_data} = $close;
+#...Result appears to differ from $genomeTO, so apparently =NOT= "In Place"!
+my $resultTO = $kbase_server->get_strep_suis_repeats($genomeTO);
+
 $json->pretty(1);
-print $out_fh $json->encode($input_genome);
+print $out_fh $json->encode($resultTO);
 close($out_fh);

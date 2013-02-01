@@ -1,7 +1,8 @@
 /*
   API Access to the Genome Annotation Service.
 
-  Provides support for gene calling, functional annotation, re-annotation. Use to extract annotation information about an existing genome, or to create new annotations.
+  Provides support for gene calling, functional annotation, re-annotation. Use to extract annotation in
+formation about an existing genome, or to create new annotations.
 
  */
 module GenomeAnnotation
@@ -110,7 +111,7 @@ module GenomeAnnotation
     funcdef call_CDSs(genomeTO) returns (genomeTO);
     funcdef find_close_neighbors(genomeTO) returns (genomeTO);
     funcdef assign_functions_to_CDSs(genomeTO) returns (genomeTO);
-
+    
     /*
      * Given a genome object populated with feature data, reannotate
      * the features that have protein translations. Return the updated
@@ -118,4 +119,10 @@ module GenomeAnnotation
      */
     funcdef annotate_proteins(genomeTO) returns (genomeTO);
     funcdef call_CDSs_by_projection(genomeTO) returns (genomeTO);
+
+    /*
+     * Interface to Strep repeats and "boxes" tools
+     */
+    funcdef get_strep_suis_repeats(genomeTO) returns (genomeTO);
+    funcdef get_strep_pneumo_repeats(genomeTO) returns (genomeTO);
 };

@@ -1,15 +1,15 @@
 
-=head1 genomeTO_to_strep_pneumo_repeats
+=head1 genomeTO_to_strep_suis_repeats
 
 
 This routine takes as input a file containing a JSON-encoded
 genomeTO.  It invokes a tool to locate a set of control sites (often called "repeats")
-in Streptococcus pneumonia genomes.  This tool locates the sites and adds the features
+in Streptococcus suisnia genomes.  This tool locates the sites and adds the features
 representing them to the genomeTO.
 
 Example:
 
-    genomeTO_to_strep_pneumo_repeats < input > output
+    genomeTO_to_strep_suis_repeats < input > output
 
 =cut
 
@@ -29,11 +29,11 @@ my $rc = GetOptions('url=s'     => \$url,
 		    'output=s'  => \$output_file,
 		    );
 
-my $usage = "genomeTO_to_strep_pneumo_repeats [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> extended-genome-file]";
+my $usage = "genomeTO_to_strep_suis_repeats [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> extended-genome-file]";
 
 @ARGV == 0 or die "Usage: $usage\n";
 
-my $anno_server = Bio::KBase::GenomeAnnotation::Client->new($url);
+my $kbase_server = Bio::KBase::GenomeAnnotation::Client->new($url);
 
 my $in_fh;
 if ($input_file)
@@ -56,23 +56,18 @@ else
 }
 my $json = JSON::XS->new;
 
-my $input_genome;
+my $genomeTO;
 {
     local $/;
     undef $/;
     my $input_genome_txt = <$in_fh>;
-    $input_genome = $json->decode($input_genome_txt);
+    $genomeTO = $json->decode($input_genome_txt);
 }
-
-use CloseGenomes;
-
 use JSON::XS;
-my $tmp = $input_genome->{contigs};
-my @raw_contigs = map { [$_->{id},'',$_->{dna}] }  @$tmp;
-my $contigs = \@raw_contigs;
-my $close = &StrepRepeats::get_strep_pneumo_repeats($contigs, {});
 
-$input_genome->{DNA_kmer_data} = $close;
+#...$resultTO appears to differ from $genomeTO, so apparently =NOT= "In Place"!
+my $resultTO = $kbase_server->get_strep_pneumo_repeats($genomeTO);  #...Modified "in place"
+
 $json->pretty(1);
-print $out_fh $json->encode($input_genome);
+print $out_fh $json->encode($resultTO);
 close($out_fh);
