@@ -1,29 +1,38 @@
 
-=head1 fasta_to_genome
+=head1 NAME
+
+fasta_to_genome
+
+=head1 SYNOPSIS
+
+fasta_to_genome [--input fasta-file] [--output output-file] [--source source] [--source-id source-id] scientific-name domain genetic-code [< contig-fasta] [> genome-data]
+
+=head1 DESCRIPTION
 
 This command takes as input a file containing contigs for a prokaryotic genome
 and it creates as output a genomeTO
 
 Example:
 
-    fasta_to_genome scientific-name domain genetic-code < contigs > genomeTO
+    fasta_to_genome  scientific-name domain genetic-code < contigs > genomeTO
 
-=over 4
+=head1 COMMAND-LINE OPTIONS
 
-=item scientific-name
+Usage: fasta_to_genome [--input fasta-file] [--output output-file] [--source source] [--source-id source-id] scientific-name domain genetic-code [< contig-fasta] [> genome-data]
 
-This is the full name you want associated with the genome (e.g., 'Buchnera aphidicola str. Tuc7 (Acyrthosiphon pisum)')
 
-=item domain
+    scientific-name --- This is the full name you want associated with the genome
+                        (e.g., 'Buchnera aphidicola str. Tuc7 (Acyrthosiphon pisum)')
 
-This should be 'Bacteria' or 'Archaea' for prokaryotes.
+    domain          --- This should be 'Bacteria' or 'Archaea' for prokaryotes.
 
-=item genetic-code
+    genetic-code    --- This is normally 11 for prokaryotes, but is 4 for a group including the <i>Mycoplasmas</i>.
+                        (Check with NCBI if you are not sure which code to use.)
+    
+=head1 AUTHORS
 
-This is normally 11 for prokaryotes, but is 4 for a group including the <i>Mycoplasmas</i>.  Check NCBI
-if you are not sure which to use.
+L<The SEED Project|http://www.theseed.org>
 
-=back
 =cut
 
 
@@ -34,6 +43,7 @@ use JSON::XS;
 
 use Getopt::Long;
 
+my $help;
 my $scientific_name;
 my $domain;
 my $genetic_code;
@@ -42,7 +52,8 @@ my $source_id;
 my $input_file;
 my $output_file;
 
-my $rc = GetOptions('source=s' 	  => \$source,
+my $rc = GetOptions('help'        => \$help,
+		    'source=s' 	  => \$source,
 		    'source-id=s' => \$source_id,
 		    'input=s' 	  => \$input_file,
 		    'output=s'    => \$output_file,
@@ -50,7 +61,19 @@ my $rc = GetOptions('source=s' 	  => \$source,
 
 my $usage = "fasta_to_genome [--input fasta-file] [--output output-file] [--source source] [--source-id source-id] scientific-name domain genetic-code [< contig-fasta] [> genome-data]";
 
-@ARGV == 3 or die "Usage: $usage\n";
+if (!$rc || $help || @ARGV != 3) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
+
+
 my $scientific_name = shift;
 my $domain = shift;
 my $genetic_code = shift;
@@ -103,3 +126,5 @@ my $jdumper = JSON::XS->new;
 $jdumper->pretty(1);
 print $out_fh $jdumper->encode($genome);
 close($out_fh);
+
+__DATA__

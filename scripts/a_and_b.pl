@@ -1,9 +1,61 @@
 use strict;
 
+#
+# This is a SAS Component
+#
+
+=head1 NAME
+
+a_and_b
+
+=head1 SYNOPSIS
+
+a_and_b File1 File2 > intersection
+
+=head1 DESCRIPTION
+
+Finds the lines in File1 that are also present in File2.
+
+Example:
+
+    a_not_b File1 File2 > intersection
+
+where File1 and File2 are lists of assigned functions.
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage: a_and_b File1 File2 > intersection
+
+File1 --- Name of a text file
+
+File2 --- Name of text-file to be compared.
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
+
+=cut
+
+
 my($f1,$f2);
 my $usage = "usage: a_and_b File1 File2 > intersection";
 
-@ARGV == 2 or die $usage;
+my $help;
+use Getopt::Long;
+my $rc = GetOptions('help' => \$help);
+
+if (!$rc || $help || @ARGV < 2) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
+
 
 (
  ($f1 = shift @ARGV) && (-s $f1) &&
@@ -22,3 +74,5 @@ foreach $_ (sort keys(%keep))
 {
     print $_;
 }
+
+__DATA__

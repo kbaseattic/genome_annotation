@@ -16,8 +16,49 @@ my $source_id;
 my $input_file;
 my $output_file;
 
+
+use Getopt::Long;
+
+=head1 NAME                                                                                                                                
+cs_to_genome                                                                                                                                 
+=head1 SYNOPSIS                                                                                                                         
+cs_to_genome [--output output-file] KBase-genome-id > genome-object                                                                                                                           
+=head1 DESCRIPTION                                                                                                                   
+detailed_description_of_purpose_of_script                                                                                    
+Example:                                                                                                                                   
+   example_of_use                                                                                                                         
+example_description                                                                                                                       
+=head1 COMMAND-LINE OPTIONS                                                                                              
+Usage: cs_to_genome [--output output-file] KBase-genome-id > genome-object                                                                                                               
+=head1 AUTHORS                                                                                                                         
+L<The SEED Project|http://www.theseed.org>
+
+=cut
+
+use Carp;
+use strict;
+
+$| = 1;
+
+my $help;
+
 my $rc = GetOptions('output=s'    => \$output_file,
+                    'help' => \$help,
 		    );
+
+if (!$rc || $help || @ARGV != 1) {
+       seek(DATA, 0, 0);
+      while (<DATA>) {
+             last if /^=head1 COMMAND-LINE /;
+      }
+      while (<DATA>) {
+          last if (/^=/);
+           print $_;
+       }
+      exit($help ? 0 : 1);
+}
+
+
 
 my $usage = "cs_to_genome [--output output-file] KBase-genome-id > genome-object";
 
@@ -146,3 +187,6 @@ my $jdumper = JSON::XS->new;
 $jdumper->pretty(1);
 print $out_fh $jdumper->encode($genome);
 close($out_fh);
+
+
+__DATA__

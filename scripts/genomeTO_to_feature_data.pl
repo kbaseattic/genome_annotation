@@ -1,18 +1,63 @@
+
+=head1 NAME                                                                                                                                
+
+genomeTO_to_feature_data                                                                                                                                 
+=head1 SYNOPSIS                                                                                                                         
+
+genomeTO_to_feature_data [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> reconstruction-file                                                                                                                           
+=head1 DESCRIPTION                                                                                                                   
+
+detailed_description_of_purpose_of_script                                                                                    
+
+Example:                                                                                                                                   
+
+   example_of_use                                                                                                                         
+
+example_description                                                                                                                       
+
+=head1 COMMAND-LINE OPTIONS                                                                                              
+
+Usage: genomeTO_to_feature_data [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> reconstruction-file]                                                                                                               
+=head1 AUTHORS                                                                                                                         
+
+L<The SEED Project|http://www.theseed.org>
+
+=cut
+
+use Carp;
+use strict;
 use Bio::KBase::GenomeAnnotation::Client;
 use JSON::XS;
 
 use Getopt::Long;
-use strict;
 use Data::Dumper;
 
 my $input_file;
 my $output_file;
 my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
 
+
+$| = 1;
+
+my $help;
 my $rc = GetOptions('url=s'     => \$url,
 		    'input=s' 	=> \$input_file,
 		    'output=s'  => \$output_file,
+                    'help'      => \$help,
 		    );
+
+if (!$rc || $help || @ARGV != 0) {
+       seek(DATA, 0, 0);
+      while (<DATA>) {
+             last if /^=head1 COMMAND-LINE /;
+      }
+      while (<DATA>) {
+          last if (/^=/);
+           print $_;
+       }
+      exit($help ? 0 : 1);
+}
+
 
 my $usage = "genomeTO_to_feature_data [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> reconstruction-file]";
 
@@ -55,3 +100,4 @@ foreach $_ (@$feature_data)
     print join("\t",@$_),"\n";
 }
 
+__DATA__

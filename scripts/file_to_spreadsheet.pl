@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+
 use Getopt::Std;
 use Spreadsheet::WriteExcel;
 use strict;
@@ -11,36 +12,58 @@ use Carp;
 #
 
 
-=head1 svr_file_to_spreadsheet -f filename 
+=head1 NAME
+
+svr_file_to_spreadsheet
+
+=head1 SYNOPSIS
+
+svr_file_to_spreadsheet -f filename [-u hyperlink_template]
+
+=head1 DESCRIPTION
 
 Writes the contents of the tab separated file on STDIN to a spreadsheet
 
 The output is an xls file
 
-Example: svr_file_to_spreadsheet -f test.xls  < test.txt 
+Example: svr_file_to_spreadsheet -f test.xls -u < test.txt 
 
-=head2 Command-Line Options
+=head1 COMMAND-LINE OPTIONS
 
-=over 4
+Usage: svr_file_to_spreadsheet -f test.xls -u http://pubseed.theseed.org/?page=Annotation&feature=PEG < test.txt
 
-=item -f 
+    -f --- The filename for the output xls format spreadsheet.
 
-The file name given to the output xls format spreadsheet.
+    -u --- An optional hyperlink template; PEG will be replaced by any FIG-IDs in the input file
 
-=back
+=head1 AUTHORS
 
-=head2 Output Format
-
-The output is a file in xls format
+L<The SEED Project|http://www.theseed.org>
 
 =cut
 
 
+my $help;
 our ($opt_f, $opt_u);
-getopt("f:u:");
-if (!$opt_f) {
-	die "Usage: No File Specified (-f missing)\n";
-} 
+use Getopt::Long;
+my $rc = GetOptions('help' => \$help,
+		    'f=s'  => \$opt_f,
+		    'u:s'  => \$opt_u,
+    );
+
+if (!$rc || $help || @ARGV != 0) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
+
+
 
 # Create a new Excel workbook
 my $workbook = Spreadsheet::WriteExcel->new($opt_f);
@@ -83,3 +106,5 @@ for my $col (0..$#ctot)
 	$worksheet->set_column($col, $col, $avg);
     }
 }
+
+__DATA__

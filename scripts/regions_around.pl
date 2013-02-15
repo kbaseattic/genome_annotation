@@ -6,12 +6,18 @@ use Carp;
 # This is a SAS Component
 #
 
-=head1 regions_around
+=head1 NAME
 
+regions_around
+
+=head1 SYNOPSIS
+
+regions_around [-c N] -base Type -upstream Upstream -downstream Downstream < input > output";
+
+=head1 DESCRIPTION
 
 This routine takes as input a file in which one column is composed
-of fids, and it outputs a sorted version (sorted by fid locations).
-
+of FIDs (Feature IDs)., and it outputs a sorted version (sorted by FID).
 
 Example:
 
@@ -19,15 +25,36 @@ Example:
 
 The standard input should be a tab-separated table (i.e., each line
 is a tab-separated set of fields).  Normally, the last field in each
-line would contain the identifer. If another column contains the identifier
+line would contain the identifer. If another column contains the FID,
 use
 
     -c N
 
-where N is the column (from 1) that contains the subsystem.
+where N is the column (from 1) that contains the feature IDs.
 
-This is a pipe command. The input is taken from the standard input, and the
-output is to the standard output.
+This is a pipe command. The input is normally taken from the standard input,
+and the output is written to standard output.
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage: regions_around [-c N] -base Type -upstream Upstream -downstream Downstream < input > output
+Usage: regions_around [-c N] -base Type -upstream Upstream -downstream Downstream --input genoime-file --output genome-file
+
+    -c N         ---  Number of column of input file containing the feature ID
+
+    -base        ---  Options are 's', 'e', or 'i'
+
+    -upstream    --- 
+
+    -downstream  ---
+
+    --input      ---  Option to read genome-typed-object from input file instead of from STDIN
+
+    --output     ---  Option to write enhanced genome-typed-object to output file instead of STDOUT
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
 
 =cut
 
@@ -136,3 +163,4 @@ sub extract_region {
     return "$contig\_$b$strand$ln";
 }
 
+__DATA__

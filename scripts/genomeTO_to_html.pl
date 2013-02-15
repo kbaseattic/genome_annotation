@@ -1,3 +1,35 @@
+
+=head1 NAME
+
+script_name
+
+=head1 SYNOPSIS
+
+genomeTO_to_html [--input genome-file] [--output html-file] [< genome-file] [> html-file]
+
+=head1 DESCRIPTION
+
+Displays contents of a genome-typed-object file as an HTML table
+
+Example:
+
+    genomeTO_to_html < genome.TO > genome.html
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage: genomeTO_to_html  < genome-file  > html-file
+Usage: genomeTO_to_html  --input genome-file --output html-file
+
+    --input  --- Option to read input from named file instead of from STDIN
+    
+    --output --- Option to write output from named file instead of to STDOUT
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
+
+=cut
+
 use Bio::KBase::GenomeAnnotation::Client;
 use JSON::XS;
 
@@ -9,13 +41,26 @@ use Template;
 my $input_file;
 my $output_file;
 
-my $rc = GetOptions('input=s' 	=> \$input_file,
+my $help;
+my $rc = GetOptions('help'      => \$help,
+		    'input=s' 	=> \$input_file,
 		    'output=s'  => \$output_file,
 		    );
 
-my $usage = "genomeTO_to_html [--in  genome-file] [--output html-file] [< genome-file] [> html-file]";
+my $usage = "genomeTO_to_html [--input genome-file] [--output html-file] [< genome-file] [> html-file]";
 
-@ARGV == 0 or die "Usage: $usage\n";
+if (!$rc || $help || @ARGV != 0) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
+
 
 my $in_fh;
 if ($input_file)

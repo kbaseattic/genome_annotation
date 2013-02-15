@@ -6,12 +6,16 @@ use Carp;
 # This is a SAS Component
 #
 
-=head1 sort_by_ids
+=head1 NAME
 
+sort_by_ids
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
 
 This routine takes as input a file in which one column is composed
-of fids, and it outputs a sorted version (sorted by fid ID).
-
+of FIDs (Feature IDs)., and it outputs a sorted version (sorted by FID).
 
 Example:
 
@@ -24,10 +28,24 @@ use
 
     -c N
 
-where N is the column (from 1) that contains the subsystem.
+where N is the column (from 1) that contains the feature ID.
 
-This is a pipe command. The input is taken from the standard input, and the
-output is to the standard output.
+This is a pipe command. The input is normally taken from the standard input,
+and the output is written to the standard output.
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage: sort_by_id [-c N] < input  > sorted.input
+
+    -c N     --- The number of the column (from 1) that contains the feature ID.
+
+    --input  --- Option to read genome-typed-object from input file instead of from STDIN
+
+    --output --- Option to write enhanced genome-typed-object to output file instead of STDOUT
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
 
 =cut
 
@@ -38,8 +56,8 @@ my $input_file;
 my $output_file;
 use Bio::KBase::CDMI::CDMIClient;
 use Bio::KBase::Utilities::ScriptThing;
-my $kbO = Bio::KBase::CDMI::CDMIClient->new_for_script('c=i' => \$column,
-						       'input=s' 	=> \$input_file,
+my $kbO = Bio::KBase::CDMI::CDMIClient->new_for_script('c=i'       => \$column,
+						       'input=s'   => \$input_file,
 						       'output=s'  => \$output_file);
 
 if (! $kbO) { print STDERR $usage; exit }
@@ -86,3 +104,4 @@ sub by_fid {
     return 0;
 }
 
+__DATA__

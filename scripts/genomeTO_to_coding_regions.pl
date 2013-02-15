@@ -1,6 +1,13 @@
 
-=head1 genomeTO_to_coding_regions
+=head1 NAME
 
+genomeTO_to_coding_regions
+
+=head1 SYNOPSIS
+
+genomeTO_to_coding_regions [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> extended-genome-file]
+
+=head1 DESCRIPTION
 
 This routine takes as input a file containing a JSON-encoded
 genomeTO.  It invokes a kmer-based service which attempts to
@@ -15,6 +22,21 @@ Example:
 
     genomeTO_to_coding_regions < input > output
 
+=head1 COMMAND-LINE OPTIONS
+
+Usage: genomeTO_to_coding_regions [--url service-url]  < genome-file  > extended-genome-file]
+Usage: genomeTO_to_coding_regions  --input genome-file  --output genome-file  [--url service-url]
+
+    --url    --- Optional URL for alternate KBase server (D: http://bio-data-1.mcs.anl.gov/services/genome_annotation)
+
+    --input  --- optional name of genome-typed-object input file
+
+    --output --- optional name of genome-typed-object output file
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
+
 =cut
 
 use Bio::KBase::GenomeAnnotation::Client;
@@ -28,14 +50,26 @@ my $input_file;
 my $output_file;
 my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
 
-my $rc = GetOptions('url=s'     => \$url,
+my $help;
+my $rc = GetOptions('help'      => \$help,
+		    'url=s'     => \$url,
 		    'input=s' 	=> \$input_file,
 		    'output=s'  => \$output_file,
 		    );
 
 my $usage = "genomeTO_to_coding_regions [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> extended-genome-file]";
 
-@ARGV == 0 or die "Usage: $usage\n";
+if (!$rc || $help || @ARGV != 0) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
 
 my $anno_server = Bio::KBase::GenomeAnnotation::Client->new($url);
 
@@ -80,3 +114,5 @@ $input_genome->{DNA_kmer_data} = $close;
 $json->pretty(1);
 print $out_fh $json->encode($input_genome);
 close($out_fh);
+
+__DATA__

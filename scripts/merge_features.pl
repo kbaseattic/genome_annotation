@@ -1,6 +1,13 @@
 
-=head1 merge_features
+=head1 NAME
 
+merge_features
+
+=head1 SYNOPSIS 
+
+merge_features [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> extended-genome-file]";
+
+=head1 DESCRIPTION
 
 This routines take a genomeTO as input.  It is presumed that
 all of the called features are in the genomeTO, as well as many
@@ -10,6 +17,21 @@ is supposed to select that set of features that are to be kept.
 Example:
 
     merge_features < input > output
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage:  merge_features  [--url service-url] < input > output
+Usage:  merge_features  --input genome-file  --output genome-file  [--url service-url]
+
+    --url    --- Optional URL for alternate KBase server (D: http://bio-data-1.mcs.anl.gov/services/genome_annotation)
+
+    --input  --- Option to read genome-typed-object from input file instead of from STDIN
+
+    --output --- Option to write enhanced genome-typed-object to output file instead of STDOUT
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
 
 =cut
 
@@ -24,14 +46,26 @@ my $input_file;
 my $output_file;
 my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
 
-my $rc = GetOptions('url=s'     => \$url,
+my $help;
+my $rc = GetOptions('help'      => \$help,
+		    'url=s'     => \$url,
 		    'input=s' 	=> \$input_file,
 		    'output=s'  => \$output_file,
 		    );
 
 my $usage = "merge_features [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> extended-genome-file]";
 
-@ARGV == 0 or die "Usage: $usage\n";
+if (!$rc || $help || @ARGV != 0) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
 
 my $anno_server = Bio::KBase::GenomeAnnotation::Client->new($url);
 
@@ -261,3 +295,5 @@ sub overlap_sz {
     if ($maxB > $minE) { return 0 }
     return ($minE - $maxB) + 1;
 }
+
+__DATA__

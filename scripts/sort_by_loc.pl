@@ -6,12 +6,18 @@ use Carp;
 # This is a SAS Component
 #
 
-=head1 sort_by_loc
+=head1 NAME
 
+sort_by_loc
+
+=head1 SYNOPSIS
+
+sort_by_loc  [-c N]  < input  > sorted.input
+
+=head1 DESCRIPTION
 
 This routine takes as input a file in which one column is composed
-of fids, and it outputs a sorted version (sorted by fid locations).
-
+of locations, and it outputs a sorted version (sorted by locations).
 
 Example:
 
@@ -19,15 +25,30 @@ Example:
 
 The standard input should be a tab-separated table (i.e., each line
 is a tab-separated set of fields).  Normally, the last field in each
-line would contain the identifer. If another column contains the identifier
+line would contain the identifer. If another column contains the location,
 use
 
     -c N
 
-where N is the column (from 1) that contains the subsystem.
+where N is the column (from 1) that contains the location.
 
-This is a pipe command. The input is taken from the standard input, and the
-output is to the standard output.
+This is a pipe command. The input is normally taken from the standard input,
+and the output is written to standard output.
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage:  sort_by_loc  [-c N]  < input  > sorted.input
+Usage   sort_by_loc  [-c N]  --input input-file  --output sorted-input
+
+    -c N     --- The number of the column (from 1) that contains the location
+
+    --input  --- Option to read genome-typed-object from input file instead of from STDIN
+
+    --output --- Option to write enhanced genome-typed-object to output file instead of STDOUT
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
 
 =cut
 
@@ -86,3 +107,4 @@ sub by_loc {
     return 0;
 }
 
+__DATA__

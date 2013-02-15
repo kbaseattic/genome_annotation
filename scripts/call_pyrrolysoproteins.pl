@@ -1,4 +1,38 @@
 
+=head1 NAME
+
+call_pyrrolysoproteins
+
+=head1 SYNOPSIS
+
+call_pyrrolysoproteins [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> genome-file]
+
+=head1 DESCRIPTION
+
+Reads a JSON-encoded genome-typed-object file, and outputs a genome-typed-object file enhanced with
+predicted RNA features, using the default KBase pyrrolysoprotein prediction method.
+
+Example:
+
+    call_pyrrolysoproteins < genome.TO > genome.with-predicted-pyrrolysoproteins.TO
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage: call_pyrrolysoproteins [--url service-url]  < genome-file  > genome-file
+Usage: call_pyrrolysoproteins --input genome-file --output genome-file  [--url service-url]
+
+    --url    --- Optional URL for alternate KBase server (D: http://bio-data-1.mcs.anl.gov/services/genome_annotation)
+
+    --input  --- Option to read genome-typed-object from input file instead of from STDIN
+
+    --output --- Option to write enhanced genome-typed-object to output file instead of STDOUT
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
+
+=cut
+
 use strict;
 use gjoseqlib;
 use Bio::KBase::GenomeAnnotation::Client;
@@ -18,10 +52,17 @@ my $rc = GetOptions('help'      => \$help,
 		    'output=s'  => \$output_file,
 		    );
 
-die "Usage: $usage\n" if ($help 
-			  || $rc   == 0 
-			  || @ARGV != 0
-			  );
+if (!$rc || $help || @ARGV != 0) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
 
 my $kbase_server = Bio::KBase::GenomeAnnotation::Client->new($url);
 
@@ -59,3 +100,5 @@ my $output_genome = $kbase_server->call_pyrrolysoproteins($input_genome);
 $json->pretty(1);
 print $out_fh $json->encode($output_genome);
 close($out_fh);
+
+__DATA__

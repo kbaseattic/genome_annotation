@@ -1,15 +1,37 @@
 
-=head1 genomeTO_to_strep_suis_repeats
+=head1 NAME
 
+genomeTO_to_strep_suis_repeats
+
+=head1 SYNOPSIS
+
+genomeTO_to_strep_suis_repeats [-url] < input > output
+
+=head1 DESCRIPTION
 
 This routine takes as input a file containing a JSON-encoded
 genomeTO.  It invokes a tool to locate a set of control sites (often called "repeats")
-in Streptococcus suisnia genomes.  This tool locates the sites and adds the features
+in Streptococcus suis genomes.  This tool locates the sites and adds the features
 representing them to the genomeTO.
 
 Example:
 
     genomeTO_to_strep_suis_repeats < input > output
+
+=head1 COMMAND-LINE OPTIONS
+
+Usage: genomeTO_to_strep_suis_repeats [--url service-url]  < genome-file  > extended-genome-file
+Usage: genomeTO_to_strep_suis_repeats --input genome-file  --output genome-file [--url service-url]
+
+    --url    --- Optional URL for alternate KBase server (D: http://bio-data-1.mcs.anl.gov/services/genome_annotation)
+
+    --input  --- Option to read genome-typed-object from input file instead of from STDIN
+
+    --output --- Option to write enhanced genome-typed-object to output file instead of STDOUT
+
+=head1 AUTHORS
+
+L<The SEED Project|http://www.theseed.org>
 
 =cut
 
@@ -24,14 +46,26 @@ my $input_file;
 my $output_file;
 my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
 
-my $rc = GetOptions('url=s'     => \$url,
-		    'input=s' 	=> \$input_file,
-		    'output=s'  => \$output_file,
+my $help;
+my $rc = GetOptions('url:s'     => \$url,
+		    'help'      => \$help,
+		    'input:s' 	=> \$input_file,
+		    'output:s'  => \$output_file,
 		    );
 
 my $usage = "genomeTO_to_strep_suis_repeats [--input genome-file] [--output genome-file] [--url service-url] [< genome-file] [> extended-genome-file]";
 
-@ARGV == 0 or die "Usage: $usage\n";
+if (!$rc || $help || @ARGV != 0) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
 
 my $kbase_server = Bio::KBase::GenomeAnnotation::Client->new($url);
 
@@ -71,3 +105,5 @@ my $resultTO = $kbase_server->get_strep_suis_repeats($genomeTO);
 $json->pretty(1);
 print $out_fh $json->encode($resultTO);
 close($out_fh);
+
+__DATA__

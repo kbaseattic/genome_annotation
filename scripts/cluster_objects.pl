@@ -20,6 +20,26 @@
 # http://www.theseed.org/LICENSE.TXT.
 #
 
+use Getopt::Long;
+
+=head1 NAME                                                                                                                                
+cluster_objects                                                                                                                                 
+=head1 SYNOPSIS                                                                                                                         
+cluster_objects < related > sets
+
+=head1 DESCRIPTION                                                                                                                   
+cluster related objects into sets
+Example:                                                                                                                                   
+   cluster_objects < related > sets
+
+example_description                                                                                                                       
+=head1 COMMAND-LINE OPTIONS                                                                                              
+Usage: cluster_objects < related > sets
+
+=head1 AUTHORS                                                                                                                         
+L<The SEED Project|http://www.theseed.org>
+
+=cut
 
 use Carp;
 use strict;
@@ -28,10 +48,29 @@ use strict;
 
 $| = 1;
 
+my $help;
+my $rc = GetOptions('help' => \$help);
+
+if (!$rc || $help || @ARGV != 0) {
+       seek(DATA, 0, 0);
+      while (<DATA>) {
+             last if /^=head1 COMMAND-LINE /;
+      }
+      while (<DATA>) {
+          last if (/^=/);
+           print $_;
+       }
+      exit($help ? 0 : 1);
+}
+
+
 my %to_cluster;
 my %in_cluster;
 
 my $nxt = 1;
+
+
+
 while (defined($_ = <STDIN>))
 {
     if ($_ =~ /^(\S[^\t]*\S)\t(\S[^\t]*\S)/)
@@ -74,3 +113,5 @@ foreach my $cluster (keys(%in_cluster))
     my $set = $in_cluster{$cluster};
     print join("\t",sort @$set),"\n";
 }
+
+__DATA__

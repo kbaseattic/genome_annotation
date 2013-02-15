@@ -18,18 +18,67 @@
 # http://www.theseed.org/LICENSE.TXT.
 #
 
+=head1 NAME                                                                                                                                
 
-$usage = "usage: tabs2rel [InitialN] < tab-sep-sets > relation";
+tabs2rel                                                                                                                                 
 
-$n = (@ARGV > 0) ? $ARGV[0] : 1;
+=head1 SYNOPSIS                                                                                                                         
+
+tabs2rel [InitialN] < tab-sep-sets > relation                                                                                                                           
+=head1 DESCRIPTION                                                                                                                   
+
+detailed_description_of_purpose_of_script                                                                                    
+
+Example:                                                                                                                                   
+
+   example_of_use                                                                                                                         
+
+example_description                                                                                                                       
+
+=head1 COMMAND-LINE OPTIONS                                                                                              
+
+Usage: tabs2rel [InitialN] < tab-sep-sets > relation                                                                                                               
+=head1 AUTHORS                                                                                                                         
+
+L<The SEED Project|http://www.theseed.org>
+
+=cut
+
+use Carp;
+use strict;
+use Getopt::Long;
+
+my $usage = "usage: tabs2rel [InitialN] < tab-sep-sets > relation";
+
+my $n = (@ARGV > 0) ? $ARGV[0] : 1;
+
+
+$| = 1;
+
+my $help;
+my $rc = GetOptions('help' => \$help);
+
+if (!$rc || $help || @ARGV > 1) {
+    seek(DATA, 0, 0);
+    while (<DATA>) {
+	last if /^=head1 COMMAND-LINE /;
+    }
+    while (<DATA>) {
+	last if (/^=/);
+	print $_;
+    }
+    exit($help ? 0 : 1);
+}
+
 
 while (defined($_ = <STDIN>))
 {
     chop;
-    foreach $x (split(/\t/,$_))
+    foreach my $x (split(/\t/,$_))
     {
 	print "$n\t$x\n";
     }
     $n++;
 }
 
+__DATA__
