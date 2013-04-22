@@ -66,8 +66,11 @@ my $usage = "cs_to_genome [--output output-file] KBase-genome-id > genome-object
 
 my $src_genome_id = shift;
 
-my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
-my $cs = Bio::KBase::CDMI::Client->new('http://bio-data-1.mcs.anl.gov/services/cdmi_api');
+# my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+# my $cs = Bio::KBase::CDMI::Client->new('http://bio-data-1.mcs.anl.gov/services/cdmi_api');
+my $id_server = Bio::KBase::IDServer::Client->new('https://kbase.us/services/idserver');
+my $cs = Bio::KBase::CDMI::Client->new('https://kbase.us/services/cdmi_api');
+
 
 my $out_fh;
 if ($output_file)
