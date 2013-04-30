@@ -78,7 +78,8 @@ my $scientific_name = shift;
 my $domain = shift;
 my $genetic_code = shift;
 
-my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+# my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+my $id_server = Bio::KBase::IDServer::Client->new('https://kbase.us/services/idserver');
 
 my $in_fh;
 if ($input_file)

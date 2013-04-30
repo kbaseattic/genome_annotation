@@ -43,7 +43,8 @@ my $usage = "call_CDSs [--input genome-file] [--output genome-file] [--url servi
 my $help;
 my $input_file;
 my $output_file;
-my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
+# my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
+my $url = "https://kbase.us/services/genome_annotation";
 
 use Getopt::Long;
 my $rc = GetOptions('help'      => \$help,

@@ -7,5 +7,5 @@ compile_typespec \
 	-client Bio::KBase::GenomeAnnotation::Client \
 	-js GenomeAnnotation \
 	-py GenomeAnnotation \
-	-url http://bio-data-1.mcs.anl.gov/services/genome_annotation \
+	-url https://kbase.us/services/genome_annotation \
 	GenomeAnnotation.spec lib
