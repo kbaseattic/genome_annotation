@@ -1,5 +1,15 @@
 use strict;
 use warnings;
+#	Command line tests for genome_annotation
+#
+#	Test the methods that begin with a reconstructionTO
+#	Begin by downloading MIT9313.genome.annotated.reconstructionTO
+#	Send output to MIT9313.genome.annotated.reconstructionTO.out 
+#
+#	Three tests
+#	1.	Did the test execute without errors
+#	2.	Does the output file exist
+#	3.	Is the output file non-empty
 
 use Test::More;
 use Data::Dumper;
@@ -18,25 +28,32 @@ my $outfile = "MIT9313.genome.annotated.reconstructionTO.out";
 my $cmd;
 my $ret;
 
-#  Test 3 - Can the object do all of the methods that take
+# Commands (including Gene calling) that take a
 #           reconstruction typed objects as input.
 my @reconstruction_methods = qw(
         reconstructionTO_to_roles
         reconstructionTO_to_subsystems
 );
 
-#  Test 6 - Download test data
-unlink $infile if -e $infile;
+#  Download test data
+unlink $infile  if -e $infile;
+unlink $outfile if -e $outfile;
 
 my $ua = LWP::UserAgent->new();
 my $res = $ua->get("http://www.kbase.us/docs/build/MIT9313.genome.annotated.reconstructionTO",
-                   ":content_file" => "MIT9313.genome.annotated.reconstructionTO");
+                   ":content_file" => $infile);
 
+#
+#	Was the data download successful
+#
 ok($res->is_success, "Downloaded test data");
-
-# Create a genome typed object
+ok(-e $infile ,"Does the infile exist");
 
 note("Test the happy cases for reconstruction methods");
+#
+#	Loop through the methods (command-line commands)
+#	Test each one with the reconstructionTO as input
+#
 
 foreach my $method (@reconstruction_methods) {
 	$cmd = "$method --input $infile --output $outfile ";
@@ -49,6 +66,6 @@ foreach my $method (@reconstruction_methods) {
 }
 
 done_testing();
-unlink "MIT9313.genome.annotated.reconstructionTO";
+unlink $infile;
 
 
