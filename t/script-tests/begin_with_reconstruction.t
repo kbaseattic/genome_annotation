@@ -16,8 +16,6 @@ use Data::Dumper;
 use Getopt::Long;
 use LWP::UserAgent;
 
-use Bio::KBase::GenomeAnnotation::Client;
-
 my $debug=0;
 my $getoptResult=GetOptions(
         'debug' =>      \$debug,
