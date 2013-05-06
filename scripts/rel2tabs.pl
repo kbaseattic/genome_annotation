@@ -19,7 +19,7 @@
 #
 
 
-# usage: rel2tabs < 2-column-table > 1-column.version";
+# usage: rel2tabs < 2-column-table > multi-column.version";
 
 =head1 NAME                                                                                                                                
 
@@ -27,10 +27,32 @@ rel2tabs
 
 =head1 SYNOPSIS                                                                                                                         
 
-rel2tabs < 2-column-table > 1-column.version                                                                                                                           
+rel2tabs < 2-column-table > multi-column.version                                                                                                                           
 =head1 DESCRIPTION                                                                                                                   
 
 detailed_description_of_purpose_of_script                                                                                    
+Given:
+
+1   kb|g.22250.peg.2733286
+1   kb|g.19976.c.0_2409901+588
+1   CDS
+1   hypothetical protein
+2   kb|g.22250.peg.2733262
+2   kb|g.19976.c.0_2379935+1359
+2   CDS
+2   Chloride channel protein
+3   kb|g.22250.peg.27332783   kb|g.19976.c.0_2395935+615
+3   CDS
+3   hypothetical protein4   kb|g.22250.peg.2733279
+4   kb|g.19976.c.0_2396827+2494   CDS
+                                       
+rel2tabs will produce:
+
+kb|g.22250.peg.2733286  kb|g.19976.c.0_2409901+588  CDS hypothetical
+kb|g.22250.peg.2733262  kb|g.19976.c.0_2379935+1359 CDS Chloride
+kb|g.22250.peg.2733278  kb|g.19976.c.0_2395935+615  CDS hypothetical
+kb|g.22250.peg.2733279  kb|g.19976.c.0_2396827+249  CDS hypothetical
+
 
 Example:                                                                                                                                   
 
@@ -40,7 +62,7 @@ example_description
 
 =head1 COMMAND-LINE OPTIONS                                                                                              
 
-Usage: rel2tabs < 2-column-table > 1-column.version                                                                                                               
+Usage: rel2tabs < 2-column-table > multi-column.version                                                                                                               
 =head1 AUTHORS                                                                                                                         
 
 L<The SEED Project|http://www.theseed.org>

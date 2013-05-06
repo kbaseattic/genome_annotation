@@ -34,8 +34,8 @@ use Data::Dumper;
 
 my $input_file;
 my $output_file;
-# my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
-my $url = "https://kbase.us/services/genome_annotation";
+#my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
+my $url = "http://kbase.us/services/genome_annotation";
 
 
 $| = 1;
@@ -98,7 +98,7 @@ my $input_genome;
 my $feature_data = $anno_server->genomeTO_to_feature_data($input_genome);
 foreach $_ (@$feature_data)
 {
-    print join("\t",@$_),"\n";
+    print $out_fh join("\t",@$_),"\n";
 }
 
 __DATA__
