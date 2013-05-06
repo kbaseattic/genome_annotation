@@ -16,21 +16,27 @@ regions_around [-c N] -base Type -upstream Upstream -downstream Downstream < inp
 
 =head1 DESCRIPTION
 
-This routine takes as input a file in which one column is composed
-of FIDs (Feature IDs)., and it outputs a sorted version (sorted by FID).
+We usually represent a region of DNA as the concatenation of a contig id, an underscore, the position of the first base pair in the region, a single character (+ or i) giving the strand, and the length of the region.
+Thus,
+      Contig10_182-20
+      represents a region of Contig10 on the negative strand from 182 through 163.
+
+The command regions_around takes as input a sequence of lines thought of as a table in which each line is a "row". One of the columns is assumed to contain regions. The command takes as three arguments:
+
+    -base indicating whether you wish a region around the start position, a region around the end position, or a region upstream of the start to downstream of the end. Thus,
+        -base start       [ for a region ariound the start position ]
+        -base end         [ for a region ariound the end position ]
+        -base interval    [ for a region around the interval from start to end ]
+
+    -upstream N1 specifies how far upstream of the base the actual start of the desired sequence occurs, and
+    -downstream N2 specifies how far downstream the extracted sequence ends. 
 
 Example:
-
-    regions_around [-c N] -base Type -upstream Upstream -downstream Downstream < input > output
-
-The standard input should be a tab-separated table (i.e., each line
-is a tab-separated set of fields).  Normally, the last field in each
-line would contain the identifer. If another column contains the FID,
-use
+     region_around -base start -upstream 100 -downstream 0
+     Sepcifies  that the base will be around the start position of the input location, and it will run from 100 bp upstream through the start position. 
 
     -c N
-
-where N is the column (from 1) that contains the feature IDs.
+        where N is the column (from 1) that contains the Regions.
 
 This is a pipe command. The input is normally taken from the standard input,
 and the output is written to standard output.
@@ -38,7 +44,7 @@ and the output is written to standard output.
 =head1 COMMAND-LINE OPTIONS
 
 Usage: regions_around [-c N] -base Type -upstream Upstream -downstream Downstream < input > output
-Usage: regions_around [-c N] -base Type -upstream Upstream -downstream Downstream --input genoime-file --output genome-file
+Usage: regions_around [-c N] -base Type -upstream Upstream -downstream Downstream --input genome-file --output genome-file
 
     -c N         ---  Number of column of input file containing the feature ID
 
