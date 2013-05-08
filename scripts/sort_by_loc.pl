@@ -42,9 +42,9 @@ Usage   sort_by_loc  [-c N]  --input input-file  --output sorted-input
 
     -c N     --- The number of the column (from 1) that contains the location
 
-    --input  --- Option to read genome-typed-object from input file instead of from STDIN
+    --input  --- Option to read from input file instead of from STDIN
 
-    --output --- Option to write enhanced genome-typed-object to output file instead of STDOUT
+    --output --- Option to write to output file instead of STDOUT
 
 =head1 AUTHORS
 

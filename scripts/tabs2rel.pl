@@ -29,6 +29,36 @@ tabs2rel [InitialN] < tab-sep-sets > relation
 
 detailed_description_of_purpose_of_script                                                                                    
 
+CHanges an input file of tabular data into a set of relations.
+
+ie, given
+
+kb|g.22250.peg.2733286  kb|g.19976.c.0_2409901+588  CDS hypothetical
+kb|g.22250.peg.2733262  kb|g.19976.c.0_2379935+1359 CDS Chloride
+kb|g.22250.peg.2733278  kb|g.19976.c.0_2395935+615  CDS hypothetical
+kb|g.22250.peg.2733279  kb|g.19976.c.0_2396827+249  CDS hypothetical
+
+tabs2rel will produce
+
+
+1   kb|g.22250.peg.2733286
+1   kb|g.19976.c.0_2409901+588
+1   CDS
+1   hypothetical protein
+2   kb|g.22250.peg.2733262
+2   kb|g.19976.c.0_2379935+1359
+2   CDS
+2   Chloride channel protein
+3   kb|g.22250.peg.2733278
+3   kb|g.19976.c.0_2395935+615
+3   CDS
+3   hypothetical protein
+4   kb|g.22250.peg.2733279
+4   kb|g.19976.c.0_2396827+249
+4   CDS
+4   hypothetical protein
+
+
 Example:                                                                                                                                   
 
    example_of_use                                                                                                                         

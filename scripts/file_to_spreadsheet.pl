@@ -14,11 +14,11 @@ use Carp;
 
 =head1 NAME
 
-svr_file_to_spreadsheet
+file_to_spreadsheet
 
 =head1 SYNOPSIS
 
-svr_file_to_spreadsheet -f filename [-u hyperlink_template]
+file_to_spreadsheet -f filename [-u hyperlink_template]
 
 =head1 DESCRIPTION
 
@@ -26,11 +26,11 @@ Writes the contents of the tab separated file on STDIN to a spreadsheet
 
 The output is an xls file
 
-Example: svr_file_to_spreadsheet -f test.xls -u < test.txt 
+Example: file_to_spreadsheet -f test.xls -u < test.txt 
 
 =head1 COMMAND-LINE OPTIONS
 
-Usage: svr_file_to_spreadsheet -f test.xls -u http://pubseed.theseed.org/?page=Annotation&feature=PEG < test.txt
+Usage: file_to_spreadsheet -f test.xls [-u http://pubseed.theseed.org/?page=Annotation&feature=PEG] < test.txt
 
     -f --- The filename for the output xls format spreadsheet.
 

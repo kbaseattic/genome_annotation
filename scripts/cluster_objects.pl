@@ -29,10 +29,54 @@ cluster_objects < related > sets
 
 =head1 DESCRIPTION                                                                                                                   
 cluster related objects into sets
-Example:                                                                                                                                   
-   cluster_objects < related > sets
+input is a two column table of related objects (id's)
+Using transitive closure, cluster_objects produces all sets of related objects.
 
-example_description                                                                                                                       
+Example:                                                                                                                                   
+Computing protein sets for the genomes in an OTU
+
+   use strict;
+   use Data::Dumper;
+
+   my $usage = "usage: pan_genome OTU > protein.families";
+   my $otu = shift @ARGV;
+   if (! defined($otu)) { die $usage };
+
+   my @genomes = map { chop; $_ } `echo $otu | get_relationship_IsCollectionOf -to id | cut -f2`;
+
+   open(CLUSTER,"| cluster_objects") || die "could not open clustering";
+   foreach my $x (@genomes)
+   {
+       foreach my $y (@genomes) {
+           if ($x lt $y) {
+               my @output = `corresponds "$x" "$y" -a 0.6 2> /dev/null`;
+               foreach $_ (@output) { 
+                   chomp;
+                   my($peg1,$sc,$peg2) = split(/\t/,$_);
+                   print CLUSTER "$peg1\t$peg2\n";
+               }
+           }
+       }
+   }
+   close(CLUSTER);
+
+For otu 512, this produces
+
+kb|g.1997.peg.115   kb|g.3378.peg.1544  kb|g.3460.peg.1206  kb|g.927.peg.1035
+kb|g.1997.peg.1288  kb|g.3378.peg.1435  kb|g.3460.peg.1811  kb|g.927.peg.436
+kb|g.1997.peg.1047  kb|g.3378.peg.361   kb|g.3460.peg.935   kb|g.927.peg.316
+kb|g.3378.peg.1151  kb|g.3460.peg.1464  kb|g.927.peg.136
+kb|g.1997.peg.1662  kb|g.3378.peg.563   kb|g.3460.peg.93    kb|g.927.peg.1468
+kb|g.1997.peg.952   kb|g.3378.peg.1558  kb|g.3460.peg.1788  kb|g.927.peg.724
+kb|g.1997.peg.466   kb|g.3378.peg.1417  kb|g.3460.peg.1355  kb|g.927.peg.1073
+kb|g.1997.peg.1649  kb|g.3378.peg.243   kb|g.3460.peg.773   kb|g.927.peg.1157
+kb|g.1997.peg.849   kb|g.3378.peg.1530  kb|g.3460.peg.1726  kb|g.927.peg.19
+kb|g.1997.peg.1449  kb|g.3378.peg.222   kb|g.3460.peg.1424  kb|g.927.peg.1506
+kb|g.1997.peg.1417  kb|g.3378.peg.28    kb|g.3460.peg.1264  kb|g.927.peg.311
+kb|g.1997.peg.1031  kb|g.927.peg.425
+...
+
+
 =head1 COMMAND-LINE OPTIONS                                                                                              
 Usage: cluster_objects < related > sets
 

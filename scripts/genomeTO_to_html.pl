@@ -124,7 +124,7 @@ my $tdata = {
 
 $tdata->{genome} = $g;
 
-$template->process(\*DATA, $tdata);
+$template->process(\*DATA, $tdata, $out_fh);
 
     
 

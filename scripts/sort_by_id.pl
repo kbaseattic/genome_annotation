@@ -39,9 +39,9 @@ Usage: sort_by_id [-c N] < input  > sorted.input
 
     -c N     --- The number of the column (from 1) that contains the feature ID.
 
-    --input  --- Option to read genome-typed-object from input file instead of from STDIN
+    --input  --- Option to read from input file instead of from STDIN
 
-    --output --- Option to write enhanced genome-typed-object to output file instead of STDOUT
+    --output --- Option to write to output file instead of STDOUT
 
 =head1 AUTHORS
 
@@ -83,14 +83,17 @@ else
 }
 
 my @tuples = Bio::KBase::Utilities::ScriptThing::GetBatch($in_fh, 1000000, $column);
+#print Dumper @tuples; 
 @tuples = sort { &by_fid($a->[0],$b->[0]) } @tuples;
 foreach $_ (@tuples)
 {
     print $out_fh $_->[1],"\n";
 }
 
+
 sub by_fid {
     my($x,$y) = @_;
+    my $rc = 0;
 
     if ($x =~ /^kb\|g\.(\d+)\.([^\.]+)\.(\d+)$/)
     {
@@ -98,10 +101,11 @@ sub by_fid {
 	if ($y =~ /^kb\|g\.(\d+)\.([^\.]+)\.(\d+)$/)
 	{
 	    my($g2,$t2,$n2) = ($1,$2,$3);
-	    return ($g1 <=> $g2) or ($t1 cmp $t2) or ($n1 <=> $n2);
-	}
+	    $rc =  ($g1 <=> $g2) || ($t1 cmp $t2) || ($n1 <=> $n2);
+        }
+            
     }
-    return 0;
+    return $rc;
 }
 
 __DATA__
