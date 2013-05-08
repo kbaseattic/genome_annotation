@@ -60,7 +60,7 @@ print "Downloaded test data\n";
 ok($res->is_success, "Downloaded test data");
 ok(-e $infile ,"Does the infile exist");
 
-note("Test the happy cases for annotation methods");
+note("Do gene calling for these methods");
 
 # Call genes
 	$cmd = "call_CDSs --input $infile --output $outgene ";
@@ -75,7 +75,7 @@ note("Test the happy cases for annotation methods");
 
 foreach my $method (@annotation_methods) {
 	note ("Testing $method-------------------------");
-	$cmd = "$method --input $infile --output $outfile ";
+	$cmd = "$method --input $outgene --output $outfile ";
 	eval { $ret = `$cmd`; };
 	is($@, '',     "use valid data: $method returns without error");
 
