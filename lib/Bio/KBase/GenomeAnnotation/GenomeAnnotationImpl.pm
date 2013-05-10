@@ -28,6 +28,8 @@ use SeedUtils;
 use gjoseqlib;
 use StrepRepeats;
 
+our $idserver_url = 'https://kbase.us/services/idserver';
+
 #END_HEADER
 
 sub new
@@ -800,6 +802,19 @@ sub annotate_genome
     my $genome = $genomeTO;
     my $anno = ANNOserver->new();
 
+    if ($genome->{genetic_code} !~ /^\d+$/)
+    {
+	die "Genome has invalid genetic code $genome->{genetic_code}";
+    }
+    if ($genome->{scientific_name} eq '')
+    {
+	die "Genome does not have a scientific name defined";
+    }
+    if ($genome->{domain} eq '')
+    {
+	die "Genome does not have a domain defined";
+    }
+
     #
     # Reformat the contigs for use with the ANNOserver.
     #
@@ -821,6 +836,7 @@ sub annotate_genome
     # Call RNAs
     #
     my($genus, $species, $strain) = split(/\s+/, $genome->{scientific_name}, 3);
+    $species = "sp" if $species eq '';
     print STDERR "Call rnas '$genus' '$species' '$strain' '$genome->{domain}'...\n";
     my $rna_calls = $anno->find_rnas(-input => \@contigs, -genus => $genus, -species => $species,
 				     -domain => $genome->{domain});
@@ -876,7 +892,7 @@ sub annotate_genome
 	$feature_loc{$loc_id} = [$contig, $start, $strand, $len];
     }
 
-    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
 
     #
     # Create features for PEGs
@@ -1098,7 +1114,7 @@ sub call_selenoproteins
     #
     my $n_pegs = @results;
     my $protein_prefix = "$genomeTO->{id}.CDS";
-    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
     my $peg_id_start = $id_server->allocate_id_range($protein_prefix, $n_pegs) + 0;
     my $next_id = $peg_id_start;
     print STDERR "allocated CDS id start $peg_id_start for $n_pegs CDSs\n";
@@ -1300,7 +1316,7 @@ sub call_pyrrolysoproteins
     #
     my $n_pegs = @results;
     my $protein_prefix = "$genomeTO->{id}.CDS";
-    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
     my $peg_id_start = $id_server->allocate_id_range($protein_prefix, $n_pegs) + 0;
     my $next_id = $peg_id_start;
     print STDERR "allocated CDS id start $peg_id_start for $n_pegs CDSs\n";
@@ -1493,10 +1509,20 @@ sub call_RNAs
 	push(@contigs, [$gctg->{id}, undef, $gctg->{dna}]);
     }
 
+    if ($genomeTO->{scientific_name} eq '')
+    {
+	die "Genome does not have a scientific name defined";
+    }
+    if ($genomeTO->{domain} eq '')
+    {
+	die "Genome does not have a domain defined";
+    }
+
     #
     # Call RNAs
     #
     my($genus, $species, $strain) = split(/\s+/, $genomeTO->{scientific_name}, 3);
+    $species = "sp" if $species eq '';
     print STDERR "Call rnas '$genus' '$species' '$strain' '$genomeTO->{domain}'...\n";
     my $rna_calls = $anno->find_rnas(-input => \@contigs, -genus => $genus, -species => $species,
 				     -domain => $genomeTO->{domain});
@@ -1522,7 +1548,7 @@ sub call_RNAs
 	$genomeTO->{features} = $features;
     }
 
-    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
 
     #
     # Create features for RNAs
@@ -1687,10 +1713,14 @@ sub call_CDSs
     my($return);
     #BEGIN call_CDSs
     
-    
     my $genome = $genomeTO;
     my $anno = ANNOserver->new();
 
+    if ($genome->{genetic_code} !~ /^\d+$/)
+    {
+	die "Genome has invalid genetic code $genome->{genetic_code}";
+    }
+    
     #
     # Reformat the contigs for use with the ANNOserver.
     #
@@ -1743,7 +1773,7 @@ sub call_CDSs
 	$feature_loc{$loc_id} = [$contig, $start, $strand, $len];
     }
 
-    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
 
     #
     # Create features for PEGs
@@ -2381,7 +2411,7 @@ sub call_CDSs_by_projection
     }
 
     my $callsN = keys(%$calls) + keys(%$new_calls);
-    my $id_server = Bio::KBase::IDServer::Client->new('http://bio-data-1.mcs.anl.gov/services/idserver');
+    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
     my $cds_prefix = "$genomeTO->{id}.CDS";
     my $cds_id_start = $id_server->allocate_id_range($cds_prefix, $callsN) + 0;
     my $next_id = $cds_id_start;
