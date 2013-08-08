@@ -1,0 +1,17 @@
+OVERVIEW
+--------
+
+The genome_annotation service provides the following functionality to its clients:
+
+    Gene calling via Glimmer and Prodigal.
+    RNA calling via search_for_rnas.
+    Special-protein calling (selenoprotein and pyrrolysoprotein).
+    Determination of streptococcus repeat sequences.
+    Protein annotation using the RAST kmer-based annotation algorithms.
+    Metabolic reconstruction.
+    Computation of close neighbors of a genome.
+
+CHANGES - 8/8/2013
+------------------
+
+At this point the module is generally stable, with no changes made in the recent past. 
