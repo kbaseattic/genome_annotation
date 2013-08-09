@@ -40,6 +40,11 @@ deploy: deploy-client deploy-service
 deploy-all: deploy-client deploy-service
 deploy-client: deploy-docs deploy-libs deploy-scripts
 
+deploy-libs: recompile-typespec
+
+recompile-typespec:
+	./recompile_typespec
+
 deploy-service: deploy-monit deploy-libs
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
 	chmod +x $(TARGET)/services/$(SERVICE)/start_service
