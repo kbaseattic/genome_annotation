@@ -84,7 +84,8 @@ else
 
 #my $genome_idx = $id_server->allocate_id_range('kb|g', 1);
 #my $genome_id = "kb|g.$genome_idx";
-my $genome_id = "kb|g.22186";
+#my $genome_id = "kb|g.22186";
+my $genome_id = $src_genome_id;
 
 my $ginfo = $cs->genomes_to_genome_data([$src_genome_id]);
 $ginfo = $ginfo->{$src_genome_id};
