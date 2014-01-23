@@ -7,6 +7,7 @@ formation about an existing genome, or to create new annotations.
  */
 module GenomeAnnotation
 {
+    typedef int bool;
     typedef string md5;
     typedef list<md5> md5s;
     typedef string genome_id;
@@ -23,6 +24,8 @@ module GenomeAnnotation
 
 	   We often speak of "a region".  By "location", we mean a sequence
 	   of regions from the same genome (perhaps from distinct contigs).
+
+	   Strand is either '+' or '-'.
         */
     typedef tuple<contig_id, int begin, string strand,int length> region_of_dna;
 
@@ -30,14 +33,39 @@ module GenomeAnnotation
 	a "location" refers to a sequence of regions
     */
     typedef list<region_of_dna> location;
-    
-    typedef tuple<string comment, string annotator, int annotation_time> annotation;
 
-    /* represents a feature on the genome
-       location on the contig with a type,
-       and if a protein has translation,
-       any aliases associated
-       current history of annoation in style of SEED
+    typedef string analysis_event_id;
+    typedef structure {
+	analysis_event_id id;
+	string tool_name;
+	float execution_time;
+	list<string> parameters;
+	string hostname;
+    } analysis_event;
+
+    typedef tuple<string comment, string annotator, int annotation_time, analysis_event_id> annotation;
+
+    typedef structure {
+	bool truncated_begin;
+	bool truncated_end;
+	/* Is this a real feature? */
+	float existence_confidence;
+
+	bool frameshifted;
+	bool selenoprotein;
+	bool pyrrolysylprotein;
+
+	bool overlap_allowed;
+
+	float hit_count;
+	float weighted_hit_count;
+    } feature_quality_measure;
+
+    /* A feature object represents a feature on the genome. It contains 
+       the location on the contig with a type, the translation if it
+       represents a protein, associated aliases, etc. It also contains
+       information gathered during the annotation process that is involved
+       in stages that perform overlap removal, quality testing, etc.
     */
     typedef structure {
 	feature_id id;
@@ -47,13 +75,32 @@ module GenomeAnnotation
 	string protein_translation;
 	list<string> aliases;
 	list<annotation> annotations;
+	feature_quality_measure quality;
+	analysis_event_id feature_creation_event;
     } feature;
 
     /* Data for DNA contig */
     typedef structure {
 	contig_id id;
 	string dna;
+	int genetic_code;
+	string cell_compartment;
+	string replicon_type;
+	/* circular / linear */
+	string replicon_geometry;
+	bool complete;
     } contig;
+
+    typedef structure {
+	genome_id genome;
+	float closeness_measure;
+    } close_genome;
+
+    typedef structure
+    {
+	float frameshift_error_rate;
+	float sequence_error_rate;
+    } genome_quality_measure;
 
     /* All of the information about particular genome */
     typedef structure {
@@ -63,9 +110,15 @@ module GenomeAnnotation
 	int genetic_code;
 	string source;
 	string source_id;
+
+	genome_quality_measure quality;
 	
 	list<contig> contigs;
 	list<feature> features;
+
+	list<close_genome> close_genomes;
+
+	list <analysis_event> analysis_events;
     } genomeTO;
 
     typedef string subsystem;
@@ -107,22 +160,93 @@ module GenomeAnnotation
     funcdef annotate_genome(genomeTO) returns (genomeTO);
     funcdef call_selenoproteins(genomeTO) returns (genomeTO);
     funcdef call_pyrrolysoproteins(genomeTO) returns (genomeTO);
-    funcdef call_RNAs(genomeTO) returns (genomeTO);
-    funcdef call_CDSs(genomeTO) returns (genomeTO);
-    funcdef find_close_neighbors(genomeTO) returns (genomeTO);
-    funcdef assign_functions_to_CDSs(genomeTO) returns (genomeTO);
+
+    /* [ validate.enum("5S", "SSU", "LSU", "ALL") ] */
+    typedef string rna_type;
     
     /*
-     * Given a genome object populated with feature data, reannotate
-     * the features that have protein translations. Return the updated
-     * genome object.
+     * Given a genome typed object, find instances of ribosomal RNAs in
+     * the genome.
+     *
+     * The types parameter is used to select the types of RNAs to
+     * call. It is a list of strings where each value is one of
+     *
+     *    "5S"
+     *    "SSU"
+     *    "LSU"
+     *
+     * or "ALL" to choose all available rRNA types.
      */
+    funcdef call_features_rRNA_SEED(genomeTO genome_in, list<rna_type> types) returns (genomeTO genome_out);
+
+    /*
+     * Given a genome typed object, find instances of tRNAs in
+     * the genome.
+     */
+    funcdef call_features_tRNA_trnascan(genomeTO genome_in) returns (genomeTO genome_out);
+
+    /*
+     * Given a genome typed object, find instances of all RNAs we currently
+     * have support for detecting.
+     */
+    funcdef call_RNAs(genomeTO genome_in) returns (genomeTO genome_out);
+
+    funcdef call_features_CDS_glimmer3(genomeTO) returns (genomeTO);
+    funcdef call_features_CDS_prodigal(genomeTO) returns (genomeTO);
+    funcdef call_features_CDS_SEED_projection(genomeTO) returns (genomeTO);
+    funcdef call_features_CDS_FragGeneScan(genomeTO) returns (genomeTO);
+
+    typedef structure
+    {
+	float min_identity;
+	int min_length;
+    } repeat_region_SEED_parameters;
+    funcdef call_features_repeat_region_SEED(genomeTO genome_in, repeat_region_SEED_parameters params) returns (genomeTO genome_out);
+
+    funcdef call_features_prophage_phispy(genomeTO genome_in) returns (genomeTO genome_out);
+
+    funcdef call_features_scan_for_matches(genomeTO genome_in, string pattern, string feature_type) returns (genomeTO genome_out);
+    
+    typedef structure
+    {
+	int kmer_size;
+	string dataset_name;
+	int return_scores_for_all_proteins;
+	int score_threshold;
+	int hit_threshold;
+	int sequential_hit_threshold;
+	int detailed;
+    } kmer_v1_parameters;
+
+    funcdef annotate_proteins_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);
+
+    typedef structure {
+	int min_hits;
+	int max_gap;
+    } kmer_v2_parameters;
+    
+    funcdef annotate_proteins_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);
+
+    funcdef call_features_ProtoCDS_kmer_v1(genomeTO) returns (genomeTO);		/* RAST-style kmers */
+    funcdef call_features_ProtoCDS_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);		/* Ross's new kmers */
+
     funcdef annotate_proteins(genomeTO) returns (genomeTO);
-    funcdef call_CDSs_by_projection(genomeTO) returns (genomeTO);
+
+    /* Determine close genomes. */
+    funcdef estimate_crude_phylogenetic_position_kmer(genomeTO) returns (string position_estimate);
+
+    funcdef find_close_neighbors(genomeTO) returns (genomeTO);
 
     /*
      * Interface to Strep repeats and "boxes" tools
      */
-    funcdef get_strep_suis_repeats(genomeTO) returns (genomeTO);
-    funcdef get_strep_pneumo_repeats(genomeTO) returns (genomeTO);
+    funcdef call_features_strep_suis_repeat(genomeTO) returns (genomeTO);
+    funcdef call_features_strep_pneumo_repeat(genomeTO) returns (genomeTO);
+    funcdef call_features_crispr(genomeTO) returns (genomeTO);
+
+    /*
+     * Export genome typed object to one of the supported output formats:
+     * genbank, embl, or gff.
+     */
+    funcdef export_genome(genomeTO genome_in, string format) returns (string exported_data);
 };

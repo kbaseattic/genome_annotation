@@ -101,6 +101,7 @@ else
 }
 my $json = JSON::XS->new;
 
+
 my $input_genome;
 {
     local $/;
@@ -108,6 +109,21 @@ my $input_genome;
     my $input_genome_txt = <$in_fh>;
     $input_genome = $json->decode($input_genome_txt);
 }
+
+
+#...Check to make sure genome is from supported domain and has valid genetic code
+my $trouble = 0;
+if ($input_genome->{domain} =~ m/^Euk/o) {
+    $trouble = 1;
+    warn "Application \'annotate_genome\' cannot annotate eukaryotic genomes\n";
+}
+
+if ($input_genome->{genetic_code} !~ m/^4|11$/o) {
+    $trouble = 1;
+    warn "Application \'annotate_genome\' only supports genetic code 11 (most prokaryotes) and 4 (mycoplasmas, etc.)\n";
+}
+die "Aborting due to unsupported genome attributes\n" if $trouble;
+
 
 my $output_genome = $anno_server->annotate_genome($input_genome);
 
