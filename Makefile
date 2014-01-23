@@ -34,7 +34,14 @@ service: $(SERVICE_MODULE)
 $(SERVICE_MODULE): $(SERVER_SPEC)
 	./recompile_typespec 
 
-bin: $(BIN_PERL)
+bin: $(BIN_PERL) $(BIN_DIR)/kmer_guts
+
+$(BIN_DIR)/kmer_guts: src/kmer_guts
+	rm -f $(BIN_DIR)/kmer_guts
+	cp src/kmer_guts $(BIN_DIR)/kmer_guts
+
+src/kmer_guts: src/kmer_guts.c
+	cd src; cc -O -o kmer_guts kmer_guts.c
 
 deploy: deploy-client deploy-service
 deploy-all: deploy-client deploy-service
