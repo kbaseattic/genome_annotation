@@ -3,8 +3,26 @@ export KB_TOP=[% kb_top %]
 export KB_RUNTIME=[% kb_runtime %]
 export PATH=$KB_TOP/bin:$KB_RUNTIME/bin:$PATH
 export PERL5LIB=$KB_TOP/lib
-export KB_SERVICE_DIR=$KB_TOP/services/[% kb_service_name %]
+export KB_SERVICE_NAME="[% kb_service_name %]"
+export KB_SERVICE_DIR="$KB_TOP/services/[% kb_service_name %]"
+export KB_DEPLOYMENT_CONFIG="$KB_TOP/deployment.cfg"
 
 pid_file=$KB_SERVICE_DIR/service.pid
 
-exec $KB_RUNTIME/bin/perl $KB_RUNTIME/bin/starman --listen :[% kb_service_port %] --pid $pid_file $KB_TOP/lib/GenomeAnnotation.psgi
+
+[% IF kb_starman_workers -%]
+workers="--workers [% kb_starman_workers %]"
+[% END -%]
+[% IF kb_starman_max_requests -%]
+max_requests="--max-requests [% kb_starman_max_requests %]"
+[% END -%]
+
+starman_params="--listen :[% kb_service_port %] --pid $pid_file $workers $max_requests"
+
+starman_params="$starman_params --error-log $KB_SERVICE_DIR/error.log"
+starman_params="$starman_params --access-log $KB_SERVICE_DIR/access.log"
+
+starman_params="$starman_params --daemonize"
+
+exec $KB_RUNTIME/bin/perl $KB_RUNTIME/bin/starman $starman_params $KB_TOP/lib/GenomeAnnotation.psgi
+
