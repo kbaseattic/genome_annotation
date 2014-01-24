@@ -41,18 +41,22 @@ $(BIN_DIR)/kmer_guts: src/kmer_guts
 	cp src/kmer_guts $(BIN_DIR)/kmer_guts
 
 src/kmer_guts: src/kmer_guts.c
-	cd src; cc -O -o kmer_guts kmer_guts.c
+	cd src; $(CC) $(CFLAGS) -O -o kmer_guts kmer_guts.c
 
 deploy: deploy-client deploy-service
 deploy-all: deploy-client deploy-service
-deploy-client: deploy-docs deploy-libs deploy-scripts
+deploy-client: deploy-docs deploy-libs deploy-scripts deploy-guts
+
+deploy-guts:
+	rm -f $(TARGET)/services/$(SERVICE)/bin/kmer_guts
+	cp $(BIN_DIR)/kmer_guts $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 
 deploy-libs: recompile-typespec
 
 recompile-typespec:
 	./recompile_typespec
 
-deploy-service: deploy-monit deploy-libs
+deploy-service: deploy-dir deploy-monit deploy-libs
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
 	chmod +x $(TARGET)/services/$(SERVICE)/start_service
 	$(TPAGE) $(TPAGE_ARGS) service/stop_service.tt > $(TARGET)/services/$(SERVICE)/stop_service
@@ -68,5 +72,11 @@ deploy-docs:
 	mkdir -p doc
 	$(DEPLOY_RUNTIME)/bin/pod2html -t "Genome Annotation Service API" lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm > doc/genomeanno_impl.html
 	cp doc/*html $(SERVICE_DIR)/webroot/.
+
+deploy-dir:
+	if [ ! -d $(SERVICE_DIR) ] ; then mkdir $(SERVICE_DIR) ; fi
+	if [ ! -d $(SERVICE_DIR)/webroot ] ; then mkdir $(SERVICE_DIR)/webroot ; fi
+	if [ ! -d $(SERVICE_DIR)/bin ] ; then mkdir $(SERVICE_DIR)/bin ; fi
+
 
 include $(TOP_DIR)/tools/Makefile.common.rules
