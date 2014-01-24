@@ -38,6 +38,8 @@ use SeedUtils;
 use gjoseqlib;
 use StrepRepeats;
 
+use Bio::KBase::DeploymentConfig;
+
 our $idserver_url = 'https://kbase.us/services/idserver';
 
 sub _get_coder
@@ -54,8 +56,20 @@ sub new
     };
     bless $self, $class;
     #BEGIN_CONSTRUCTOR
-    
-    $self->{kmer_v2_data_directory} = "/vol/ross/KmerAnnotationsUsingCoreSEED/Data2";
+
+    my $cfg = Bio::KBase::DeploymentConfig->new($ENV{KB_SERVICE_NAME} || "GenomeAnnotation");
+
+    my $dir = $cfg->setting("kmer_v2_data_directory");
+    $dir or die "Configuration parameter for kmer_v2_data_directory not set";
+    -d $dir or die "Directory $dir for kmer_v2_data_directory does not exist";
+	
+    $self->{kmer_v2_data_directory} = $dir;
+
+    my $i = $cfg->setting("idserver_url");
+    $idserver_url = $i if $i;
+
+    print STDERR "kmer_v2_data_directory = $dir\n";
+    print STDERR "idserver = $idserver_url\n";
 
     my $h = `hostname`;
     chomp $h;
