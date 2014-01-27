@@ -10,6 +10,13 @@ SERVICE_MODULE = lib/Bio/KBase/GenomeAnnotation/Service.pm
 SERVICE = genome_annotation
 SERVICE_PORT = 7050
 
+SERVICE_URL = https://kbase.us/services/$(SERVICE)
+
+SERVICE_NAME = GenomeAnnotation
+SERVICE_NAME_PY = $(SERVICE_NAME)
+
+SERVICE_PSGI_FILE = $(SERVICE_NAME).psgi
+
 TPAGE_ARGS = --define kb_top=$(TARGET) \
 	--define kb_runtime=$(DEPLOY_RUNTIME) \
 	--define kb_service_name=$(SERVICE) \
@@ -17,7 +24,7 @@ TPAGE_ARGS = --define kb_top=$(TARGET) \
 
 TESTS = $(wildcard t/client-tests/*.t)
 
-all: bin service
+all: bin compile-typespec service
 
 test:
 	# run each test
@@ -33,8 +40,26 @@ test:
 
 service: $(SERVICE_MODULE)
 
-$(SERVICE_MODULE): $(SERVER_SPEC)
+$(SERVICE_MODULE): $(SERVER_SPEC) 
 	./recompile_typespec 
+
+compile-typespec: Makefile
+	mkdir -p lib/biokbase/$(SERVICE_NAME_PY)
+	touch lib/biokbase/__init__.py #do not include code in biokbase/__init__.py
+	touch lib/biokbase/$(SERVICE_NAME_PY)/__init__.py 
+	mkdir -p lib/javascript/$(SERVICE_NAME)
+	compile_typespec \
+		--psgi $(SERVICE_PSGI_FILE) \
+		--impl Bio::KBase::$(SERVICE_NAME)::%sImpl \
+		--service Bio::KBase::$(SERVICE_NAME)::Service \
+		--client Bio::KBase::$(SERVICE_NAME)::Client \
+		--py biokbase/$(SERVICE_NAME_PY)/client \
+		--js javascript/$(SERVICE_NAME)/Client \
+		--url $(SERVICE_URL) \
+		$(SERVER_SPEC) lib
+	-rm -f lib/$(SERVER_MODULE)Server.py
+	-rm -f lib/$(SERVER_MODULE)Impl.py
+	-rm -f lib/CDMI_EntityAPIImpl.py
 
 bin: $(BIN_PERL) $(BIN_DIR)/kmer_guts
 
@@ -47,16 +72,11 @@ src/kmer_guts: src/kmer_guts.c
 
 deploy: deploy-client deploy-service
 deploy-all: deploy-client deploy-service
-deploy-client: deploy-docs deploy-libs deploy-scripts deploy-guts
+deploy-client: compile-typespec deploy-docs deploy-libs deploy-scripts deploy-guts
 
 deploy-guts:
 	rm -f $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 	cp $(BIN_DIR)/kmer_guts $(TARGET)/services/$(SERVICE)/bin/kmer_guts
-
-deploy-libs: recompile-typespec
-
-recompile-typespec:
-	./recompile_typespec
 
 deploy-service: deploy-dir deploy-monit deploy-libs
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
