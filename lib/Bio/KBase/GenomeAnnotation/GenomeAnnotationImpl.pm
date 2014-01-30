@@ -2674,6 +2674,7 @@ sub call_features_CDS_glimmer3
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_CDS_glimmer3
+    die "Not implemented";
     #END call_features_CDS_glimmer3
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -3101,6 +3102,7 @@ sub call_features_CDS_SEED_projection
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_CDS_SEED_projection
+    die "Not implemented";
     #END call_features_CDS_SEED_projection
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -3305,6 +3307,7 @@ sub call_features_CDS_FragGeneScan
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_CDS_FragGeneScan
+    die "Not implemented";
     #END call_features_CDS_FragGeneScan
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -4031,6 +4034,7 @@ sub call_features_scan_for_matches
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($genome_out);
     #BEGIN call_features_scan_for_matches
+    die "Not implemented";
     #END call_features_scan_for_matches
     my @_bad_returns;
     (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
@@ -4254,6 +4258,7 @@ sub annotate_proteins_kmer_v1
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN annotate_proteins_kmer_v1
+    die "Not implemented";
     #END annotate_proteins_kmer_v1
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -4727,6 +4732,7 @@ sub call_features_ProtoCDS_kmer_v1
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_ProtoCDS_kmer_v1
+    die "Not implemented";
     #END call_features_ProtoCDS_kmer_v1
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -5443,6 +5449,7 @@ sub estimate_crude_phylogenetic_position_kmer
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($position_estimate);
     #BEGIN estimate_crude_phylogenetic_position_kmer
+    die "Not implemented";
     #END estimate_crude_phylogenetic_position_kmer
     my @_bad_returns;
     (!ref($position_estimate)) or push(@_bad_returns, "Invalid type for return variable \"position_estimate\" (value was \"$position_estimate\")");
@@ -5647,6 +5654,7 @@ sub find_close_neighbors
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN find_close_neighbors
+    die "Not implemented";
     #END find_close_neighbors
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -5851,6 +5859,7 @@ sub call_features_strep_suis_repeat
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_strep_suis_repeat
+    die "Not implemented";
     #END call_features_strep_suis_repeat
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -6055,6 +6064,7 @@ sub call_features_strep_pneumo_repeat
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_strep_pneumo_repeat
+    die "Not implemented";
     #END call_features_strep_pneumo_repeat
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -6259,6 +6269,7 @@ sub call_features_crispr
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_crispr
+    die "Not implemented";
     #END call_features_crispr
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
