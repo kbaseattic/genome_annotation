@@ -11,6 +11,30 @@ The genome_annotation service provides the following functionality to its client
     Metabolic reconstruction.
     Computation of close neighbors of a genome.
 
+CHANGES - 1/29/2014
+-------------------
+
+Added the following command-line scripts (and associated API calls):
+
+rast2-call-features-CDS-prodigal: Call CDS features using the Prodigal gene
+caller.
+
+rast2-call-features-rRNA-SEED: Call rRNA features using code from the SEED project.
+
+rast2-call-features-tRNA-trnascan: Call tRNA features using trnascan.
+
+rast2-call-features-repeat-region-SEED: Call repeat region features using code
+from the SEED project.
+
+rast2-call-features-prophage-phispy: Call prophage regions using the phispy
+application.
+
+rast2-annotate-proteins-kmer-v2: Annotate CDS features using the SEED kmer
+method.
+
+rast2-export-genome: Export a genome object to a variety of standard output
+formats.
+
 CHANGES - 8/8/2013
 ------------------
 
