@@ -49,7 +49,7 @@ deploy: deploy-client deploy-service
 deploy-all: deploy-client deploy-service
 deploy-client: deploy-docs deploy-libs deploy-scripts deploy-guts
 
-deploy-guts:
+deploy-guts: deploy-dir
 	rm -f $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 	cp $(BIN_DIR)/kmer_guts $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 
