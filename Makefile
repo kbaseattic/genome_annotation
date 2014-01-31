@@ -72,13 +72,13 @@ src/kmer_guts: src/kmer_guts.c
 
 deploy: deploy-client deploy-service
 deploy-all: deploy-client deploy-service
-deploy-client: compile-typespec deploy-docs deploy-libs deploy-scripts deploy-guts
+deploy-client: compile-typespec deploy-docs deploy-libs deploy-scripts
 
 deploy-guts: deploy-dir
 	rm -f $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 	cp $(BIN_DIR)/kmer_guts $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 
-deploy-service: deploy-dir deploy-monit deploy-libs
+deploy-service: deploy-dir deploy-monit deploy-libs deploy-guts
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
 	chmod +x $(TARGET)/services/$(SERVICE)/start_service
 	$(TPAGE) $(TPAGE_ARGS) service/stop_service.tt > $(TARGET)/services/$(SERVICE)/stop_service
