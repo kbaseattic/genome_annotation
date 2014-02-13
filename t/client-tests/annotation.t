@@ -8,7 +8,7 @@ use LWP::UserAgent;
 
 use Bio::KBase::GenomeAnnotation::Client;
 
-my $debug=0;
+my $debug=1;
 my $localServer=0;
 my $getoptResult=GetOptions(
 	'debug'	=>	\$debug,
@@ -47,7 +47,7 @@ isa_ok( $annotation_server, 'Bio::KBase::GenomeAnnotation::Client', "Is it in th
 unlink "MIT9313.genomeTO" if -e "MIT9313.genomeTO";
 
 my $ua = LWP::UserAgent->new();
-my $res = $ua->get("http://www.kbase.us/docs/build/MIT9313.genomeTO", 
+my $res = $ua->get("http://bioseed.mcs.anl.gov/~olson/MIT9313.genomeTO", 
 		   ":content_file" => "MIT9313.genomeTO");
 
 ok($res->is_success, "Downloaded test data");
