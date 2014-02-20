@@ -247,6 +247,8 @@ module GenomeAnnotation
     /*
      * Export genome typed object to one of the supported output formats:
      * genbank, embl, or gff.
+     * If feature_types is a non-empty list, limit the output to the given
+     * feature types.
      */
-    funcdef export_genome(genomeTO genome_in, string format) returns (string exported_data);
+    funcdef export_genome(genomeTO genome_in, string format, list<string> feature_types) returns (string exported_data);
 };

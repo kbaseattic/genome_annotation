@@ -39,14 +39,14 @@ sub options_rrna_seed
 
 sub options_repeat_regions_seed
 {
-    return(['min_identity=f', 'minimum BLAST idendity'],
-	   ['min_length=i', 'minimum length'],
+    return(['min-identity=f', 'minimum BLAST idendity'],
+	   ['min-length=i', 'minimum length'],
 	   );
 }
 
 sub options_export
 {
-    return ();
+    return (['feature-type=s@', 'Include this feature type in output. If no feature-types specified, include all feature types']);
 }
 
 sub get_annotation_client

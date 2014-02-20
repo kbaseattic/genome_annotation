@@ -126,8 +126,13 @@ COMMAND LINE ARGUMENTS:
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <ctype.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -180,9 +185,8 @@ typedef struct sig_kmer {
 } sig_kmer_t;
 
 typedef struct kmer_handle {
-  unsigned long long num_sigs;
   sig_kmer_t *kmer_table;
-  unsigned char *kmer_bits;
+  unsigned long long num_sigs;
   char **function_array;   /* indexed by fI */
   char **otu_array;        /* OTU indexes point at a representation of multiple OTUs */
 } kmer_handle_t;
@@ -219,6 +223,9 @@ static int   order_constraint = 0;
 static int   min_hits = 5;
 static int   min_weighted_hits = 0;
 static int   max_gap  = 200;
+
+void run_accept_loop(kmer_handle_t *kmersH, short port);
+void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out);
 
 /* =========================== end of reduction global variables ================= */
 
@@ -538,8 +545,8 @@ long long find_empty_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encode
     return hash_entry;
 }
 
-int lookup_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encodedK) {
-    int hash_entry = encodedK % size_hash;
+long long lookup_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encodedK) {
+    long long  hash_entry = encodedK % size_hash;
     if (debug >= 2)
       tot_lookups++;
     while ((sig_kmers[hash_entry].which_kmer <= MAX_ENCODED) && (sig_kmers[hash_entry].which_kmer != encodedK)) {
@@ -557,9 +564,10 @@ int lookup_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encodedK) {
     }
 }
 
-sig_kmer_t *load_raw_kmers(char *file,unsigned long long *sz) {
+sig_kmer_t *load_raw_kmers(char *file,unsigned long long *sz, unsigned long long *alloc_sz) {
   *sz = size_hash;
-  sig_kmer_t *sig_kmers = malloc(sizeof(sig_kmer_t) * size_hash);
+  *alloc_sz = sizeof(sig_kmer_t) * size_hash;
+  sig_kmer_t *sig_kmers = malloc(*alloc_sz);
 
   FILE *ifp      = fopen(file,"r");
   if (ifp == NULL) { 
@@ -580,7 +588,7 @@ sig_kmer_t *load_raw_kmers(char *file,unsigned long long *sz) {
   while (fscanf(ifp,"%s\t%d\t%d\t%f\t%d",
 		kmer_string,&end_off,&fI,&f_wt,&oI) >= 4) {
     unsigned long long encodedK = encoded_aa_kmer(kmer_string);
-    int hash_entry = find_empty_hash_entry(sig_kmers,encodedK);
+    long long hash_entry = find_empty_hash_entry(sig_kmers,encodedK);
     loaded++;
     if (loaded >= (size_hash / 2)) {
       fprintf(stderr,"Your Kmer hash is half-full; use -s (and -w) to bump it\n");
@@ -609,25 +617,31 @@ kmer_handle_t *init_kmers(char *dataD) {
   strcpy(file,dataD);
   strcat(file,"/otu.index");
   handle->otu_array      = load_otus(file);
-  unsigned long long sz;
-  strcpy(file,dataD);
-  strcat(file,"/final.kmers");
 
   char fileM[300];
   strcpy(fileM,dataD);
   strcat(fileM,"/kmer.table.mem_map");
 
   if (write_mem_map) {
-    handle->kmer_table     = load_raw_kmers(file,&sz);
-    handle->num_sigs       = sz;
+    unsigned long long sz, table_size;
+    strcpy(file,dataD);
+    strcat(file,"/final.kmers");
+    
+    handle->kmer_table = load_raw_kmers(file, &sz, &table_size);
+    handle->num_sigs   = sz;
 
     FILE *fp = fopen(fileM,"w");
     if (fp == NULL) { 
-      fprintf(stderr,"could not open %s",fileM);
+      fprintf(stderr,"could not open %s for writing: %s ",fileM, strerror(errno));
       exit(1);
     }
-    unsigned long long table_size = sz * sizeof(sig_kmer_t);
     fwrite(handle->kmer_table,table_size,1,fp);
+    fclose(fp);
+
+    strcpy(fileM,dataD);
+    strcat(fileM,"/size_hash.and.table_size");
+    fp = fopen(fileM,"w");
+    fprintf(fp,"%lld\t%lld\n",sz,table_size);
     fclose(fp);
   }
   else {
@@ -639,12 +653,18 @@ kmer_handle_t *init_kmers(char *dataD) {
 
     struct stat sbuf;
     if (stat(fileM, &sbuf) == -1) {
-      perror("stat");
+      fprintf(stderr, "stat %s failed: %s\n", fileM, strerror(errno));
       exit(1);
     }
 
-    if ((handle->kmer_table = (sig_kmer_t *) mmap((caddr_t)0, sbuf.st_size, PROT_READ, MAP_SHARED, fd, 0)) == (sig_kmer_t *)(-1)) {
-      perror("mmap: kmer table");
+    unsigned long long table_size = sbuf.st_size;
+    size_hash = table_size / sizeof(sig_kmer_t);
+    handle->num_sigs = size_hash;
+    fprintf(stderr, "Set size_hash=%lld from file size %lld\n", size_hash, table_size);
+
+    if ((handle->kmer_table = (sig_kmer_t *) mmap((caddr_t)0, table_size,
+						  PROT_READ, MAP_POPULATE | MAP_SHARED, fd, 0)) == (sig_kmer_t *)(-1)) {
+      fprintf(stderr, "mmap of kmer_table %s failed: %s\n", fileM, strerror(errno));
       exit(1);
     }
   }
@@ -703,17 +723,17 @@ void advance_past_ambig(unsigned char **p,unsigned char *bound) {
   }
 }
 
-void display_hits() {
-  printf("hits: ");
+void display_hits(FILE *fh) {
+  fprintf(fh, "hits: ");
   int i;
   for (i=0; (i < num_hits); i++) {
-    printf("%d/%f/%d ", hits[i].from0_in_prot,hits[i].function_wt,hits[i].fI);
+    fprintf(fh, "%d/%f/%d ", hits[i].from0_in_prot,hits[i].function_wt,hits[i].fI);
   }
-  printf("\n");
+  fprintf(fh, "\n");
 }
 
 
-void process_set_of_hits(kmer_handle_t *kmersH) {
+void process_set_of_hits(kmer_handle_t *kmersH, FILE *fh) {
   int fI_count = 0;
   float weighted_hits = 0;
   int last_hit=0;
@@ -726,15 +746,16 @@ void process_set_of_hits(kmer_handle_t *kmersH) {
     }
     i++;
   }  if ((fI_count >= min_hits) && (weighted_hits >= min_weighted_hits)) {
-    printf("CALL\t%d\t%d\t%d\t%d\t%s\t%f\n",hits[0].from0_in_prot,
+      fprintf(fh, "CALL\t%d\t%d\t%d\t%d\t%s\t%f\n",hits[0].from0_in_prot,
 	                                hits[last_hit].from0_in_prot+(K-1),
 	                                fI_count,
                                         current_fI,
 	                                kmersH->function_array[current_fI],
 	                                weighted_hits);
 
-    if (debug > 1) {
-      printf("after-call: "); display_hits();
+      if (debug > 1) {
+	  fprintf(fh, "after-call: ");
+	  display_hits(fh);
     }
     /* once we have decided to call a region, we take the kmers for fI and
        add them to the counts maintained to assign an OTU to the sequence */
@@ -789,10 +810,11 @@ void process_set_of_hits(kmer_handle_t *kmersH) {
   }
 }
 
-void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,unsigned char *pIseq, kmer_handle_t *kmersH) {
+void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
+		 unsigned char *pIseq, kmer_handle_t *kmersH, FILE *fh) {
   
   if (debug >= 3) {
-    printf("translated: %c\t%d\t%s\n",strand,prot_off,pseq);
+      fprintf(fh, "translated: %c\t%d\t%s\n",strand,prot_off,pseq);
   }
 
   unsigned char *p = pIseq;
@@ -805,7 +827,7 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,unsigned char *
     encodedK = encoded_kmer(p);
   }
   while (p < bound) {
-    int where = lookup_hash_entry(kmersH->kmer_table,encodedK);
+    long long  where = lookup_hash_entry(kmersH->kmer_table,encodedK);
     if (where >= 0) {
       sig_kmer_t *kmers_hash_entry = &(kmersH->kmer_table[where]);
       int avg_off_end = kmers_hash_entry->avg_from_end;
@@ -813,12 +835,12 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,unsigned char *
       int oI          = kmers_hash_entry->otu_index;
       float f_wt      = kmers_hash_entry->function_wt;
       if (debug >= 1) {
-	printf("HIT\t%ld\t%lld\t%d\t%d\t%0.3f\t%d\n",p-pIseq,encodedK,avg_off_end,fI,f_wt,oI);
+	  fprintf(fh, "HIT\t%ld\t%lld\t%d\t%d\t%0.3f\t%d\n",p-pIseq,encodedK,avg_off_end,fI,f_wt,oI);
       }
 
       if ((num_hits > 0) && (hits[num_hits-1].from0_in_prot + max_gap) < (p-pIseq)) {
 	if (num_hits >= min_hits) {
-	  process_set_of_hits(kmersH);
+	    process_set_of_hits(kmersH, fh);
 	}
 	else {
 	  num_hits = 0;
@@ -842,11 +864,12 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,unsigned char *
 	hits[num_hits].function_wt = f_wt;
 	num_hits++;
 	if (debug > 1) {
-	  printf("after-hit: "); display_hits();
+	    fprintf(fh, "after-hit: ");
+	    display_hits(fh);
 	}
 	if ((num_hits > 1) && (current_fI != fI) &&           /* if we have a pair of new fIs, it is time to */
 	    (hits[num_hits-2].fI == hits[num_hits-1].fI)) {   /* process one set and initialize the next */
-	  process_set_of_hits(kmersH);
+	    process_set_of_hits(kmersH, fh);
 	}
       }
     }
@@ -865,26 +888,31 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,unsigned char *
     }    
   }
   if (num_hits >= min_hits) {
-    process_set_of_hits(kmersH);
+      process_set_of_hits(kmersH, fh);
   }
   num_hits = 0;
 }
 
-void tabulate_otu_data_for_contig() {
+void tabulate_otu_data_for_contig(FILE *fh) {
   int i;
-  printf("OTU-COUNTS\t%s[%d]",current_id,current_length_contig);
+  fprintf(fh, "OTU-COUNTS\t%s[%d]",current_id,current_length_contig);
   for (i=0; (i < num_oI); i++) {
-    printf("\t%d-%d",oI_counts[i].count,oI_counts[i].oI);
+      fprintf(fh, "\t%d-%d",oI_counts[i].count,oI_counts[i].oI);
   }
-  printf("\n");
+  fprintf(fh, "\n");
   num_oI = 0;
 }
 
-void process_aa_seq(char *id,char *pseq,kmer_handle_t *kmersH) {
-  static unsigned char pIseq[MAX_SEQ_LEN / 3];
+void process_aa_seq(char *id,char *pseq,kmer_handle_t *kmersH, FILE *fh) {
+  static unsigned char *pIseq = 0;
+  if (pIseq == 0)
+  {
+    pIseq = malloc(MAX_SEQ_LEN / 3);
+  }
+  //static unsigned char pIseq[MAX_SEQ_LEN / 3];
 
   strcpy(current_id,id);
-  printf("PROTEIN-ID\t%s\n",id);
+  fprintf(fh, "PROTEIN-ID\t%s\n",id);
   int ln = strlen(pseq);
   current_length_contig = ln;
   current_strand        = '+';
@@ -892,33 +920,43 @@ void process_aa_seq(char *id,char *pseq,kmer_handle_t *kmersH) {
   int i;
   for (i=0; (i < ln); i++)
     pIseq[i] = to_amino_acid_off(*(pseq+i));
-  gather_hits(ln,'+',0,pseq,pIseq,kmersH);  
-  tabulate_otu_data_for_contig();
+  gather_hits(ln,'+',0,pseq,pIseq,kmersH,fh);  
+  tabulate_otu_data_for_contig(fh);
 }
 
-void process_seq(char *id,char *data,kmer_handle_t *kmersH) {
+void process_seq(char *id,char *data,kmer_handle_t *kmersH, FILE *fh) {
 
-  static char cdata[MAX_SEQ_LEN];
+  static char *cdata = 0;
+  static char *pseq = 0;
+  static unsigned char *pIseq = 0;
 
-  static char pseq[MAX_SEQ_LEN / 3];
-  static unsigned char pIseq[MAX_SEQ_LEN / 3];
+  if (cdata == 0)
+  {
+    cdata = malloc(MAX_SEQ_LEN);
+    pseq = malloc(MAX_SEQ_LEN / 3);
+    pIseq = malloc(MAX_SEQ_LEN / 3);
+  }
+     
+//  static char cdata[MAX_SEQ_LEN];
+//  static char pseq[MAX_SEQ_LEN / 3];
+//  static unsigned char pIseq[MAX_SEQ_LEN / 3];
 
   strcpy(current_id,id);
   int ln = strlen(data);
   current_length_contig = ln;
 
-  printf("processing %s[%d]\n",id,ln);
+  fprintf(fh, "processing %s[%d]\n",id,ln);
   int i;
   for (i=0; (i < 3); i++) {
     
     translate(data,i,pseq,pIseq);
     current_strand   = '+';
     current_prot_off = i;
-    printf("TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
+    fprintf(fh, "TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
 	                                   current_length_contig,
 	                                   current_strand,
 	                                   current_prot_off);
-    gather_hits(ln,'+',i,pseq,pIseq,kmersH);
+    gather_hits(ln,'+',i,pseq,pIseq,kmersH, fh);
   }
   rev_comp(data,cdata);
   for (i=0; (i < 3); i++) {
@@ -926,22 +964,23 @@ void process_seq(char *id,char *data,kmer_handle_t *kmersH) {
 
     current_strand   = '-';
     current_prot_off = i;
-    printf("TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
+    fprintf(fh, "TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
 	                                   current_length_contig,
 	                                   current_strand,
 	                                   current_prot_off);
-    gather_hits(ln,'-',i,pseq,pIseq,kmersH);
+    gather_hits(ln,'-',i,pseq,pIseq,kmersH, fh);
   }
-  tabulate_otu_data_for_contig();
+  tabulate_otu_data_for_contig(fh);
 }
 
 int main(int argc,char *argv[]) {
   int c;
   char *past;
-  static char data[MAX_SEQ_LEN];
   char file[300];
+  int is_server = 0;
+  unsigned short port;
 
-  while ((c = getopt (argc, argv, "ad:s:wD:m:g:OM:")) != -1) {
+  while ((c = getopt (argc, argv, "ad:s:wD:m:g:OM:l:")) != -1) {
     switch (c) {
     case 'a':
       aa = 1;
@@ -949,6 +988,10 @@ int main(int argc,char *argv[]) {
     case 'd':
       debug = strtol(optarg,&past,0);
       break;
+    case 'l':
+	port = atoi(optarg);
+	is_server = 1;
+	break;
     case 'm':
       min_hits = strtol(optarg,&past,0);
       break;
@@ -977,14 +1020,35 @@ int main(int argc,char *argv[]) {
   }
 
   kmer_handle_t *kmersH = init_kmers(file);
+
+  if (is_server)
+  {
+      run_accept_loop(kmersH, port);
+  }
+  else
+  {
+      run_from_filehandle(kmersH, stdin, stdout);
+  }
+  return 0;
+}
+
+void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out)
+{
+  static char *data = 0;
+  if (data == 0)
+  {
+    data = malloc(MAX_SEQ_LEN);
+  }
+  
+  // static char data[MAX_SEQ_LEN];
   int got_gt = 0;
   int i;
   char *p;
   char id[2000];
 
-  while (((!got_gt && (fscanf(stdin,">%s",id) == 1)) ||
-	  (got_gt && (fscanf(stdin,"%s",id) == 1)))) {
-    while (getc(stdin) != '\n')
+  while (((!got_gt && (fscanf(fh_in,">%s",id) == 1)) ||
+	  (got_gt && (fscanf(fh_in,"%s",id) == 1)))) {
+    while (getc(fh_in) != '\n')
       ;
     if ((id[0] == 'F') &&
 	(id[1] == 'L') &&
@@ -992,19 +1056,19 @@ int main(int argc,char *argv[]) {
 	(id[3] == 'S') &&
 	(id[4] == 'H')) {   /* ugly compare, since \n is included in id */
 
-      int rc = fflush(NULL);
+/*      int rc = fflush(fh_in);
       if (rc != 0) {
 	fprintf(stderr,"fflush did not seem to work\n");
       }
-      else {
-	printf("//\n");
+*/
+	fprintf(fh_out, "//\n");
 	got_gt = 0;
-      }
     }
     else {
-      for (p=data; ((i = getc(stdin)) != -1) && (i != '>');) {
+
+      for (p=data; ((i = getc(fh_in)) != -1) && (i != '>');) {
 	if ((i != ' ') && (i != '\n'))
-	  *(p++) = i;
+	    *(p++) = toupper(i);
       }
       if (i == '>')
 	got_gt = 1;
@@ -1018,16 +1082,166 @@ int main(int argc,char *argv[]) {
       }
 
       if (! aa)
-	process_seq(id,data,kmersH);
+	  process_seq(id,data,kmersH, fh_out);
       else
-	process_aa_seq(id,data,kmersH);
+	  process_aa_seq(id,data,kmersH, fh_out);
+      fflush(fh_out);
     }
   }
 
   if (debug >= 2)
-    printf("tot_lookups=%d retry=%d\n",tot_lookups,retry);
-  return 0;
+      fprintf(fh_out, "tot_lookups=%d retry=%d\n",tot_lookups,retry);
 }
 
-void print_kmers(kmer_handle_t *handle) {
+void run_accept_loop(kmer_handle_t *kmersH, short port)
+{
+    int listenfd = 0, connfd = 0;
+    struct sockaddr_in serv_addr;
+
+    signal(SIGPIPE, SIG_IGN);
+
+    listenfd = socket(AF_INET, SOCK_STREAM, 0);
+    memset(&serv_addr, 0, sizeof(serv_addr));
+
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    serv_addr.sin_port = htons(port);
+
+    bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+
+    listen(listenfd, 10);
+
+    int save_aa = aa;
+    int save_debug = debug;
+    int save_min_hits = min_hits;
+    int save_min_weighted_hits = min_weighted_hits;
+    int save_order_constraint = order_constraint;
+    int save_max_gap = max_gap;
+    
+    while(1)
+    {
+      aa = save_aa;
+      debug = save_debug;
+      min_hits = save_min_hits;
+      min_weighted_hits = save_min_weighted_hits;
+      order_constraint = save_order_constraint;
+      max_gap = save_max_gap;
+      
+      connfd = accept(listenfd, (struct sockaddr*)NULL, NULL);
+      struct sockaddr_in peer;
+      socklen_t peer_len = sizeof(peer);
+      memset(&peer, 0, sizeof(peer));
+      
+      getpeername(connfd, (struct sockaddr *) &peer, &peer_len);
+
+      char *who = inet_ntoa(peer.sin_addr);
+      fprintf(stderr, "connection from %s\n", who);
+	
+      FILE *fh_in = fdopen(connfd, "r");
+      FILE *fh_out = fdopen(connfd, "w");
+
+      /*
+       * If the first line starts with a '-', then it's
+       * a set of options to be set for this document.
+       */
+
+      int c = fgetc(fh_in);
+      if (c == '-')
+      {
+	char linebuf[1024];
+	linebuf[0] = c;
+	  
+	if (fgets(linebuf + 1, sizeof(linebuf) - 2, fh_in) == 0)
+	{
+	  fprintf(stderr, "Error reading options line from %s\n", who);
+	  fclose(fh_in);
+	  fclose(fh_out);
+	  continue;
+	}
+
+	char *s = strchr(linebuf, '\n');
+	if (s)
+	  *s = 0;
+	  
+	/* parse into an argv */
+	const int max_args = 20;
+	char *argv[max_args + 2];
+	int n = 0;
+	fprintf(stderr, "Parsing option line '%s'\n", linebuf);
+	argv[n++] = "nothing";
+
+	s = strtok(linebuf, " \t");
+	while (s)
+	{
+	  argv[n++] = s;
+	  if (n >= max_args)
+	  {
+	    fprintf(stderr, "too many args in connection from %s\n", who);
+	    fprintf(fh_out, "ERR too many args\n");
+	    fflush(fh_out);
+	    fclose(fh_out);
+	    fclose(fh_in);
+	    s = 0;
+	    break;
+	  }
+	  s = strtok(0, " \t");
+	}
+	if (n >= max_args)
+	{
+	  continue;
+	}
+	argv[n] = 0;
+
+	char *past;
+	int arg_error = 0;
+
+	optind = 1;
+	while ((c = getopt(n, argv, "ad:m:M:Og:")) != -1)
+	{
+	  switch (c) {
+	  case 'a':
+	    aa = 1;
+	    break;
+	  case 'd':
+	    debug = strtol(optarg,&past,0);
+	    break;
+	  case 'm':
+	    min_hits = strtol(optarg,&past,0);
+	    break;
+	  case 'M':
+	    min_weighted_hits = strtol(optarg,&past,0);
+	    break;
+	  case 'O':
+	    order_constraint = 1;
+	    break;
+	  case 'g':
+	    max_gap = strtol(optarg,&past,0);
+	    break;
+	  default:
+	    fprintf(fh_out, "ERR invalid argument %c\n", c);
+	    fflush(fh_out);
+	    fclose(fh_out);
+	    fclose(fh_in);
+	    arg_error = 1;
+	    break;
+	  }
+	}
+	if (arg_error)
+	  continue;
+	fprintf(fh_out, "OK aa=%d debug=%d min_hits=%d min_weighted_hits=%d order_constraint=%d max_gap=%d\n",
+		aa, debug, min_hits, min_weighted_hits, order_constraint, max_gap);
+      }
+      else
+      {
+	ungetc(c, fh_in);
+      }
+
+      
+      run_from_filehandle(kmersH, fh_in, fh_out);
+
+      fflush(fh_out);
+      fclose(fh_in);
+      fclose(fh_out);
+
+    }
 }

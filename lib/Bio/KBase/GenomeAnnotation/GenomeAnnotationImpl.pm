@@ -6286,7 +6286,7 @@ sub call_features_crispr
 
 =head2 export_genome
 
-  $exported_data = $obj->export_genome($genome_in, $format)
+  $exported_data = $obj->export_genome($genome_in, $format, $feature_types)
 
 =over 4
 
@@ -6297,6 +6297,7 @@ sub call_features_crispr
 <pre>
 $genome_in is a genomeTO
 $format is a string
+$feature_types is a reference to a list where each element is a string
 $exported_data is a string
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -6376,6 +6377,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 
 $genome_in is a genomeTO
 $format is a string
+$feature_types is a reference to a list where each element is a string
 $exported_data is a string
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -6456,6 +6458,8 @@ analysis_event is a reference to a hash where the following keys are defined:
 
 Export genome typed object to one of the supported output formats:
 genbank, embl, or gff.
+If feature_types is a non-empty list, limit the output to the given
+feature types.
 
 =back
 
@@ -6464,11 +6468,12 @@ genbank, embl, or gff.
 sub export_genome
 {
     my $self = shift;
-    my($genome_in, $format) = @_;
+    my($genome_in, $format, $feature_types) = @_;
 
     my @_bad_arguments;
     (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
     (!ref($format)) or push(@_bad_arguments, "Invalid type for argument \"format\" (value was \"$format\")");
+    (ref($feature_types) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"feature_types\" (value was \"$feature_types\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to export_genome:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -6487,7 +6492,9 @@ sub export_genome
     my $tmp_out = File::Temp->new();
     close($tmp_out);
 
-    my @cmd = ("rast_export_genome", "--input", $tmp_in, "--output", $tmp_out, $format);
+    my @type_flag = map { "--feature-type", $_ } foreach @$feature_types
+
+    my @cmd = ("rast_export_genome", @type_flag, "--input", $tmp_in, "--output", $tmp_out, $format);
 
     my $rc = system(@cmd);
     if ($rc != 0)

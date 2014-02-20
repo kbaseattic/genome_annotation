@@ -34,17 +34,22 @@ A GFF3 file.
 =head1 COMMAND-LINE OPTIONS
 
 rast2-export-genome [-io] [long options...] format < input > output
-	-i --input      file from which the input is to be read
-	-o --output     file to which the output is to be written
-	--help          print usage message and exit
-	--url           URL for the genome annotation service
+	-i --input           file from which the input is to be read
+	-o --output          file to which the output is to be written
+	--help               print usage message and exit
+	--url                URL for the genome annotation service
+	--feature-type       Include this feature type in output. If no
+	                     feature-types specified, include all feature
+	                     types
 
 =cut
 
-my @valid_format = qw(gff genbank embl protein_fasta contig_fasta);
+my @valid_format = qw(gff genbank embl protein_fasta contig_fasta genbank_merged
+		      feature_data feature_dna
+		     );
 my %valid_format = map { $_ => 1 } @valid_format;
 
-my @options = (options_common());
+my @options = (options_common(), options_export());
 
 my($opt, $usage) = describe_options("rast2-export-genome %o format < input > output",
 				    @options);
@@ -64,6 +69,6 @@ my $genome_in = load_input($opt);
 
 my $client = get_annotation_client($opt);
 
-my $formatted = $client->export_genome($genome_in, $format);
+my $formatted = $client->export_genome($genome_in, $format, $opt->feature_type);
 
 write_text_output($formatted, $opt);
