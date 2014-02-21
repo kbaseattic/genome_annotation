@@ -6492,7 +6492,7 @@ sub export_genome
     my $tmp_out = File::Temp->new();
     close($tmp_out);
 
-    my @type_flag = map { "--feature-type", $_ } foreach @$feature_types
+    my @type_flag = map { ("--feature-type", $_) } @$feature_types;
 
     my @cmd = ("rast_export_genome", @type_flag, "--input", $tmp_in, "--output", $tmp_out, $format);
 

@@ -46,7 +46,7 @@ sub options_repeat_regions_seed
 
 sub options_export
 {
-    return (['feature-type=s@', 'Include this feature type in output. If no feature-types specified, include all feature types']);
+    return (['feature-type=s@', 'Include this feature type in output. If no feature-types specified, include all feature types', { default => [] }]);
 }
 
 sub get_annotation_client
