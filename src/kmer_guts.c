@@ -662,8 +662,12 @@ kmer_handle_t *init_kmers(char *dataD) {
     handle->num_sigs = size_hash;
     fprintf(stderr, "Set size_hash=%lld from file size %lld\n", size_hash, table_size);
 
+    int flags = MAP_SHARED;
+    #ifdef MAP_POPULATE
+    flags |= MAP_POPULATE;
+    #endif
     if ((handle->kmer_table = (sig_kmer_t *) mmap((caddr_t)0, table_size,
-						  PROT_READ, MAP_POPULATE | MAP_SHARED, fd, 0)) == (sig_kmer_t *)(-1)) {
+						  PROT_READ, flags, fd, 0)) == (sig_kmer_t *)(-1)) {
       fprintf(stderr, "mmap of kmer_table %s failed: %s\n", fileM, strerror(errno));
       exit(1);
     }
