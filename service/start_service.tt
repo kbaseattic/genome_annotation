@@ -1,7 +1,7 @@
 #!/bin/sh
 export KB_TOP=[% kb_top %]
 export KB_RUNTIME=[% kb_runtime %]
-export PATH=$KB_TOP/bin:$KB_RUNTIME/bin:$PATH
+export PATH=$KB_TOP/bin:$KB_RUNTIME/bin:$KB_TOP/services/[% kb_service_name %]/bin:$KB_TOP/services/cdmi_api/bin:$PATH
 export PERL5LIB=$KB_TOP/lib
 export KB_SERVICE_NAME="[% kb_service_name %]"
 export KB_SERVICE_DIR="$KB_TOP/services/[% kb_service_name %]"
