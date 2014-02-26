@@ -216,6 +216,9 @@ module GenomeAnnotation
 	int hit_threshold;
 	int sequential_hit_threshold;
 	int detailed;
+	int min_hits;
+	int min_size;
+	int max_gap;
     } kmer_v1_parameters;
 
     funcdef annotate_proteins_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);
@@ -227,7 +230,7 @@ module GenomeAnnotation
     
     funcdef annotate_proteins_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);
 
-    funcdef call_features_ProtoCDS_kmer_v1(genomeTO) returns (genomeTO);		/* RAST-style kmers */
+    funcdef call_features_ProtoCDS_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);		/* RAST-style kmers */
     funcdef call_features_ProtoCDS_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);		/* Ross's new kmers */
 
     funcdef annotate_proteins(genomeTO) returns (genomeTO);

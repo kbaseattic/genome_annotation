@@ -28,6 +28,7 @@ use Time::HiRes 'gettimeofday';
 use Data::Structure::Util qw(unbless);
 
 use Bio::KBase::IDServer::Client;
+use Bio::KBase::KmerAnnotationByFigfam::Client;
 #use Bio::KBase::KIDL::Helpers qw(json_to_tempfile tempfile_to_json);
 use IPC::Run qw(run);
 use JSON::XS;
@@ -67,6 +68,8 @@ sub new
 
     my $i = $cfg->setting("idserver_url");
     $idserver_url = $i if $i;
+
+    $self->{kmer_service_url} = $cfg->setting("kmer_service_url");
 
     print STDERR "kmer_v2_data_directory = $dir\n";
     print STDERR "idserver = $idserver_url\n";
@@ -4140,6 +4143,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	hit_threshold has a value which is an int
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 </pre>
 
@@ -4227,6 +4232,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	hit_threshold has a value which is an int
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 
 =end text
@@ -4258,7 +4265,60 @@ sub annotate_proteins_kmer_v1
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN annotate_proteins_kmer_v1
-    die "Not implemented";
+
+    my $n_proteins_per_call = 100;
+
+    my $genome_in = GenomeTypeObject->initialize($genomeTO);
+
+    my $kmer_service = Bio::KBase::KmerAnnotationByFigfam::Client->new($self->{kmer_service_url});
+
+
+    if (!defined($params->{dataset_name}))
+    {
+	$params->{dataset_name} = $kmer_service->get_default_dataset_name();
+    }
+
+    my $event = {
+	tool_name => "KmerAnnotationByFigfam",
+	execution_time => scalar gettimeofday,
+	parameters => [ map { join("=", $_, $params->{$_}) } sort keys %$params ],
+	hostname => $self->{hostname},
+    };
+
+    my $event_id = $genome_in->add_analysis_event($event);
+
+    my @proteins;
+
+    my $do_anno = sub {
+	my($proteins) = @_;
+	my $res = $kmer_service->annotate_proteins($proteins, $params);
+	for my $hit (@$res)
+	{
+	    my($id, $func, $otu, $score, $nonover, $over, $details) = @$hit;
+	    if ($func)
+	    {
+		$genome_in->update_function("GenomeAnnotationImpl", $id, $func, $event_id);
+	    }
+	}
+    };
+
+    for my $feature ($genome_in->features)
+    {
+	my $trans = $feature->{protein_translation};
+	next unless $trans;
+
+	push(@proteins, [$feature->{id}, $trans]);
+	if (@proteins >= $n_proteins_per_call)
+	{
+	    $do_anno->(\@proteins);
+	    @proteins = ();
+	}
+    }
+    $do_anno->(\@proteins) if @proteins;
+    
+    $return = $genome_in;
+    unbless $return;
+
     #END annotate_proteins_kmer_v1
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -4544,7 +4604,7 @@ sub annotate_proteins_kmer_v2
 
 =head2 call_features_ProtoCDS_kmer_v1
 
-  $return = $obj->call_features_ProtoCDS_kmer_v1($genomeTO)
+  $return = $obj->call_features_ProtoCDS_kmer_v1($genomeTO, $params)
 
 =over 4
 
@@ -4554,6 +4614,7 @@ sub annotate_proteins_kmer_v2
 
 <pre>
 $genomeTO is a genomeTO
+$params is a kmer_v1_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -4624,6 +4685,16 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 </pre>
 
@@ -4632,6 +4703,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 =begin text
 
 $genomeTO is a genomeTO
+$params is a kmer_v1_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -4702,6 +4774,16 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 
 =end text
@@ -4719,10 +4801,11 @@ analysis_event is a reference to a hash where the following keys are defined:
 sub call_features_ProtoCDS_kmer_v1
 {
     my $self = shift;
-    my($genomeTO) = @_;
+    my($genomeTO, $params) = @_;
 
     my @_bad_arguments;
     (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"params\" (value was \"$params\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to call_features_ProtoCDS_kmer_v1:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -4732,7 +4815,80 @@ sub call_features_ProtoCDS_kmer_v1
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_ProtoCDS_kmer_v1
-    die "Not implemented";
+
+    my $genome_in = GenomeTypeObject->initialize($genomeTO);
+    
+    my $min_hits = 5;
+    my $max_gap = 200;
+
+    if (defined($params->{min_hits}))
+    {
+	$min_hits = $params->{min_hits};
+    }
+	
+    if (defined($params->{max_gap}))
+    {
+	$max_gap = $params->{max_gap};
+    }
+
+    my $event = {
+	tool_name => "KmerAnnotationByFigfam",
+	execution_time => scalar gettimeofday,
+	parameters => [ map { join("=", $_, $params->{$_}) } sort keys %$params ],
+	hostname => $self->{hostname},
+    };
+
+    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $event_id = $genome_in->add_analysis_event($event);
+
+    my $type = 'protoCDS';
+
+    my $kmer_service = Bio::KBase::KmerAnnotationByFigfam::Client->new($self->{kmer_service_url});
+    if (!defined($params->{dataset_name}))
+    {
+	$params->{dataset_name} = $kmer_service->get_default_dataset_name();
+    }
+
+    for my $ctg ($genome_in->contigs)
+    {
+	my $hits = $kmer_service->call_genes_in_dna([[$ctg->{id}, $ctg->{dna}]], $params);
+	# print STDERR Dumper($hits);
+	for my $hit (@$hits)
+	{
+	    my($nhits, $id, $begin, $end, $function, $otu) = @$hit;
+	    my $quality = {
+		existence_confidence => 0.5,
+		hit_count => 0 + $nhits,
+	    };
+	    my($strand, $len);
+	    if ($begin < $end)
+	    {
+		$strand = '+';
+		$len = $end - $begin + 1;
+	    }
+	    else
+	    {
+		$strand = '-';
+		$len = $begin - $end + 1;
+	    }
+	    
+	    my $loc = [[$id, $begin, $strand, $len]];
+	    $genome_in->add_feature({
+		-id_client 	     => $idc,
+		-id_prefix 	     => $genome_in->{id},
+		-type 	     => $type,
+		-location 	     => $loc,
+		-function 	     => $function,
+		-event_id 	     => $event_id,
+		-quality_measure => $quality,
+	    });
+	}
+    }
+
+    $return = $genome_in;
+    $return->prepare_for_return();
+    unbless $return;
+
     #END call_features_ProtoCDS_kmer_v1
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -7680,6 +7836,8 @@ score_threshold has a value which is an int
 hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
+min_hits has a value which is an int
+max_gap has a value which is an int
 
 </pre>
 
@@ -7695,6 +7853,8 @@ score_threshold has a value which is an int
 hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
+min_hits has a value which is an int
+max_gap has a value which is an int
 
 
 =end text

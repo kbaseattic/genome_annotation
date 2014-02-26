@@ -68,7 +68,11 @@ if (!$rc || $help || @ARGV != 3) {
     }
     while (<DATA>) {
 	last if (/^=/);
-	print $_;
+	if ($help) {
+	    print $_;
+	} else {
+	    print STDERR $_;
+	}
     }
     exit($help ? 0 : 1);
 }

@@ -3766,6 +3766,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	hit_threshold has a value which is an int
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 </pre>
 
@@ -3853,6 +3855,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	hit_threshold has a value which is an int
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 
 =end text
@@ -4143,7 +4147,7 @@ sub annotate_proteins_kmer_v2
 
 =head2 call_features_ProtoCDS_kmer_v1
 
-  $return = $obj->call_features_ProtoCDS_kmer_v1($genomeTO)
+  $return = $obj->call_features_ProtoCDS_kmer_v1($genomeTO, $params)
 
 =over 4
 
@@ -4153,6 +4157,7 @@ sub annotate_proteins_kmer_v2
 
 <pre>
 $genomeTO is a genomeTO
+$params is a kmer_v1_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -4223,6 +4228,16 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 </pre>
 
@@ -4231,6 +4246,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 =begin text
 
 $genomeTO is a genomeTO
+$params is a kmer_v1_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -4301,6 +4317,16 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	max_gap has a value which is an int
 
 
 =end text
@@ -4319,16 +4345,17 @@ sub call_features_ProtoCDS_kmer_v1
 
 # Authentication: none
 
-    if ((my $n = @args) != 1)
+    if ((my $n = @args) != 2)
     {
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function call_features_ProtoCDS_kmer_v1 (received $n, expecting 1)");
+							       "Invalid argument count for function call_features_ProtoCDS_kmer_v1 (received $n, expecting 2)");
     }
     {
-	my($genomeTO) = @args;
+	my($genomeTO, $params) = @args;
 
 	my @_bad_arguments;
         (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genomeTO\" (value was \"$genomeTO\")");
+        (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 2 \"params\" (value was \"$params\")");
         if (@_bad_arguments) {
 	    my $msg = "Invalid arguments passed to call_features_ProtoCDS_kmer_v1:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -7311,6 +7338,8 @@ score_threshold has a value which is an int
 hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
+min_hits has a value which is an int
+max_gap has a value which is an int
 
 </pre>
 
@@ -7326,6 +7355,8 @@ score_threshold has a value which is an int
 hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
+min_hits has a value which is an int
+max_gap has a value which is an int
 
 
 =end text

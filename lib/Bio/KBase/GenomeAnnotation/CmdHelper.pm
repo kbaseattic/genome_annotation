@@ -6,7 +6,7 @@ use JSON::XS;
 use File::Slurp qw(read_file write_file);
 use base 'Exporter';
 our @EXPORT_OK = qw(load_input write_output get_annotation_client write_text_output
-		    get_params_for_kmer_v2
+		    get_params_for_kmer_v1 get_params_for_kmer_v2
 		    options_common options_kmer_v1 options_kmer_v2 options_rrna_seed
 		    options_repeat_regions_seed options_export);
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
@@ -19,6 +19,19 @@ sub options_common
 	    ['url=s', 'URL for the genome annotation service'],
 	    );
 	    
+}
+
+sub options_kmer_v1
+{
+    return(['kmer-size=i' => "kmer size", { default => 8 } ],
+	   ['dataset-name=s' => "kmer dataset name"],
+	   ['score-threshold' => 'score threshold'],
+	   ['hit-threshold' => 'hit threshold'],
+	   ['sequential-hit-threshold' => 'sequential-hit threshold'],
+	   ['min-hits=i', 'minimum number of Kmer hits required for a call to be made'],
+	   ['max-gap=i',  'maximum size of a gap allowed for a call to be made'],
+	   ['min-size=i' => 'minimum size of DNA feature to call', { default => 48 }],
+	  );
 }
 
 sub options_kmer_v2
@@ -112,5 +125,16 @@ sub get_params_for_kmer_v2
     my $params = {};
     $params->{min_hits} = $opt->{min_hits} if defined($opt->{min_hits});
     $params->{max_gap} = $opt->{max_gap} if defined($opt->{max_gap});
+    return $params;
+}
+
+sub get_params_for_kmer_v1
+{
+    my($opt) = @_;
+    my $params = {};
+    for my $p (qw(kmer_size dataset_name score_threshold hit_threshold sequential_hit_threshold max_gaps min_hits min_size))
+    {
+	$params->{$p} = $opt->{$p} if defined($opt->{$p});
+    }
     return $params;
 }
