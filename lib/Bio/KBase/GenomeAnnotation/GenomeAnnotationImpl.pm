@@ -33,6 +33,7 @@ use Bio::KBase::KmerAnnotationByFigfam::Client;
 use IPC::Run qw(run);
 use JSON::XS;
 
+use Bio::KBase::GenomeAnnotation::Glimmer;
 use GenomeTypeObject;
 use ANNOserver;
 use SeedUtils;
@@ -2489,7 +2490,7 @@ sub call_RNAs
 
 =head2 call_features_CDS_glimmer3
 
-  $return = $obj->call_features_CDS_glimmer3($genomeTO)
+  $return = $obj->call_features_CDS_glimmer3($genomeTO, $params)
 
 =over 4
 
@@ -2499,6 +2500,7 @@ sub call_RNAs
 
 <pre>
 $genomeTO is a genomeTO
+$params is a glimmer3_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -2569,6 +2571,8 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
 
 </pre>
 
@@ -2577,6 +2581,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 =begin text
 
 $genomeTO is a genomeTO
+$params is a glimmer3_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -2647,6 +2652,8 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
 
 
 =end text
@@ -2664,10 +2671,11 @@ analysis_event is a reference to a hash where the following keys are defined:
 sub call_features_CDS_glimmer3
 {
     my $self = shift;
-    my($genomeTO) = @_;
+    my($genomeTO, $params) = @_;
 
     my @_bad_arguments;
     (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"params\" (value was \"$params\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to call_features_CDS_glimmer3:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -2677,7 +2685,60 @@ sub call_features_CDS_glimmer3
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_CDS_glimmer3
-    die "Not implemented";
+
+    my $genome_in = GenomeTypeObject->initialize($genomeTO);
+    my $sequences_file = $genome_in->extract_contig_sequences_to_temp_file();
+
+    my $gparams = { %$params };
+    $gparams->{genetic_code} = $genome_in->{genetic_code};
+    my $calls = Bio::KBase::GenomeAnnotation::Glimmer::call_genes_with_glimmer($sequences_file, $gparams);
+
+    my $trans_table = SeedUtils::genetic_code($genome_in->{genetic_code});
+    
+    my $event = {
+	tool_name => "glimmer3",
+	execution_time => scalar gettimeofday,
+	parameters => [ map { join("=", $_, $gparams->{$_}) } sort keys %$gparams ],
+	hostname => $self->{hostname},
+    };
+
+    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $event_id = $genome_in->add_analysis_event($event);
+    my $type = 'CDS';
+    
+    for my $call (@$calls)
+    {
+	my($fid, $contig, $begin, $end, $dna) = @$call;
+
+	my $trans = SeedUtils::translate($dna, $trans_table);
+
+	my($strand, $len);
+	if ($begin < $end)
+	{
+	    $strand = '+';
+	    $len = $end - $begin + 1;
+	}
+	else
+	{
+	    $strand = '-';
+	    $len = $begin - $end + 1;
+	}
+	
+	my $loc = [[$contig, $begin, $strand, $len]];
+	$genome_in->add_feature({
+	    -id_client 	     => $idc,
+	    -id_prefix 	     => $genome_in->{id},
+	    -type 	     => $type,
+	    -location 	     => $loc,
+	    -event_id 	     => $event_id,
+	    -protein_translation => $trans,
+	});
+    }
+				
+    $return = $genome_in;
+    $return->prepare_for_return();
+    unbless $return;
+
     #END call_features_CDS_glimmer3
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -4144,6 +4205,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 </pre>
@@ -4233,6 +4295,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 
@@ -4694,6 +4757,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 </pre>
@@ -4783,6 +4847,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 
@@ -7785,6 +7850,36 @@ a string
 
 
 
+=head2 glimmer3_parameters
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+min_training_len has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+min_training_len has a value which is an int
+
+
+=end text
+
+=back
+
+
+
 =head2 repeat_region_SEED_parameters
 
 =over 4
@@ -7837,6 +7932,7 @@ hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
 min_hits has a value which is an int
+min_size has a value which is an int
 max_gap has a value which is an int
 
 </pre>
@@ -7854,6 +7950,7 @@ hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
 min_hits has a value which is an int
+min_size has a value which is an int
 max_gap has a value which is an int
 
 

@@ -191,7 +191,13 @@ module GenomeAnnotation
      */
     funcdef call_RNAs(genomeTO genome_in) returns (genomeTO genome_out);
 
-    funcdef call_features_CDS_glimmer3(genomeTO) returns (genomeTO);
+    typedef structure
+    {
+	int min_training_len;
+    } glimmer3_parameters;
+    
+    funcdef call_features_CDS_glimmer3(genomeTO, glimmer3_parameters params) returns (genomeTO);
+    
     funcdef call_features_CDS_prodigal(genomeTO) returns (genomeTO);
     funcdef call_features_CDS_SEED_projection(genomeTO) returns (genomeTO);
     funcdef call_features_CDS_FragGeneScan(genomeTO) returns (genomeTO);

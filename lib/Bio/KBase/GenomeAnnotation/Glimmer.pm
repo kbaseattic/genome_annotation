@@ -1,10 +1,10 @@
-use strict;
-use Data::Dumper;
+# use strict;
+# use Data::Dumper;
 
-my $out = Bio::KBase::GenomeAnnotation::Glimmer::call_genes_with_glimmer("/Users/olson/rast_comparison_genomes/buchnera.fa",
-		    { verbose => 0 });
+# my $out = Bio::KBase::GenomeAnnotation::Glimmer::call_genes_with_glimmer("/home/olson/rast_comparison_genomes/staph.fa",
+# 		    { verbose => 1 });
 
-print Dumper($out);
+# print Dumper($out);
 
 package Bio::KBase::GenomeAnnotation::Glimmer;
 use strict;
@@ -77,7 +77,9 @@ sub call_genes_with_glimmer
 	    
 	    my $longorfs_err = qq();
 	    my $tmp_longorfs_err = "$tmp_prefix.longorfs.err";
-	    my $rc = system("long-orfs -l -n -t 1.15 $genetic_code_switch  $tmp_contig $tmp_coords > $tmp_longorfs_err 2>&1");
+	    my $cmd = "long-orfs -l -n -t 1.15 $genetic_code_switch  $tmp_contig $tmp_coords > $tmp_longorfs_err 2>&1";
+	    print STDERR "$cmd\n";
+	    my $rc = system($cmd);
 	    if (-s $tmp_longorfs_err) {
 		$longorfs_err = read_file($tmp_longorfs_err);
 		print STDERR $longorfs_err if $verbose;
@@ -488,3 +490,5 @@ sub run
 	die "Cmd failed with rc=$rc: @cmd\n";
     }
 }
+
+1;

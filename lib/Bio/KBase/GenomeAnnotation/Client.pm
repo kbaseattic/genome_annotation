@@ -2129,7 +2129,7 @@ sub call_RNAs
 
 =head2 call_features_CDS_glimmer3
 
-  $return = $obj->call_features_CDS_glimmer3($genomeTO)
+  $return = $obj->call_features_CDS_glimmer3($genomeTO, $params)
 
 =over 4
 
@@ -2139,6 +2139,7 @@ sub call_RNAs
 
 <pre>
 $genomeTO is a genomeTO
+$params is a glimmer3_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -2209,6 +2210,8 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
 
 </pre>
 
@@ -2217,6 +2220,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 =begin text
 
 $genomeTO is a genomeTO
+$params is a glimmer3_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -2287,6 +2291,8 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
 
 
 =end text
@@ -2305,16 +2311,17 @@ sub call_features_CDS_glimmer3
 
 # Authentication: none
 
-    if ((my $n = @args) != 1)
+    if ((my $n = @args) != 2)
     {
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function call_features_CDS_glimmer3 (received $n, expecting 1)");
+							       "Invalid argument count for function call_features_CDS_glimmer3 (received $n, expecting 2)");
     }
     {
-	my($genomeTO) = @args;
+	my($genomeTO, $params) = @args;
 
 	my @_bad_arguments;
         (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genomeTO\" (value was \"$genomeTO\")");
+        (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 2 \"params\" (value was \"$params\")");
         if (@_bad_arguments) {
 	    my $msg = "Invalid arguments passed to call_features_CDS_glimmer3:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -3767,6 +3774,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 </pre>
@@ -3856,6 +3864,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 
@@ -4237,6 +4246,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 </pre>
@@ -4326,6 +4336,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	sequential_hit_threshold has a value which is an int
 	detailed has a value which is an int
 	min_hits has a value which is an int
+	min_size has a value which is an int
 	max_gap has a value which is an int
 
 
@@ -7287,6 +7298,36 @@ a string
 
 
 
+=head2 glimmer3_parameters
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+min_training_len has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+min_training_len has a value which is an int
+
+
+=end text
+
+=back
+
+
+
 =head2 repeat_region_SEED_parameters
 
 =over 4
@@ -7339,6 +7380,7 @@ hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
 min_hits has a value which is an int
+min_size has a value which is an int
 max_gap has a value which is an int
 
 </pre>
@@ -7356,6 +7398,7 @@ hit_threshold has a value which is an int
 sequential_hit_threshold has a value which is an int
 detailed has a value which is an int
 min_hits has a value which is an int
+min_size has a value which is an int
 max_gap has a value which is an int
 
 
