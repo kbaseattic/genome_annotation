@@ -11,6 +11,22 @@ The genome_annotation service provides the following functionality to its client
     Metabolic reconstruction.
     Computation of close neighbors of a genome.
 
+CHANGES - 2/26/2014
+-------------------
+
+Added the following command-line scripts (and associated API calls):
+
+rast2-annotate-proteins-kmer-v1: Annotate CDS features using the SEED
+FIGfam-based Kmers.
+
+rast2-call-features-ProtoCDS-kmer-v1: Call "proto-CDS" features from genome
+DNA using the SEED FIGfam-based kmers.
+
+rast2-call-features-ProtoCDS-kmer-v2: Call "proto-CDS" features from genome
+DNA using the SEED function-based kmers.
+
+rast2-export-genome: Export a genome object in a variety of formats.
+
 CHANGES - 1/29/2014
 -------------------
 
