@@ -19,6 +19,8 @@ Added the following command-line scripts (and associated API calls):
 rast2-annotate-proteins-kmer-v1: Annotate CDS features using the SEED
 FIGfam-based Kmers.
 
+scripts/rast2-call-features-CDS-glimmer3: Call CDS features using glimmer.
+
 rast2-call-features-ProtoCDS-kmer-v1: Call "proto-CDS" features from genome
 DNA using the SEED FIGfam-based kmers.
 
