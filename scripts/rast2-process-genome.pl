@@ -173,9 +173,16 @@ my $res = $client->run_pipeline($genome, $workflow);
 
 for my $format (@{$opt->output_format})
 {
-    my $txt = $client->export_genome($res, $format, []);
-    my $fh = get_output_fh($opt);
-    print $fh $txt;
+    if ($format eq 'genome_object')
+    {
+	write_output($res, $opt);
+    }
+    else
+    {
+	my $txt = $client->export_genome($res, $format, []);
+	my $fh = get_output_fh($opt);
+	print $fh $txt;
+    }
     last;
 }
     

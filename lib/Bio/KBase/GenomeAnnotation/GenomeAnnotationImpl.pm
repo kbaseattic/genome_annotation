@@ -7256,6 +7256,7 @@ sub default_workflow
     my @stages = (
 	      { name => 'call_features_rRNA_SEED' },
 	      { name => 'call_features_tRNA_trnascan' },
+	      { name => 'call_features_repeat_region_SEED' },
 	      { name => 'call_selenoproteins' },
 	      { name => 'call_pyrrolysoproteins' },
 	      { name => 'call_features_strep_suis_repeat' },
