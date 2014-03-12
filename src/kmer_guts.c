@@ -211,7 +211,8 @@ typedef struct hit {
   float function_wt;
 } hit_t;
 
-static hit_t hits[10000]; 
+#define MAX_HITS_PER_SEQ 40000
+static hit_t hits[MAX_HITS_PER_SEQ]; 
 static int   num_hits = 0;
 
 #define OI_BUFSZ 5
@@ -924,7 +925,8 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
 	hits[num_hits].from0_in_prot = p-pIseq;
 	hits[num_hits].avg_off_from_end = avg_off_end;
 	hits[num_hits].function_wt = f_wt;
-	num_hits++;
+        if (num_hits < MAX_HITS_PER_SEQ - 2) 
+	  num_hits++;
 	if (debug > 1) {
 	    fprintf(fh, "after-hit: ");
 	    display_hits(fh);
@@ -1006,7 +1008,6 @@ void process_seq(char *id,char *data,kmer_handle_t *kmersH, FILE *fh) {
   strcpy(current_id,id);
   int ln = strlen(data);
   current_length_contig = ln;
-
   fprintf(fh, "processing %s[%d]\n",id,ln);
   int i;
   for (i=0; (i < 3); i++) {
@@ -1132,6 +1133,7 @@ void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out)
 	if ((i != ' ') && (i != '\n'))
 	    *(p++) = toupper(i);
       }
+
       if (i == '>')
 	got_gt = 1;
       else
@@ -1142,6 +1144,8 @@ void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out)
 	fprintf(stderr,"The contig size exceeds %d; bump MAX_SEQ_LEN\n",MAX_SEQ_LEN);
 	exit(1);
       }
+
+      /* fprintf(stderr,"%d bytes read\nends with %s\n",(p-data),p-50); */
 
       if (! aa)
 	  process_seq(id,data,kmersH, fh_out);
