@@ -180,9 +180,16 @@ typedef struct sig_kmer {
   unsigned long long  which_kmer;
   int  otu_index;
   unsigned short  avg_from_end;
-  unsigned short  function_index;
+  int  function_index;
   float function_wt;
 } sig_kmer_t;
+
+#define VERSION 1
+typedef struct kmer_memory_image {
+  unsigned long long num_sigs;
+  unsigned long long entry_size;
+  long long  version;
+} kmer_memory_image_t;
 
 typedef struct kmer_handle {
   sig_kmer_t *kmer_table;
@@ -214,7 +221,7 @@ struct otu_count {
 } oI_counts[OI_BUFSZ];
 static int num_oI = 0;
 
-static short current_fI;
+static int   current_fI;
 static char  current_id[300];
 static int   current_length_contig;
 static char  current_strand;
@@ -564,10 +571,22 @@ long long lookup_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encodedK) 
     }
 }
 
-sig_kmer_t *load_raw_kmers(char *file,unsigned long long *sz, unsigned long long *alloc_sz) {
-  *sz = size_hash;
-  *alloc_sz = sizeof(sig_kmer_t) * size_hash;
-  sig_kmer_t *sig_kmers = malloc(*alloc_sz);
+kmer_memory_image_t *load_raw_kmers(char *file,unsigned long long num_entries, unsigned long long *alloc_sz) {
+  /*
+   * Allocate enough memory to hold the kmer_memory_image_t header plus the hash table itself.
+   */
+  *alloc_sz = sizeof(kmer_memory_image_t) + (sizeof(sig_kmer_t) * num_entries);
+
+  kmer_memory_image_t *image = malloc(*alloc_sz);
+
+  /*
+   * Initialize our table pointer to the first byte after the header.
+   */
+  image->num_sigs = num_entries;
+  image->entry_size = sizeof(sig_kmer_t);
+  image->version = (long long) VERSION;
+
+  sig_kmer_t *sig_kmers = (sig_kmer_t *) (image + 1);
 
   FILE *ifp      = fopen(file,"r");
   if (ifp == NULL) { 
@@ -603,11 +622,13 @@ sig_kmer_t *load_raw_kmers(char *file,unsigned long long *sz, unsigned long long
   if (debug >= 2)
     fprintf(stderr,"loaded %lld kmers\n",loaded);
 
-  return sig_kmers;
+  return image;
 }
 
 kmer_handle_t *init_kmers(char *dataD) {
   kmer_handle_t *handle = malloc(sizeof(kmer_handle_t));
+
+  kmer_memory_image_t *image;
 
   char file[300];
   strcpy(file,dataD);
@@ -627,15 +648,19 @@ kmer_handle_t *init_kmers(char *dataD) {
     strcpy(file,dataD);
     strcat(file,"/final.kmers");
     
-    handle->kmer_table = load_raw_kmers(file, &sz, &table_size);
-    handle->num_sigs   = sz;
+    unsigned long long image_size;
+
+    image = load_raw_kmers(file, size_hash, &image_size);
+
+    handle->kmer_table = (sig_kmer_t *) (image + 1);
+    handle->num_sigs   = image->num_sigs;
 
     FILE *fp = fopen(fileM,"w");
     if (fp == NULL) { 
       fprintf(stderr,"could not open %s for writing: %s ",fileM, strerror(errno));
       exit(1);
     }
-    fwrite(handle->kmer_table,table_size,1,fp);
+    fwrite(image, image_size, 1, fp);
     fclose(fp);
 
     strcpy(fileM,dataD);
@@ -651,26 +676,59 @@ kmer_handle_t *init_kmers(char *dataD) {
       exit(1);
     }
 
+    /*
+     * Set up for creating memory image from file. Start by determining file size
+     * on disk with a stat() call.
+     */
     struct stat sbuf;
     if (stat(fileM, &sbuf) == -1) {
       fprintf(stderr, "stat %s failed: %s\n", fileM, strerror(errno));
       exit(1);
     }
+    unsigned long long file_size = sbuf.st_size;
 
-    unsigned long long table_size = sbuf.st_size;
-    size_hash = table_size / sizeof(sig_kmer_t);
-    handle->num_sigs = size_hash;
-    fprintf(stderr, "Set size_hash=%lld from file size %lld\n", size_hash, table_size);
-
+    /* 
+     * Memory map.
+     */
     int flags = MAP_SHARED;
     #ifdef MAP_POPULATE
     flags |= MAP_POPULATE;
     #endif
-    if ((handle->kmer_table = (sig_kmer_t *) mmap((caddr_t)0, table_size,
-						  PROT_READ, flags, fd, 0)) == (sig_kmer_t *)(-1)) {
+    
+    image = (kmer_memory_image_t *) mmap((caddr_t)0, file_size, PROT_READ, flags, fd, 0);
+
+    if (image == (kmer_memory_image_t *)(-1)) {
       fprintf(stderr, "mmap of kmer_table %s failed: %s\n", fileM, strerror(errno));
       exit(1);
     }
+
+    /* 
+     * Our image is mapped. Validate against the current version of this code.
+     */
+    if (image->version != (long long) VERSION) {
+      fprintf(stderr, "Version mismatch for file %s: file has %lld code has %lld\n", 
+	      fileM, image->version, (long long) VERSION);
+      exit(1);
+    }
+
+    if (image->entry_size != (unsigned long long) sizeof(sig_kmer_t)) {
+      fprintf(stderr, "Version mismatch for file %s: file has entry size %lld code has %lld\n",
+	      fileM, image->entry_size, (unsigned long long) sizeof(sig_kmer_t));
+      exit(1);
+    }
+
+    size_hash = image->num_sigs;
+    handle->num_sigs = size_hash;
+    handle->kmer_table = (sig_kmer_t *) (image + 1);
+
+    /* Validate overall file size vs the entry size and number of entries */
+    if (file_size != ((sizeof(sig_kmer_t) * image->num_sigs) + sizeof(kmer_memory_image_t))) {
+      fprintf(stderr, "Version mismatch for file %s: file size does not match\n", fileM);
+      exit(1);
+    }
+
+    fprintf(stderr, "Set size_hash=%lld from file size %lld\n", size_hash, file_size);
+
   }
   return handle;
 }
@@ -835,7 +893,7 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
     if (where >= 0) {
       sig_kmer_t *kmers_hash_entry = &(kmersH->kmer_table[where]);
       int avg_off_end = kmers_hash_entry->avg_from_end;
-      short fI        = kmers_hash_entry->function_index;
+      int fI        = kmers_hash_entry->function_index;
       int oI          = kmers_hash_entry->otu_index;
       float f_wt      = kmers_hash_entry->function_wt;
       if (debug >= 1) {

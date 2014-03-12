@@ -44,6 +44,13 @@ our %return_counts = (
         'call_features_strep_pneumo_repeat' => 1,
         'call_features_crispr' => 1,
         'export_genome' => 1,
+        'enumerate_classifiers' => 1,
+        'query_classifier_groups' => 1,
+        'query_classifier_taxonomies' => 1,
+        'classify_into_bins' => 1,
+        'classify_full' => 3,
+        'default_workflow' => 1,
+        'run_pipeline' => 1,
         'version' => 1,
 );
 
@@ -81,6 +88,13 @@ sub _build_valid_methods
         'call_features_strep_pneumo_repeat' => 1,
         'call_features_crispr' => 1,
         'export_genome' => 1,
+        'enumerate_classifiers' => 1,
+        'query_classifier_groups' => 1,
+        'query_classifier_taxonomies' => 1,
+        'classify_into_bins' => 1,
+        'classify_full' => 1,
+        'default_workflow' => 1,
+        'run_pipeline' => 1,
         'version' => 1,
     };
     return $methods;

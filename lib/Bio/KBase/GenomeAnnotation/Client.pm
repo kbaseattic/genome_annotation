@@ -6168,6 +6168,823 @@ sub export_genome
 
 
 
+=head2 enumerate_classifiers
+
+  $return = $obj->enumerate_classifiers()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$return is a reference to a list where each element is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$return is a reference to a list where each element is a string
+
+
+=end text
+
+=item Description
+
+Enumerate the available classifiers. Returns the list of identifiers for
+the classifiers.
+
+=back
+
+=cut
+
+sub enumerate_classifiers
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 0)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function enumerate_classifiers (received $n, expecting 0)");
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.enumerate_classifiers",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'enumerate_classifiers',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method enumerate_classifiers",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'enumerate_classifiers',
+				       );
+    }
+}
+
+
+
+=head2 query_classifier_groups
+
+  $return = $obj->query_classifier_groups($classifier)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$classifier is a string
+$return is a reference to a hash where the key is a string and the value is a reference to a list where each element is a genome_id
+genome_id is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$classifier is a string
+$return is a reference to a hash where the key is a string and the value is a reference to a list where each element is a genome_id
+genome_id is a string
+
+
+=end text
+
+=item Description
+
+Query the groups included in the given classifier. This is a
+mapping from the group name to the list of genome IDs included
+in the group. Note that these are genome IDs native to the
+system that created the classifier; currently these are
+SEED genome IDs that may be translated using the
+source IDs on the Genome entity.
+
+=back
+
+=cut
+
+sub query_classifier_groups
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function query_classifier_groups (received $n, expecting 1)");
+    }
+    {
+	my($classifier) = @args;
+
+	my @_bad_arguments;
+        (!ref($classifier)) or push(@_bad_arguments, "Invalid type for argument 1 \"classifier\" (value was \"$classifier\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to query_classifier_groups:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'query_classifier_groups');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.query_classifier_groups",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'query_classifier_groups',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method query_classifier_groups",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'query_classifier_groups',
+				       );
+    }
+}
+
+
+
+=head2 query_classifier_taxonomies
+
+  $return = $obj->query_classifier_taxonomies($classifier)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$classifier is a string
+$return is a reference to a hash where the key is a string and the value is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$classifier is a string
+$return is a reference to a hash where the key is a string and the value is a string
+
+
+=end text
+
+=item Description
+
+Query the taxonomy strings that this classifier maps.
+
+=back
+
+=cut
+
+sub query_classifier_taxonomies
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function query_classifier_taxonomies (received $n, expecting 1)");
+    }
+    {
+	my($classifier) = @args;
+
+	my @_bad_arguments;
+        (!ref($classifier)) or push(@_bad_arguments, "Invalid type for argument 1 \"classifier\" (value was \"$classifier\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to query_classifier_taxonomies:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'query_classifier_taxonomies');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.query_classifier_taxonomies",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'query_classifier_taxonomies',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method query_classifier_taxonomies",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'query_classifier_taxonomies',
+				       );
+    }
+}
+
+
+
+=head2 classify_into_bins
+
+  $return = $obj->classify_into_bins($classifier, $dna_input)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$classifier is a string
+$dna_input is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (id) a string
+	1: (dna_data) a string
+$return is a reference to a hash where the key is a string and the value is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$classifier is a string
+$dna_input is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (id) a string
+	1: (dna_data) a string
+$return is a reference to a hash where the key is a string and the value is an int
+
+
+=end text
+
+=item Description
+
+Classify a dataset, returning only the binned output.
+
+=back
+
+=cut
+
+sub classify_into_bins
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 2)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function classify_into_bins (received $n, expecting 2)");
+    }
+    {
+	my($classifier, $dna_input) = @args;
+
+	my @_bad_arguments;
+        (!ref($classifier)) or push(@_bad_arguments, "Invalid type for argument 1 \"classifier\" (value was \"$classifier\")");
+        (ref($dna_input) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument 2 \"dna_input\" (value was \"$dna_input\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to classify_into_bins:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'classify_into_bins');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.classify_into_bins",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'classify_into_bins',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method classify_into_bins",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'classify_into_bins',
+				       );
+    }
+}
+
+
+
+=head2 classify_full
+
+  $return_1, $raw_output, $unassigned = $obj->classify_full($classifier, $dna_input)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$classifier is a string
+$dna_input is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (id) a string
+	1: (dna_data) a string
+$return_1 is a reference to a hash where the key is a string and the value is an int
+$raw_output is a string
+$unassigned is a reference to a list where each element is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$classifier is a string
+$dna_input is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (id) a string
+	1: (dna_data) a string
+$return_1 is a reference to a hash where the key is a string and the value is an int
+$raw_output is a string
+$unassigned is a reference to a list where each element is a string
+
+
+=end text
+
+=item Description
+
+Classify a dataset, returning the binned output along with the raw assignments and the list of
+sequences that were not assigned.
+
+=back
+
+=cut
+
+sub classify_full
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 2)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function classify_full (received $n, expecting 2)");
+    }
+    {
+	my($classifier, $dna_input) = @args;
+
+	my @_bad_arguments;
+        (!ref($classifier)) or push(@_bad_arguments, "Invalid type for argument 1 \"classifier\" (value was \"$classifier\")");
+        (ref($dna_input) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument 2 \"dna_input\" (value was \"$dna_input\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to classify_full:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'classify_full');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.classify_full",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'classify_full',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method classify_full",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'classify_full',
+				       );
+    }
+}
+
+
+
+=head2 default_workflow
+
+  $return = $obj->default_workflow()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$return is a workflow
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$return is a workflow
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub default_workflow
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 0)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function default_workflow (received $n, expecting 0)");
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.default_workflow",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'default_workflow',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method default_workflow",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'default_workflow',
+				       );
+    }
+}
+
+
+
+=head2 run_pipeline
+
+  $genome_out = $obj->run_pipeline($genome_in, $workflow)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$workflow is a workflow
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_allowed has a value which is a bool
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$workflow is a workflow
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_allowed has a value which is a bool
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub run_pipeline
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 2)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function run_pipeline (received $n, expecting 2)");
+    }
+    {
+	my($genome_in, $workflow) = @args;
+
+	my @_bad_arguments;
+        (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genome_in\" (value was \"$genome_in\")");
+        (ref($workflow) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 2 \"workflow\" (value was \"$workflow\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to run_pipeline:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'run_pipeline');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.run_pipeline",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'run_pipeline',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method run_pipeline",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'run_pipeline',
+				       );
+    }
+}
+
+
+
 sub version {
     my ($self) = @_;
     my $result = $self->{client}->call($self->{url}, {
@@ -6179,16 +6996,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'export_genome',
+                method_name => 'run_pipeline',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method export_genome",
+            error => "Error invoking method run_pipeline",
             status_line => $self->{client}->status_line,
-            method_name => 'export_genome',
+            method_name => 'run_pipeline',
         );
     }
 }
@@ -7432,6 +8249,74 @@ max_gap has a value which is an int
 a reference to a hash where the following keys are defined:
 min_hits has a value which is an int
 max_gap has a value which is an int
+
+
+=end text
+
+=back
+
+
+
+=head2 pipeline_stage
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+name has a value which is a string
+repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+glimmer3_parameters has a value which is a glimmer3_parameters
+kmer_v1_parameters has a value which is a kmer_v1_parameters
+kmer_v2_parameters has a value which is a kmer_v2_parameters
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+name has a value which is a string
+repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+glimmer3_parameters has a value which is a glimmer3_parameters
+kmer_v1_parameters has a value which is a kmer_v1_parameters
+kmer_v2_parameters has a value which is a kmer_v2_parameters
+
+
+=end text
+
+=back
+
+
+
+=head2 workflow
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+stages has a value which is a reference to a list where each element is a pipeline_stage
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+stages has a value which is a reference to a list where each element is a pipeline_stage
 
 
 =end text

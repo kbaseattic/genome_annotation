@@ -7,15 +7,23 @@ use File::Slurp qw(read_file write_file);
 use base 'Exporter';
 our @EXPORT_OK = qw(load_input write_output get_annotation_client write_text_output
 		    get_params_for_kmer_v1 get_params_for_kmer_v2 get_params_for_glimmer3
-		    options_common options_kmer_v1 options_kmer_v2 options_rrna_seed options_glimmer3
-		    options_repeat_regions_seed options_export);
+		    options_help options_common options_kmer_v1 options_kmer_v2 options_rrna_seed options_glimmer3
+		    options_repeat_regions_seed options_export options_classifier
+		    get_input_fh get_output_fh
+		   );
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
 
 sub options_common
 {
     return (['input|i=s', 'file from which the input is to be read'],
 	    ['output|o=s', 'file to which the output is to be written'],
-	    ['help', 'print usage message and exit'],
+	    &options_help());
+	    
+}
+
+sub options_help
+{
+    return (['help|h', 'print usage message and exit'],
 	    ['url=s', 'URL for the genome annotation service'],
 	    );
 	    
@@ -69,12 +77,52 @@ sub options_export
     return (['feature-type=s@', 'Include this feature type in output. If no feature-types specified, include all feature types', { default => [] }]);
 }
 
+
+sub options_classifier
+{
+    return (["detailed-output-file|d=s" => "File to write detailed output (reads and hit information)"],
+	    ["unclassified-output-file|u=s" => "File to write unclassified read IDs to"]);
+
+}
+
 sub get_annotation_client
 {
     my($opts) = @_;
     my $client = Bio::KBase::GenomeAnnotation::Client->new($opts->{url});
     return $client;
 }
+
+sub get_input_fh
+{
+    my($opts) = @_;
+
+    my $fh;
+    if ($opts->{input})
+    {
+	open($fh, "<", $opts->{input}) or die "Cannot open input file $opts->{input} :$!";
+    }
+    else
+    {
+	$fh = \*STDIN;
+    }
+    return $fh;
+}	
+
+sub get_output_fh
+{
+    my($opts) = @_;
+
+    my $fh;
+    if ($opts->{output})
+    {
+	open($fh, ">", $opts->{output}) or die "Cannot open input file $opts->{output} :$!";
+    }
+    else
+    {
+	$fh = \*STDOUT;
+    }
+    return $fh;
+}	
 
 sub load_input
 {

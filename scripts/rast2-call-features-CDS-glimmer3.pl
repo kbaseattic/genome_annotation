@@ -1,8 +1,8 @@
-
 use strict;
 use Getopt::Long::Descriptive;
 use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
+
 =head1 NAME
 
 rast2-call-features-CDS-glimmer3

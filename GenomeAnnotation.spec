@@ -260,4 +260,57 @@ module GenomeAnnotation
      * feature types.
      */
     funcdef export_genome(genomeTO genome_in, string format, list<string> feature_types) returns (string exported_data);
+
+    /*
+     * Enumerate the available classifiers. Returns the list of identifiers for
+     * the classifiers.
+     */
+    funcdef enumerate_classifiers() returns (list<string>);
+
+    /*
+     * Query the groups included in the given classifier. This is a
+     * mapping from the group name to the list of genome IDs included
+     * in the group. Note that these are genome IDs native to the
+     * system that created the classifier; currently these are
+     * SEED genome IDs that may be translated using the
+     * source IDs on the Genome entity.
+     */
+    funcdef query_classifier_groups(string classifier) returns(mapping<string group_id, list<genome_id>>);
+
+
+    /*
+     * Query the taxonomy strings that this classifier maps.
+     */
+    
+    funcdef query_classifier_taxonomies(string classifier) returns(mapping<string group_id, string taxonomy>);
+
+    /*
+     * Classify a dataset, returning only the binned output.
+     */
+    funcdef classify_into_bins(string classifier, list<tuple<string id, string dna_data>> dna_input)
+	returns(mapping<string group_id, int count>);
+
+    /*
+     * Classify a dataset, returning the binned output along with the raw assignments and the list of
+     * sequences that were not assigned.
+     */
+    funcdef classify_full(string classifier, list<tuple<string id, string dna_data>> dna_input)
+	returns(mapping<string group_id, int count>, string raw_output, list<string> unassigned);
+
+
+    typedef structure {
+	string name;
+	repeat_region_SEED_parameters repeat_region_SEED_parameters;
+	glimmer3_parameters glimmer3_parameters;
+	kmer_v1_parameters kmer_v1_parameters;
+	kmer_v2_parameters kmer_v2_parameters;
+    } pipeline_stage;
+    
+    typedef structure
+    {
+	list<pipeline_stage> stages;
+    } workflow;
+
+    funcdef default_workflow() returns (workflow);
+    funcdef run_pipeline(genomeTO genome_in, workflow workflow) returns (genomeTO genome_out);
 };
