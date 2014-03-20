@@ -157,6 +157,7 @@ module GenomeAnnotation
      *  NOTE: Many of these "transformations" modify the input hash and
      *        copy the pointer.  Be warned.
      */
+    funcdef assign_functions_to_CDSs(genomeTO) returns (genomeTO);
     funcdef annotate_genome(genomeTO) returns (genomeTO);
     funcdef call_selenoproteins(genomeTO) returns (genomeTO);
     funcdef call_pyrrolysoproteins(genomeTO) returns (genomeTO);
