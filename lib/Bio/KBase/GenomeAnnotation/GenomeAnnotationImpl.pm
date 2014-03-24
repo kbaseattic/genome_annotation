@@ -111,8 +111,17 @@ sub new
     $self->{kmer_v2_data_directory} = $dir;
 
     my $dir = $cfg->setting("kmer_classifier_data_directory");
-    $dir or die "Configuration parameter for kmer_classifier_data_directory not set";
-    -d $dir or die "Directory $dir for kmer_classifier_data_directory does not exist";
+    #
+    # Make these soft errors for now.
+    #
+    if (!$dir)
+    {
+	warn "Configuration parameter for kmer_classifier_data_directory not set";
+    }
+    elsif (! -d $dir)
+    {
+	warn "Directory $dir for kmer_classifier_data_directory does not exist";
+    }
 	
     $self->{kmer_classifier_data_directory} = $dir;
 
