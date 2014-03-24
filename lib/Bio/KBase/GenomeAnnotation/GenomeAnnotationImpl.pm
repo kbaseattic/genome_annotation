@@ -6568,7 +6568,7 @@ sub call_features_strep_pneumo_repeat
 
 =head2 call_features_crispr
 
-  $return = $obj->call_features_crispr($genomeTO)
+  $genome_out = $obj->call_features_crispr($genome_in)
 
 =over 4
 
@@ -6577,8 +6577,8 @@ sub call_features_strep_pneumo_repeat
 =begin html
 
 <pre>
-$genomeTO is a genomeTO
-$return is a genomeTO
+$genome_in is a genomeTO
+$genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -6655,8 +6655,8 @@ analysis_event is a reference to a hash where the following keys are defined:
 
 =begin text
 
-$genomeTO is a genomeTO
-$return is a genomeTO
+$genome_in is a genomeTO
+$genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -6743,10 +6743,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 sub call_features_crispr
 {
     my $self = shift;
-    my($genomeTO) = @_;
+    my($genome_in) = @_;
 
     my @_bad_arguments;
-    (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to call_features_crispr:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -6754,18 +6754,36 @@ sub call_features_crispr
     }
 
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
-    my($return);
+    my($genome_out);
     #BEGIN call_features_crispr
-    die "Not implemented";
+
+    my $coder = JSON::XS->new;
+    my $tmp_in = File::Temp->new();
+    write_file($tmp_in, $coder->encode($genome_in));
+
+    close($tmp_in);
+    my $tmp_out = File::Temp->new();
+    close($tmp_out);
+
+    my @cmd = ("rast_call_crisprs", "--input", $tmp_in, "--output", $tmp_out,
+	       "--id-prefix", $genome_in->{id}, "--id-server", $idserver_url);
+    my $rc = system(@cmd);
+    if ($rc != 0)
+    {
+	die "error calling rRNAs: $rc\non command @cmd";
+    }
+
+    $genome_out = $coder->decode(scalar read_file("" . $tmp_out));
+
     #END call_features_crispr
     my @_bad_returns;
-    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to call_features_crispr:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
 							       method_name => 'call_features_crispr');
     }
-    return($return);
+    return($genome_out);
 }
 
 
@@ -7500,12 +7518,13 @@ sub default_workflow
     my @stages = (
 	      { name => 'call_features_rRNA_SEED' },
 	      { name => 'call_features_tRNA_trnascan' },
-	      { name => 'call_features_repeat_region_SEED' },
+	      { name => 'call_features_repeat_region_SEED',
+		    repeat_region_SEED_parameters => { } },
 	      { name => 'call_selenoproteins' },
 	      { name => 'call_pyrrolysoproteins' },
 	      { name => 'call_features_strep_suis_repeat' },
 	      { name => 'call_features_strep_pneumo_repeat' },
-#	      { name => 'call_features_crispr' },
+	      { name => 'call_features_crispr' },
 	      { name => 'call_features_CDS_prodigal' },
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => {} },
 	      { name => 'call_features_prophage_phispy' },
@@ -7778,6 +7797,7 @@ sub run_pipeline
 		      annotate_proteins_kmer_v2 => 'kmer_v2_parameters',
 		      call_features_repeat_region_SEED => 'repeat_regions_SEED_parameters',
 		      call_features_CDS_glimmer3 => 'glimmer3_parameters',
+		      call_features_repeat_region_SEED => 'repeat_region_SEED_parameters',
 		      );
 
     my $cur = $genome_in;

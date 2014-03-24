@@ -252,7 +252,7 @@ module GenomeAnnotation
      */
     funcdef call_features_strep_suis_repeat(genomeTO) returns (genomeTO);
     funcdef call_features_strep_pneumo_repeat(genomeTO) returns (genomeTO);
-    funcdef call_features_crispr(genomeTO) returns (genomeTO);
+    funcdef call_features_crispr(genomeTO genome_in) returns (genomeTO genome_out);
 
     /*
      * Export genome typed object to one of the supported output formats:

@@ -5942,7 +5942,7 @@ sub call_features_strep_pneumo_repeat
 
 =head2 call_features_crispr
 
-  $return = $obj->call_features_crispr($genomeTO)
+  $genome_out = $obj->call_features_crispr($genome_in)
 
 =over 4
 
@@ -5951,8 +5951,8 @@ sub call_features_strep_pneumo_repeat
 =begin html
 
 <pre>
-$genomeTO is a genomeTO
-$return is a genomeTO
+$genome_in is a genomeTO
+$genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -6029,8 +6029,8 @@ analysis_event is a reference to a hash where the following keys are defined:
 
 =begin text
 
-$genomeTO is a genomeTO
-$return is a genomeTO
+$genome_in is a genomeTO
+$genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -6124,10 +6124,10 @@ sub call_features_crispr
 							       "Invalid argument count for function call_features_crispr (received $n, expecting 1)");
     }
     {
-	my($genomeTO) = @args;
+	my($genome_in) = @args;
 
 	my @_bad_arguments;
-        (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genomeTO\" (value was \"$genomeTO\")");
+        (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genome_in\" (value was \"$genome_in\")");
         if (@_bad_arguments) {
 	    my $msg = "Invalid arguments passed to call_features_crispr:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
