@@ -98,7 +98,7 @@ my $input_genome;
     $input_genome = $json->decode($input_genome_txt);
 }
 
-my $output_genome = $kbase_server->call_CDSs($input_genome);
+my $output_genome = $kbase_server->call_features_CDS_glimmer3($input_genome, {});
 
 $json->pretty(1);
 print $out_fh $json->encode($output_genome);
