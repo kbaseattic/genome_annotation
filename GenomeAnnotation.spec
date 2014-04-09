@@ -55,7 +55,26 @@ module GenomeAnnotation
 	bool selenoprotein;
 	bool pyrrolysylprotein;
 
-	bool overlap_allowed;
+	/*
+	 * List of rules that govern the overlap removal procedure for
+	 * this feature. We don't yet have a strict definition for this but
+	 * the notion is that this will consiste of entries of the form
+	 * +feature-type which will allow overlap with the given feature type;
+	 * -feature-type which will disallow overlap with the given feature type.
+	 */
+	list<string> overlap_rules;
+
+	/*
+	 * The numeric priority of this feature's right to exist. Specialty
+	 * tools will give the features they create a high priority; more generic
+	 * tools will give their features a lower priority. The overlap removal procedure
+	 * will use this priority to determine which of a set of overlapping features
+	 * should be removed.
+	 *
+	 * The intent is that a change of 1 in the priority value represents a factor of 2 in
+	 * preference.
+	 */
+	float existence_priority;
 
 	float hit_count;
 	float weighted_hit_count;

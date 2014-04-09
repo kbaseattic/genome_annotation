@@ -56,7 +56,8 @@ my $help;
 my $input_file;
 my $output_file;
 # my $url = "http://bio-data-1.mcs.anl.gov/services/genome_annotation";
-my $url = "https://kbase.us/services/genome_annotation";
+# my $url = "https://kbase.us/services/genome_annotation";
+my $url;
 
 my $rc = GetOptions('help'      => \$help,
 		    'url=s'     => \$url,
