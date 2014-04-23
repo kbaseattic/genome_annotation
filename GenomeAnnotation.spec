@@ -178,8 +178,19 @@ module GenomeAnnotation
      */
     funcdef assign_functions_to_CDSs(genomeTO) returns (genomeTO);
     funcdef annotate_genome(genomeTO) returns (genomeTO);
+
     funcdef call_selenoproteins(genomeTO) returns (genomeTO);
     funcdef call_pyrrolysoproteins(genomeTO) returns (genomeTO);
+
+    /*
+     * Given a genome typed object, call selenoprotein features.
+     */
+    funcdef call_features_selenoprotein(genomeTO) returns (genomeTO);
+
+    /*
+     * Given a genome typed object, call pyrrolysoprotein features.
+     */
+    funcdef call_features_pyrrolysoprotein(genomeTO) returns (genomeTO);
 
     /* [ validate.enum("5S", "SSU", "LSU", "ALL") ] */
     typedef string rna_type;
