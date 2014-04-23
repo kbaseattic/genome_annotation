@@ -7999,7 +7999,7 @@ sub default_workflow
 	      { name => 'call_features_crispr' },
 	      { name => 'call_features_CDS_prodigal' },
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => {} },
-	      { name => 'call_features_prophage_phispy' },
+	      # { name => 'call_features_prophage_phispy' },
 		 );
     $return = { stages => \@stages };
     
