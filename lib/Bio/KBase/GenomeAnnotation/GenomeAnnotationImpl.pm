@@ -3405,7 +3405,13 @@ sub call_features_CDS_glimmer3
     my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     my $event_id = $genome_in->add_analysis_event($event);
     my $type = 'CDS';
-    
+
+    my $id_prefix = $genome_in->{id};
+    my $typed_prefix = join(".", $id_prefix, $type);
+
+    my $count = @$calls;
+    my $cur_id_suffix = $idc->allocate_id_range($typed_prefix, $count);
+
     for my $call (@$calls)
     {
 	my($fid, $contig, $begin, $end, $dna) = @$call;
@@ -3425,12 +3431,16 @@ sub call_features_CDS_glimmer3
 	}
 	
 	my $loc = [[$contig, $begin, $strand, $len]];
+
+	my $id = join(".", $typed_prefix, $cur_id_suffix);
+	$cur_id_suffix++;
+	
 	$genome_in->add_feature({
-	    -id_client 	     => $idc,
-	    -id_prefix 	     => $genome_in->{id},
+	    -id		     => $id,
 	    -type 	     => $type,
 	    -location 	     => $loc,
 	    -analyis_event_id 	     => $event_id,
+	    -annotator => 'glimmer3',
 	    -protein_translation => $trans,
 	});
     }
@@ -5625,6 +5635,8 @@ sub call_features_ProtoCDS_kmer_v1
     my $event_id = $genome_in->add_analysis_event($event);
 
     my $type = 'protoCDS';
+    my $id_prefix = $genome_in->{id};
+    my $typed_prefix = join(".", $id_prefix, $type);
 
     my $kmer_service = Bio::KBase::KmerAnnotationByFigfam::Client->new($self->{kmer_service_url});
     if (!defined($params->{dataset_name}))
@@ -5636,6 +5648,10 @@ sub call_features_ProtoCDS_kmer_v1
     {
 	my $hits = $kmer_service->call_genes_in_dna([[$ctg->{id}, $ctg->{dna}]], $params);
 	# print STDERR Dumper($hits);
+
+	my $count = @$hits;
+	my $cur_id_suffix = $idc->allocate_id_range($typed_prefix, $count);
+
 	for my $hit (@$hits)
 	{
 	    my($nhits, $id, $begin, $end, $function, $otu) = @$hit;
@@ -5655,10 +5671,12 @@ sub call_features_ProtoCDS_kmer_v1
 		$len = $begin - $end + 1;
 	    }
 	    
+	    my $fid = join(".", $typed_prefix, $cur_id_suffix);
+	    $cur_id_suffix++;
+
 	    my $loc = [[$id, $begin, $strand, $len]];
 	    $genome_in->add_feature({
-		-id_client 	     => $idc,
-		-id_prefix 	     => $genome_in->{id},
+		-id		     => $fid,
 		-type 	     => $type,
 		-location 	     => $loc,
 		-function 	     => $function,
@@ -5946,13 +5964,28 @@ sub call_features_ProtoCDS_kmer_v2
 #    
 
     my $type = 'protoCDS';
+    my $id_prefix = $genome_in->{id};
+    my $typed_prefix = join(".", $id_prefix, $type);
+
+    my @hits;
 
     while(<$res_fh>)
     {
 	chomp;
-	my($contig, $left, $right, $strand, $frame, $hit_count, $function, $weighted_hit_count) = split(/\t/);
+	my($contig, $left, $right, $strand, $frame, $hit_count, $function, $weighted_hit_count) = split(/\t/, $_);
 
 	next unless $left =~ /^\d+$/ && $right =~ /^\d+$/;
+
+	push(@hits, $_);
+    }
+    close($res_fh);
+
+    my $count = @hits;
+    my $cur_id_suffix = $idc->allocate_id_range($typed_prefix, $count);
+
+    for my $hit (@hits)
+    {
+	my($contig, $left, $right, $strand, $frame, $hit_count, $function, $weighted_hit_count) = split(/\t/, $hit);
 
 	my $confidence = 1 - 0.5 ** ($weighted_hit_count / 3);
 
@@ -5962,13 +5995,14 @@ sub call_features_ProtoCDS_kmer_v2
 	    weighted_hit_count => 0 + $weighted_hit_count,
 	};
 
+	my $id = join(".", $typed_prefix, $cur_id_suffix);
+	$cur_id_suffix++;
 
 	my $begin = 0 + (($strand eq '+') ? $left : $right);
 	my $len = 1 + $right - $left;
 	my $loc = [[$contig, $begin, $strand, $len]];
 	$genome_in->add_feature({
-	    -id_client 	     => $idc,
-	    -id_prefix 	     => $genome_in->{id},
+	    -id              => $id,
 	    -type 	     => $type,
 	    -location 	     => $loc,
 	    -function 	     => $function,
