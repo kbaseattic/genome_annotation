@@ -3,6 +3,7 @@ use strict;
 use Getopt::Long::Descriptive;
 use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
+
 =head1 NAME
 
 rast2-export-genome
@@ -33,23 +34,30 @@ A GFF3 file.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-export-genome [-io] [long options...] format < input > output
+rast2-export-genome [-hio] [long options...] format < input > output
 	-i --input           file from which the input is to be read
 	-o --output          file to which the output is to be written
-	--help               print usage message and exit
+	-h --help            print usage message and exit
 	--url                URL for the genome annotation service
 	--feature-type       Include this feature type in output. If no
 	                     feature-types specified, include all feature
 	                     types
+	Supported formats: 
+	  genbank         Genbank format
+	  genbank_merged  Genbank format as single merged locus, suitable for Artemis
+	  feature_data    Tabular form of feature data
+	  protein_fasta   Protein translations in fasta format
+	  contig_fasta    Contig DNA in fasta format
+	  feature_dna     Feature DNA sequences in fasta format
+	  gff             GFF format
+	  embl            EMBL format
 
 =cut
 
-my @valid_format = qw(gff genbank embl protein_fasta contig_fasta genbank_merged
-		      feature_data feature_dna
-		     );
-my %valid_format = map { $_ => 1 } @valid_format;
+my @valid_format = map { $_->[0] } @CmdHelper::export_formats;
+my %valid_format = map { $_->[0] => 1 } @CmdHelper::export_formats;
 
-my @options = (options_common(), options_export());
+my @options = (options_common(), options_export(), [], options_export_formats());
 
 my($opt, $usage) = describe_options("rast2-export-genome %o format < input > output",
 				    @options);

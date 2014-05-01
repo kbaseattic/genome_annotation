@@ -150,6 +150,1200 @@ sub new
 
 
 
+=head2 create_genome
+
+  $genome = $obj->create_genome($metadata)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$metadata is a genome_metadata
+$genome is a genomeTO
+genome_metadata is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+genome_id is a string
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$metadata is a genome_metadata
+$genome is a genomeTO
+genome_metadata is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+genome_id is a string
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Create a new genome object and assign metadata.
+
+=back
+
+=cut
+
+sub create_genome
+{
+    my $self = shift;
+    my($metadata) = @_;
+
+    my @_bad_arguments;
+    (ref($metadata) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"metadata\" (value was \"$metadata\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to create_genome:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'create_genome');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome);
+    #BEGIN create_genome
+
+    $genome = GenomeTypeObject->new();
+    $genome->set_metadata($metadata);
+
+    #
+    # If no ID was created, allocate a genome ID from our ID server.
+    #
+    if (!$genome->{id})
+    {
+	my $id_prefix = "kb";
+	
+	my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+	$genome->{id} = "$id_prefix|g." . $idc->allocate_id_range("$id_prefix|g", 1);
+    }
+    $genome->prepare_for_return();
+
+    #END create_genome
+    my @_bad_returns;
+    (ref($genome) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome\" (value was \"$genome\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to create_genome:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'create_genome');
+    }
+    return($genome);
+}
+
+
+
+
+=head2 set_metadata
+
+  $genome_out = $obj->set_metadata($genome_in, $metadata)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$metadata is a genome_metadata
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+genome_metadata is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$metadata is a genome_metadata
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+genome_metadata is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Modify genome metadata.
+
+=back
+
+=cut
+
+sub set_metadata
+{
+    my $self = shift;
+    my($genome_in, $metadata) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    (ref($metadata) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"metadata\" (value was \"$metadata\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to set_metadata:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'set_metadata');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN set_metadata
+
+    $genome_out = GenomeTypeObject->initialize_without_indexes($genome_in);
+    $genome_out->set_metadata($metadata);
+    $genome_out->prepare_for_return();
+    
+    #end set_metadata
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to set_metadata:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'set_metadata');
+    }
+    return($genome_out);
+}
+
+
+
+
+=head2 add_contigs
+
+  $genome_out = $obj->add_contigs($genome_in, $contigs)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$contigs is a reference to a list where each element is a contig
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$contigs is a reference to a list where each element is a contig
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Add a set of contigs to the genome object.
+
+=back
+
+=cut
+
+sub add_contigs
+{
+    my $self = shift;
+    my($genome_in, $contigs) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    (ref($contigs) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"contigs\" (value was \"$contigs\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to add_contigs:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_contigs');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN add_contigs
+
+    $genome_out = GenomeTypeObject->initialize_without_indexes($genome_in);
+    $genome_out->add_contigs($contigs);
+    $genome_out->prepare_for_return();
+
+    #END add_contigs
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to add_contigs:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_contigs');
+    }
+    return($genome_out);
+}
+
+
+
+
+=head2 add_contigs_from_handle
+
+  $genome_out = $obj->add_contigs_from_handle($genome_in, $contigs)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$contigs is a reference to a list where each element is a contig
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$contigs is a reference to a list where each element is a contig
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Add a set of contigs to the genome object, loading the contigs
+from the given handle service handle.
+
+=back
+
+=cut
+
+sub add_contigs_from_handle
+{
+    my $self = shift;
+    my($genome_in, $contigs) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    (ref($contigs) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"contigs\" (value was \"$contigs\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to add_contigs_from_handle:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_contigs_from_handle');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN add_contigs_from_handle
+    #END add_contigs_from_handle
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to add_contigs_from_handle:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_contigs_from_handle');
+    }
+    return($genome_out);
+}
+
+
+
+
+=head2 add_features
+
+  $genome_out = $obj->add_features($genome_in, $features)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$features is a reference to a list where each element is a compact_feature
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+compact_feature is a reference to a list containing 5 items:
+	0: (id) a string
+	1: (location) a string
+	2: (feature_type) a string
+	3: (function) a string
+	4: (aliases) a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$features is a reference to a list where each element is a compact_feature
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+compact_feature is a reference to a list containing 5 items:
+	0: (id) a string
+	1: (location) a string
+	2: (feature_type) a string
+	3: (function) a string
+	4: (aliases) a string
+
+
+=end text
+
+
+
+=item Description
+
+Add a set of features in tabular form.
+
+=back
+
+=cut
+
+sub add_features
+{
+    my $self = shift;
+    my($genome_in, $features) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    (ref($features) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"features\" (value was \"$features\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to add_features:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_features');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN add_features
+
+    $genome_out = GenomeTypeObject->initialize();
+    $genome_out->add_features_from_list($features);
+    $genome_out->prepare_for_return();
+    
+    #END add_features
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to add_features:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_features');
+    }
+    return($genome_out);
+}
+
+
+
+
 =head2 genomeTO_to_reconstructionTO
 
   $return = $obj->genomeTO_to_reconstructionTO($genomeTO)
@@ -172,6 +1366,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -189,6 +1384,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -272,6 +1474,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -289,6 +1492,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -474,6 +1684,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -491,6 +1702,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -562,6 +1780,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -579,6 +1798,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -940,6 +2166,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -957,6 +2184,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -1019,6 +2253,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -1036,6 +2271,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -1090,8 +2332,6 @@ analysis_event is a reference to a hash where the following keys are defined:
 
 Given a genome object populated with contig data, perform gene calling
 and functional annotation and return the annotated genome.
- NOTE: Many of these "transformations" modify the input hash and
-       copy the pointer.  Be warned.
 
 =back
 
@@ -1180,6 +2420,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -1197,6 +2438,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -1259,6 +2507,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -1276,6 +2525,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -1547,6 +2803,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -1564,6 +2821,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -1626,6 +2890,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -1643,6 +2908,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -1786,6 +3058,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -1803,6 +3076,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -1865,6 +3145,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -1882,6 +3163,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2024,6 +3312,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2041,6 +3330,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2103,6 +3399,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2120,6 +3417,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2233,6 +3537,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2250,6 +3555,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2312,6 +3624,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2329,6 +3642,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2443,6 +3763,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2460,6 +3781,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2524,6 +3852,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2541,6 +3870,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2696,6 +4032,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2713,6 +4050,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2775,6 +4119,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2792,6 +4137,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2920,6 +4272,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -2937,6 +4290,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -2999,6 +4359,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3016,6 +4377,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3209,6 +4577,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3226,6 +4595,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3291,6 +4667,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3308,6 +4685,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3447,8 +4831,7 @@ sub call_features_CDS_glimmer3
 				
     $return = $genome_in;
     $return->prepare_for_return();
-    unbless $return;
-
+    
     #END call_features_CDS_glimmer3
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -3485,6 +4868,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3502,6 +4886,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3564,6 +4955,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3581,6 +4973,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3710,6 +5109,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3727,6 +5127,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3789,6 +5196,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3806,6 +5214,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3917,6 +5332,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -3934,6 +5350,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -3996,6 +5419,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4013,6 +5437,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4125,6 +5556,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4142,6 +5574,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4208,6 +5647,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4225,6 +5665,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4421,6 +5868,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4438,6 +5886,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4500,6 +5955,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4517,6 +5973,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4646,6 +6109,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4663,6 +6127,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4727,6 +6198,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4744,6 +6216,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4858,6 +6337,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4875,6 +6355,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -4949,6 +6436,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -4966,6 +6454,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -5143,6 +6638,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -5160,6 +6656,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -5226,6 +6729,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -5243,6 +6747,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -5414,6 +6925,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -5431,6 +6943,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -5505,6 +7024,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -5522,6 +7042,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -5727,6 +7254,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -5744,6 +7272,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -5810,6 +7345,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -5827,6 +7363,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6051,6 +7594,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6068,6 +7612,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6130,6 +7681,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6147,6 +7699,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6258,6 +7817,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6275,6 +7835,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6337,6 +7904,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6354,6 +7922,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6465,6 +8040,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6482,6 +8058,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6544,6 +8127,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6561,6 +8145,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6672,6 +8263,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6689,6 +8281,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6751,6 +8350,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6768,6 +8368,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6881,6 +8488,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6898,6 +8506,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -6960,6 +8575,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -6977,6 +8593,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -7090,6 +8713,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -7107,6 +8731,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -7169,6 +8800,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -7186,6 +8818,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -7317,6 +8956,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -7334,6 +8974,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -7398,6 +9045,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -7415,6 +9063,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -8074,6 +9729,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -8091,6 +9747,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -8181,6 +9844,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -8198,6 +9862,13 @@ contig is a reference to a hash where the following keys are defined:
 	complete has a value which is a bool
 contig_id is a string
 bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
 feature is a reference to a hash where the following keys are defined:
 	id has a value which is a feature_id
 	location has a value which is a location
@@ -8398,6 +10069,52 @@ sub version {
 }
 
 =head1 TYPES
+
+
+
+=head2 Handle
+
+=over 4
+
+
+
+=item Description
+
+* This is a handle service handle object, used for by-reference
+* passing of data files.
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+file_name has a value which is a string
+id has a value which is a string
+type has a value which is a string
+url has a value which is a string
+remote_md5 has a value which is a string
+remote_sha1 has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+file_name has a value which is a string
+id has a value which is a string
+type has a value which is a string
+url has a value which is a string
+remote_md5 has a value which is a string
+remote_sha1 has a value which is a string
+
+
+=end text
+
+=back
 
 
 
@@ -9016,6 +10733,7 @@ source has a value which is a string
 source_id has a value which is a string
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
+contigs_handle has a value which is a Handle
 features has a value which is a reference to a list where each element is a feature
 close_genomes has a value which is a reference to a list where each element is a close_genome
 analysis_events has a value which is a reference to a list where each element is an analysis_event
@@ -9035,9 +10753,59 @@ source has a value which is a string
 source_id has a value which is a string
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
+contigs_handle has a value which is a Handle
 features has a value which is a reference to a list where each element is a feature
 close_genomes has a value which is a reference to a list where each element is a close_genome
 analysis_events has a value which is a reference to a list where each element is an analysis_event
+
+
+=end text
+
+=back
+
+
+
+=head2 genome_metadata
+
+=over 4
+
+
+
+=item Description
+
+* Genome metadata. We use this structure to define common metadata
+* settings used in the API calls below. It's possible this data should
+* have been separated in this way in the genome object itself, but there
+* is an extant body of code that assumes the current structure of the genome
+* object.
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+id has a value which is a genome_id
+scientific_name has a value which is a string
+domain has a value which is a string
+genetic_code has a value which is an int
+source has a value which is a string
+source_id has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+id has a value which is a genome_id
+scientific_name has a value which is a string
+domain has a value which is a string
+genetic_code has a value which is an int
+source has a value which is a string
+source_id has a value which is a string
 
 
 =end text
@@ -9445,6 +11213,50 @@ a reference to a list where each element is a fid_data_tuple
 =begin text
 
 a reference to a list where each element is a fid_data_tuple
+
+=end text
+
+=back
+
+
+
+=head2 compact_feature
+
+=over 4
+
+
+
+=item Description
+
+* This tuple defines a compact form for defining features to be batch-loaded
+* into a genome object.
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a list containing 5 items:
+0: (id) a string
+1: (location) a string
+2: (feature_type) a string
+3: (function) a string
+4: (aliases) a string
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a list containing 5 items:
+0: (id) a string
+1: (location) a string
+2: (feature_type) a string
+3: (function) a string
+4: (aliases) a string
+
 
 =end text
 

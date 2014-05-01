@@ -132,19 +132,14 @@ B<Domain>. The domain of this genome.
 
 =cut
  
-my @options = (['scientific-name=s', 'Scientific name for the genome to be processed.'],
-	       ['domain=s', 'Domain of the genome to be processed (Bacteria or Archaea)'],
-	       ['genetic-code=i', 'Genetic code of the genome to be processed (4 or 11)'],
-	       ['output-format=s@', 'Output format. This option may be repeated to generate multiple output formats in batch mode. Defaults to genome_object.',
+my @options = (['output-format=s@', 'Output format. This option may be repeated to generate multiple output formats in batch mode. Defaults to genome_object.',
 		{ default => ['genome_object'] }],
-	       ['input|i=s', 'Process a single genome from the given file. Input defaults to standard input.'],
-	       ['output|o=s', 'Output file to which a single processed genome will be written.'],
 	       ['batch-input-directory=s', 'Process a batch of genomes from the given directory.'],
 	       ['batch-input-file=s', 'Process a batch of genomes defined by the given file.'],
 	       ['workflow=s', 'Workflow definition for this genome or batch.'],
-	       ['url=s', 'URL to genome annotation service.'],
-	       ['help|h', 'Show this help message'],
 	       );
+
+push(@options, options_common(), [], options_export_formats());
 
 my($opt, $usage) = describe_options("%c %o < input > output",
 				    @options);

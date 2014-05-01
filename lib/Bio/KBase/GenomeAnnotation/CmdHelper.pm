@@ -1,25 +1,49 @@
 package Bio::KBase::GenomeAnnotation::CmdHelper;
 
 use strict;
+use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::Client;
 use JSON::XS;
 use File::Slurp qw(read_file write_file);
 use base 'Exporter';
+use gjoseqlib;
+use List::Util 'max';
+
 our @EXPORT_OK = qw(load_input write_output get_annotation_client write_text_output
-		    get_params_for_kmer_v1 get_params_for_kmer_v2 get_params_for_glimmer3
+		    get_params_for_kmer_v1 get_params_for_kmer_v2 get_params_for_glimmer3 get_params_for_genome_metadata
+		    get_params_for_contigs
 		    options_help options_common options_kmer_v1 options_kmer_v2 options_rrna_seed options_glimmer3
-		    options_repeat_regions_seed options_export options_classifier
-		    get_input_fh get_output_fh
+		    options_repeat_regions_seed options_export options_classifier options_genome_metadata
+		    options_genome_in options_genome_out options_contigs options_export_formats
+		    get_input_fh get_output_fh 
 		   );
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
 
+sub options_genome_in
+{
+    return (['input|i=s', 'file from which the input is to be read'])
+	    
+}
+
+sub options_genome_out
+{
+    return (['output|o=s', 'file to which the output is to be written']);
+	    
+}
+
 sub options_common
 {
-    return (['input|i=s', 'file from which the input is to be read'],
-	    ['output|o=s', 'file to which the output is to be written'],
+    return (options_genome_in(),
+	    options_genome_out(),
 	    &options_help());
 	    
 }
+
+sub options_contigs
+{
+    return(['contigs=s', 'Fasta file containing DNA contig data']);
+}
+	
 
 sub options_help
 {
@@ -83,6 +107,48 @@ sub options_classifier
     return (["detailed-output-file|d=s" => "File to write detailed output (reads and hit information)"],
 	    ["unclassified-output-file|u=s" => "File to write unclassified read IDs to"]);
 
+}
+
+sub options_genome_metadata
+{
+    return (['genome-id=s' => "Genome identifier"],
+	    ['scientific-name=s' => "Scientific name (Genus species strain) for the genome"],
+	    ['domain=s' => "Domain (Bacteria/Archaea/Virus/Eukaryota) for the genome"],
+	    ['genetic-code=i' => "Genetic code for the genome (probably 11 or 4 for bacterial genomes)"],
+	    ['source=s' => "Source (external database) name for this genome"],
+	    ['source-id=s' => "Identifier for this genome in the source (external database)"],
+	   );
+}
+
+#
+# This format list is copied from the backend rast_export.pl code. Changes in the
+# export format list happen slowly, so we can manually keep this list up to date. Much
+# simpler than requiring a roundtrip to the service to find the formats.
+#
+# Changes also need to be propagated to the documentation in the API spec.
+#   
+our @export_formats = ([genbank => "Genbank format"],
+		       [genbank_merged => "Genbank format as single merged locus, suitable for Artemis"],
+		       [feature_data => "Tabular form of feature data"],
+		       [protein_fasta => "Protein translations in fasta format"],
+		       [contig_fasta => "Contig DNA in fasta format"],
+		       [feature_dna => "Feature DNA sequences in fasta format"],
+		       [gff => "GFF format"],
+		       [embl => "EMBL format"]);
+
+sub options_export_formats
+{
+    my @options;
+    push(@options, ["Supported formats:"]);
+
+    my $len = max(map { length($_->[0]) } @export_formats);
+    $len++;
+    for my $fmt (@export_formats)
+    {
+	my($name, $desc) = @$fmt;
+	push(@options, [sprintf("  %-${len}s $desc", $name)]);
+    }
+    return @options;
 }
 
 sub get_annotation_client
@@ -203,4 +269,35 @@ sub get_params_for_glimmer3
 	$params->{$p} = $opt->{$p} if defined($opt->{$p});
     }
     return $params;
+}
+
+sub get_params_for_genome_metadata
+{
+    my($opt) = @_;
+    my $params = {};
+    for my $p (qw(genome_id scientific_name domain genetic_code source source_id))
+    {
+	my $to = ($p eq 'genome_id') ? 'id' : $p;
+	$params->{$to} = $opt->{$p} if defined($opt->{$p});
+    }
+    return $params;
+}
+
+sub get_params_for_contigs
+{
+    my($opt) = @_;
+
+    if ($opt->{contigs})
+    {
+	my $fh;
+	open($fh, "<", $opt->{contigs}) or die "Cannot open contigs data file $opt->{contigs}: $!";
+	my @ctgs;
+	while (my($id, $def, $seq) = read_next_fasta_seq($fh))
+	{
+	    push(@ctgs, { id => $id, dna => $seq });
+	}
+	close($fh);
+	return \@ctgs;
+    }
+    return undef;
 }

@@ -7,6 +7,21 @@ formation about an existing genome, or to create new annotations.
  */
 module GenomeAnnotation
 {
+
+    /*
+     * This is a handle service handle object, used for by-reference
+     * passing of data files.
+     */
+    typedef structure {
+	string file_name;
+	string id;
+	string type;
+	string url;
+	string remote_md5;
+	string remote_sha1;
+    } Handle;
+
+
     typedef int bool;
     typedef string md5;
     typedef list<md5> md5s;
@@ -133,12 +148,33 @@ module GenomeAnnotation
 	genome_quality_measure quality;
 	
 	list<contig> contigs;
+	Handle contigs_handle;
+
 	list<feature> features;
 
 	list<close_genome> close_genomes;
 
 	list <analysis_event> analysis_events;
     } genomeTO;
+
+
+    /*
+     * Genome metadata. We use this structure to define common metadata
+     * settings used in the API calls below. It's possible this data should
+     * have been separated in this way in the genome object itself, but there
+     * is an extant body of code that assumes the current structure of the genome
+     * object.
+     */
+
+    typedef structure
+    {
+	genome_id id;
+	string scientific_name;
+	string domain;
+	int genetic_code;
+	string source;
+	string source_id;
+    } genome_metadata;
 
     typedef string subsystem;
     typedef string variant;
@@ -164,6 +200,39 @@ module GenomeAnnotation
     typedef tuple<fid,md5,location,function> fid_data_tuple;
     typedef list<fid_data_tuple> fid_data_tuples;
 
+
+    /*
+     * Create a new genome object and assign metadata.
+     */
+    funcdef create_genome(genome_metadata metadata) returns (genomeTO genome);
+
+    /*
+     * Modify genome metadata.
+     */
+    funcdef set_metadata(genomeTO genome_in, genome_metadata metadata) returns (genomeTO genome_out);
+
+    /*
+     * Add a set of contigs to the genome object.
+     */
+    funcdef add_contigs(genomeTO genome_in, list<contig> contigs) returns (genomeTO genome_out);
+
+    /*
+     * Add a set of contigs to the genome object, loading the contigs
+     * from the given handle service handle.
+     */
+    funcdef add_contigs_from_handle(genomeTO genome_in, list<contig> contigs) returns (genomeTO genome_out);
+
+    /*
+     * This tuple defines a compact form for defining features to be batch-loaded
+     * into a genome object.
+     */
+    typedef tuple <string id, string location, string feature_type, string function, string aliases> compact_feature;
+
+    /*
+     * Add a set of features in tabular form.
+     */
+    funcdef add_features(genomeTO genome_in, list<compact_feature> features) returns (genomeTO genome_out);
+
     funcdef genomeTO_to_reconstructionTO (genomeTO) returns (reconstructionTO);
     funcdef genomeTO_to_feature_data (genomeTO) returns (fid_data_tuples);
     funcdef reconstructionTO_to_roles (reconstructionTO) returns (list<role>);
@@ -172,9 +241,6 @@ module GenomeAnnotation
     /*
      * Given a genome object populated with contig data, perform gene calling
      * and functional annotation and return the annotated genome.
-     *
-     *  NOTE: Many of these "transformations" modify the input hash and
-     *        copy the pointer.  Be warned.
      */
     funcdef assign_functions_to_CDSs(genomeTO) returns (genomeTO);
     funcdef annotate_genome(genomeTO) returns (genomeTO);
@@ -291,6 +357,11 @@ module GenomeAnnotation
      * feature types.
      */
     funcdef export_genome(genomeTO genome_in, string format, list<string> feature_types) returns (string exported_data);
+
+    /*
+     * Retrieve the list of supported export formats.
+     */
+    funcdef enumerate_export_formats() returns (list<tuple<string name, string description>>);
 
     /*
      * Enumerate the available classifiers. Returns the list of identifiers for

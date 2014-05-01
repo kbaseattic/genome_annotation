@@ -16,6 +16,11 @@ has 'loggers' => (is => 'ro', required => 1, builder => '_build_loggers');
 our $CallContext;
 
 our %return_counts = (
+        'create_genome' => 1,
+        'set_metadata' => 1,
+        'add_contigs' => 1,
+        'add_contigs_from_handle' => 1,
+        'add_features' => 1,
         'genomeTO_to_reconstructionTO' => 1,
         'genomeTO_to_feature_data' => 1,
         'reconstructionTO_to_roles' => 1,
@@ -63,6 +68,11 @@ sub _build_valid_methods
 {
     my($self) = @_;
     my $methods = {
+        'create_genome' => 1,
+        'set_metadata' => 1,
+        'add_contigs' => 1,
+        'add_contigs_from_handle' => 1,
+        'add_features' => 1,
         'genomeTO_to_reconstructionTO' => 1,
         'genomeTO_to_feature_data' => 1,
         'reconstructionTO_to_roles' => 1,
