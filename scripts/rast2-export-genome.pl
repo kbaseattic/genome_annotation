@@ -54,8 +54,8 @@ rast2-export-genome [-hio] [long options...] format < input > output
 
 =cut
 
-my @valid_format = map { $_->[0] } @CmdHelper::export_formats;
-my %valid_format = map { $_->[0] => 1 } @CmdHelper::export_formats;
+my @valid_format = map { $_->[0] } @Bio::KBase::GenomeAnnotation::CmdHelper::export_formats;
+my %valid_format = map { $_->[0] => 1 } @Bio::KBase::GenomeAnnotation::CmdHelper::export_formats;
 
 my @options = (options_common(), options_export(), [], options_export_formats());
 
