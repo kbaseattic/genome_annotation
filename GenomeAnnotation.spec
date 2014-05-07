@@ -216,7 +216,10 @@ module GenomeAnnotation
      */
     funcdef create_genome_from_SEED(string genome_id) returns (genomeTO genome);
 
-    
+    /*
+     * Create a new genome object based on a RAST genome.
+     */
+    funcdef create_genome_from_RAST(string genome_or_job_id) returns (genomeTO genome) authentication optional;
 
     /*
      * Modify genome metadata.
