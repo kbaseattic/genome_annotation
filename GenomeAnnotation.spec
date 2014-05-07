@@ -219,7 +219,7 @@ module GenomeAnnotation
     /*
      * Create a new genome object based on a RAST genome.
      */
-    funcdef create_genome_from_RAST(string genome_or_job_id) returns (genomeTO genome) authentication optional;
+    funcdef create_genome_from_RAST(string genome_or_job_id) returns (genomeTO genome); /*  authentication optional; */
 
     /*
      * Modify genome metadata.

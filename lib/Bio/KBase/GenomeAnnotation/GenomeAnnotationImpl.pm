@@ -1089,6 +1089,7 @@ sub create_genome_from_RAST
     #BEGIN create_genome_from_RAST
 
     print STDERR "get RAST : ctx=" . Dumper($ctx);
+    $genome = {};
     #END create_genome_from_RAST
     my @_bad_returns;
     (ref($genome) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome\" (value was \"$genome\")");

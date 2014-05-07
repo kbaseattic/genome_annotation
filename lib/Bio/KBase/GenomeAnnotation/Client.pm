@@ -5,7 +5,6 @@ use strict;
 use Data::Dumper;
 use URI;
 use Bio::KBase::Exceptions;
-use Bio::KBase::AuthToken;
 
 # Client version should match Impl version
 # This is a Semantic Version number,
@@ -41,20 +40,6 @@ sub new
 	url => $url,
     };
 
-    #
-    # This module requires authentication.
-    #
-    # We create an auth token, passing through the arguments that we were (hopefully) given.
-
-    {
-	my $token = Bio::KBase::AuthToken->new(@args);
-	
-	if (!$token->error_message)
-	{
-	    $self->{token} = $token->token;
-	    $self->{client}->{token} = $token->token;
-	}
-    }
 
     my $ua = $self->{client}->ua;	 
     my $timeout = $ENV{CDMI_TIMEOUT} || (30 * 60);	 
@@ -1018,7 +1003,7 @@ sub create_genome_from_RAST
 {
     my($self, @args) = @_;
 
-# Authentication: optional
+# Authentication: none
 
     if ((my $n = @args) != 1)
     {
