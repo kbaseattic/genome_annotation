@@ -108,6 +108,7 @@ module GenomeAnnotation
 	string function;
 	string protein_translation;
 	list<string> aliases;
+	list<tuple<string source, string alias>> alias_pairs;
 	list<annotation> annotations;
 	feature_quality_measure quality;
 	analysis_event_id feature_creation_event;
@@ -200,11 +201,22 @@ module GenomeAnnotation
     typedef tuple<fid,md5,location,function> fid_data_tuple;
     typedef list<fid_data_tuple> fid_data_tuples;
 
+    /*
+     * Given one or more Central Store genome IDs, convert them into genome objects.
+     */
+    funcdef genome_ids_to_genomes(list<genome_id> ids) returns (list<genomeTO> genomes);
 
     /*
      * Create a new genome object and assign metadata.
      */
     funcdef create_genome(genome_metadata metadata) returns (genomeTO genome);
+
+    /*
+     * Create a new genome object based on data from the SEED project.
+     */
+    funcdef create_genome_from_SEED(string genome_id) returns (genomeTO genome);
+
+    
 
     /*
      * Modify genome metadata.
@@ -357,11 +369,6 @@ module GenomeAnnotation
      * feature types.
      */
     funcdef export_genome(genomeTO genome_in, string format, list<string> feature_types) returns (string exported_data);
-
-    /*
-     * Retrieve the list of supported export formats.
-     */
-    funcdef enumerate_export_formats() returns (list<tuple<string name, string description>>);
 
     /*
      * Enumerate the available classifiers. Returns the list of identifiers for

@@ -25,7 +25,6 @@ use File::Slurp;
 use Data::Dumper;
 use Digest::MD5 'md5_hex';
 use Time::HiRes 'gettimeofday';
-use Data::Structure::Util qw(unbless);
 
 use Bio::KBase::IDServer::Client;
 use Bio::KBase::KmerAnnotationByFigfam::Client;
@@ -85,8 +84,7 @@ sub _call_using_strep_repeats
 	});
     }
 
-    $genome_in->prepare_for_return();
-    unbless $genome_in;
+    $genome_in = $genome_in->prepare_for_return();
 
     return $genome_in;
 }
@@ -147,6 +145,239 @@ sub new
 }
 
 =head1 METHODS
+
+
+
+=head2 genome_ids_to_genomes
+
+  $genomes = $obj->genome_ids_to_genomes($ids)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$ids is a reference to a list where each element is a genome_id
+$genomes is a reference to a list where each element is a genomeTO
+genome_id is a string
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$ids is a reference to a list where each element is a genome_id
+$genomes is a reference to a list where each element is a genomeTO
+genome_id is a string
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Given one or more Central Store genome IDs, convert them into genome objects.
+
+=back
+
+=cut
+
+sub genome_ids_to_genomes
+{
+    my $self = shift;
+    my($ids) = @_;
+
+    my @_bad_arguments;
+    (ref($ids) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"ids\" (value was \"$ids\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to genome_ids_to_genomes:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'genome_ids_to_genomes');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genomes);
+    #BEGIN genome_ids_to_genomes
+
+    
+
+    #END genome_ids_to_genomes
+    my @_bad_returns;
+    (ref($genomes) eq 'ARRAY') or push(@_bad_returns, "Invalid type for return variable \"genomes\" (value was \"$genomes\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to genome_ids_to_genomes:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'genome_ids_to_genomes');
+    }
+    return($genomes);
+}
+
 
 
 
@@ -211,6 +442,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -305,6 +540,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -386,7 +625,7 @@ sub create_genome
 	my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
 	$genome->{id} = "$id_prefix|g." . $idc->allocate_id_range("$id_prefix|g", 1);
     }
-    $genome->prepare_for_return();
+    $genome = $genome->prepare_for_return();
 
     #END create_genome
     my @_bad_returns;
@@ -395,6 +634,236 @@ sub create_genome
 	my $msg = "Invalid returns passed to create_genome:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
 							       method_name => 'create_genome');
+    }
+    return($genome);
+}
+
+
+
+
+=head2 create_genome_from_SEED
+
+  $genome = $obj->create_genome_from_SEED($genome_id)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_id is a string
+$genome is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_id is a string
+$genome is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Create a new genome object based on data from the SEED project.
+
+=back
+
+=cut
+
+sub create_genome_from_SEED
+{
+    my $self = shift;
+    my($genome_id) = @_;
+
+    my @_bad_arguments;
+    (!ref($genome_id)) or push(@_bad_arguments, "Invalid type for argument \"genome_id\" (value was \"$genome_id\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to create_genome_from_SEED:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'create_genome_from_SEED');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome);
+    #BEGIN create_genome_from_SEED
+    #END create_genome_from_SEED
+    my @_bad_returns;
+    (ref($genome) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome\" (value was \"$genome\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to create_genome_from_SEED:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'create_genome_from_SEED');
     }
     return($genome);
 }
@@ -457,6 +926,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -552,6 +1025,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -630,7 +1107,7 @@ sub set_metadata
 
     $genome_out = GenomeTypeObject->initialize_without_indexes($genome_in);
     $genome_out->set_metadata($metadata);
-    $genome_out->prepare_for_return();
+    $genome_out = $genome_out->prepare_for_return();
     
     #end set_metadata
     my @_bad_returns;
@@ -856,19 +1333,13 @@ sub add_contigs
 
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($genome_out);
-    #BEGIN add_contigs
-
-    $genome_out = GenomeTypeObject->initialize_without_indexes($genome_in);
-    $genome_out->add_contigs($contigs);
-    $genome_out->prepare_for_return();
-
-    #END add_contigs
+    #END set_metadata
     my @_bad_returns;
     (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
     if (@_bad_returns) {
-	my $msg = "Invalid returns passed to add_contigs:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	my $msg = "Invalid returns passed to set_metadata:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'add_contigs');
+							       method_name => 'set_metadata');
     }
     return($genome_out);
 }
@@ -876,9 +1347,9 @@ sub add_contigs
 
 
 
-=head2 add_contigs_from_handle
+=head2 add_contigs
 
-  $genome_out = $obj->add_contigs_from_handle($genome_in, $contigs)
+  $genome_out = $obj->add_contigs($genome_in, $contigs)
 
 =over 4
 
@@ -931,6 +1402,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -1019,6 +1494,248 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Add a set of contigs to the genome object.
+
+=back
+
+=cut
+
+sub add_contigs
+{
+    my $self = shift;
+    my($genome_in, $contigs) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    (ref($contigs) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"contigs\" (value was \"$contigs\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to add_contigs:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_contigs');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN add_contigs
+
+    $genome_out = GenomeTypeObject->initialize_without_indexes($genome_in);
+    $genome_out->add_contigs($contigs);
+    $genome_out = $genome_out->prepare_for_return();
+
+    #END add_contigs
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to add_contigs:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'add_contigs');
+    }
+    return($genome_out);
+}
+
+
+
+
+=head2 add_contigs_from_handle
+
+  $genome_out = $obj->add_contigs_from_handle($genome_in, $contigs)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$contigs is a reference to a list where each element is a contig
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	closeness_measure has a value which is a float
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$contigs is a reference to a list where each element is a contig
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -1157,6 +1874,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -1251,6 +1972,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -1328,7 +2053,7 @@ sub add_features
 
     $genome_out = GenomeTypeObject->initialize();
     $genome_out->add_features_from_list($features);
-    $genome_out->prepare_for_return();
+    $genome_out = $genome_out->prepare_for_return();
     
     #END add_features
     my @_bad_returns;
@@ -1398,6 +2123,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -1506,6 +2235,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -1716,6 +2449,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -1812,6 +2549,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -2198,6 +2939,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -2285,6 +3030,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -2452,6 +3201,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -2539,6 +3292,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -2835,6 +3592,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -2922,6 +3683,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3090,6 +3855,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3177,6 +3946,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3344,6 +4117,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3431,6 +4208,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3569,6 +4350,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3656,6 +4441,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3795,6 +4584,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -3884,6 +4677,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4064,6 +4861,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4151,6 +4952,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4304,6 +5109,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4391,6 +5200,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4609,6 +5422,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4699,6 +5516,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4830,7 +5651,7 @@ sub call_features_CDS_glimmer3
     }
 				
     $return = $genome_in;
-    $return->prepare_for_return();
+    $return = $return->prepare_for_return();
     
     #END call_features_CDS_glimmer3
     my @_bad_returns;
@@ -4900,6 +5721,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -4987,6 +5812,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5141,6 +5970,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5228,6 +6061,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5364,6 +6201,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5451,6 +6292,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5588,6 +6433,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5679,6 +6528,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5829,8 +6682,7 @@ sub call_features_repeat_region_SEED
     }
 
     $genome_out = $genome_in;
-    $genome_out->prepare_for_return();
-    unbless $genome_out;
+    $genome_out = $genome_out->prepare_for_return();
 
     #END call_features_repeat_region_SEED
     my @_bad_returns;
@@ -5900,6 +6752,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -5987,6 +6843,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -6141,6 +7001,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -6230,6 +7094,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -6369,6 +7237,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -6468,6 +7340,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -6598,8 +7474,7 @@ sub annotate_proteins_kmer_v1
     }
     $do_anno->(\@proteins) if @proteins;
     
-    $return = $genome_in;
-    unbless $return;
+    $return = $genome_in->prepare_for_return();
 
     #END annotate_proteins_kmer_v1
     my @_bad_returns;
@@ -6670,6 +7545,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -6761,6 +7640,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -6885,8 +7768,7 @@ sub annotate_proteins_kmer_v2
 	$genome_in->update_function("GenomeAnnotationImpl", $fid, $function, $event_id);
     }
 
-    $genome_out = $genome_in;
-    unbless $genome_out;
+    $genome_out = $genome_in->prepare_for_return();
 
     #END annotate_proteins_kmer_v2
     my @_bad_returns;
@@ -6957,6 +7839,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -7056,6 +7942,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -7214,8 +8104,7 @@ sub call_features_ProtoCDS_kmer_v1
     }
 
     $return = $genome_in;
-    $return->prepare_for_return();
-    unbless $return;
+    $return = $return->prepare_for_return();
 
     #END call_features_ProtoCDS_kmer_v1
     my @_bad_returns;
@@ -7286,6 +8175,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -7377,6 +8270,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -7555,8 +8452,7 @@ sub call_features_ProtoCDS_kmer_v2
     }
 
     $genome_out = $genome_in;
-    $genome_out->prepare_for_return();
-    unbless $genome_out;
+    $genome_out = $genome_out->prepare_for_return();
 
     #END call_features_ProtoCDS_kmer_v2
     my @_bad_returns;
@@ -7626,6 +8522,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -7713,6 +8613,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -7849,6 +8753,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -7936,6 +8844,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8072,6 +8984,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8159,6 +9075,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8295,6 +9215,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8382,6 +9306,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8520,6 +9448,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8607,6 +9539,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8745,6 +9681,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8832,6 +9772,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -8988,6 +9932,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -9077,6 +10025,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -9761,6 +10713,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -9876,6 +10832,10 @@ feature is a reference to a hash where the following keys are defined:
 	function has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
 	annotations has a value which is a reference to a list where each element is an annotation
 	quality has a value which is a feature_quality_measure
 	feature_creation_event has a value which is an analysis_event_id
@@ -10569,6 +11529,10 @@ type has a value which is a feature_type
 function has a value which is a string
 protein_translation has a value which is a string
 aliases has a value which is a reference to a list where each element is a string
+alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+0: (source) a string
+1: (alias) a string
+
 annotations has a value which is a reference to a list where each element is an annotation
 quality has a value which is a feature_quality_measure
 feature_creation_event has a value which is an analysis_event_id
@@ -10586,6 +11550,10 @@ type has a value which is a feature_type
 function has a value which is a string
 protein_translation has a value which is a string
 aliases has a value which is a reference to a list where each element is a string
+alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+0: (source) a string
+1: (alias) a string
+
 annotations has a value which is a reference to a list where each element is an annotation
 quality has a value which is a feature_quality_measure
 feature_creation_event has a value which is an analysis_event_id
