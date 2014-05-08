@@ -7,6 +7,10 @@ export KB_SERVICE_NAME="[% kb_service_name %]"
 export KB_SERVICE_DIR="$KB_TOP/services/[% kb_service_name %]"
 export KB_DEPLOYMENT_CONFIG="$KB_TOP/deployment.cfg"
 
+[% IF kb_tempdir -%]
+export TMPDIR=[% kb_tempdir %]
+export TEMPDIR=[% kb_tempdir %]
+[% END %]
 pid_file=$KB_SERVICE_DIR/service.pid
 
 
