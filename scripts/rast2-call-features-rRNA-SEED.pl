@@ -40,8 +40,8 @@ my $genome_in = load_input($opt);
 
 my $client = get_annotation_client($opt);
 
-my @ftypes = qw(5SU LSU SSU);
-my @req_ftypes = grep { $opt->{"call-$_"} } @ftypes;
+my @ftypes = qw(5S LSU SSU);
+my @req_ftypes = grep { $opt->{"call_" . lc($_)} } @ftypes;
 if (@req_ftypes == 0)
 {
     push(@req_ftypes, 'ALL');
