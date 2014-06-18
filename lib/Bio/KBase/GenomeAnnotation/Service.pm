@@ -63,6 +63,8 @@ our %return_counts = (
         'classify_full' => 3,
         'default_workflow' => 1,
         'run_pipeline' => 1,
+        'pipeline_batch_start' => 1,
+        'pipeline_batch_status' => 1,
         'version' => 1,
 );
 
@@ -119,6 +121,8 @@ sub _build_valid_methods
         'classify_full' => 1,
         'default_workflow' => 1,
         'run_pipeline' => 1,
+        'pipeline_batch_start' => 1,
+        'pipeline_batch_status' => 1,
         'version' => 1,
     };
     return $methods;

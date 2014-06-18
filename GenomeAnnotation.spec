@@ -432,5 +432,13 @@ module GenomeAnnotation
 
     funcdef default_workflow() returns (workflow);
     funcdef run_pipeline(genomeTO genome_in, workflow workflow) returns (genomeTO genome_out);
-/*    funcdef pipeline_batch_start(list<Handle> genomes*/
+    funcdef pipeline_batch_start(list<Handle> genomes, workflow workflow) returns (string batch_id);
+
+    typedef structure
+    {
+	genome_id genome_id;
+	string status;
+	Handle download_handle;
+    } pipeline_batch_genome_status;
+    funcdef pipeline_batch_status(string batch_id) returns (mapping<genome_id, pipeline_batch_genome_status>);
 };

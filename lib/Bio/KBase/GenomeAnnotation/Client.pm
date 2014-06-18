@@ -10689,6 +10689,265 @@ sub run_pipeline
 
 
 
+=head2 pipeline_batch_start
+
+  $batch_id = $obj->pipeline_batch_start($genomes, $workflow)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genomes is a reference to a list where each element is a Handle
+$workflow is a workflow
+$batch_id is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	condition has a value which is a string
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$genomes is a reference to a list where each element is a Handle
+$workflow is a workflow
+$batch_id is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	condition has a value which is a string
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub pipeline_batch_start
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 2)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function pipeline_batch_start (received $n, expecting 2)");
+    }
+    {
+	my($genomes, $workflow) = @args;
+
+	my @_bad_arguments;
+        (ref($genomes) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument 1 \"genomes\" (value was \"$genomes\")");
+        (ref($workflow) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 2 \"workflow\" (value was \"$workflow\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to pipeline_batch_start:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'pipeline_batch_start');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.pipeline_batch_start",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'pipeline_batch_start',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method pipeline_batch_start",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'pipeline_batch_start',
+				       );
+    }
+}
+
+
+
+=head2 pipeline_batch_status
+
+  $return = $obj->pipeline_batch_status($batch_id)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$batch_id is a string
+$return is a reference to a hash where the key is a genome_id and the value is a pipeline_batch_genome_status
+genome_id is a string
+pipeline_batch_genome_status is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a genome_id
+	status has a value which is a string
+	download_handle has a value which is a Handle
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$batch_id is a string
+$return is a reference to a hash where the key is a genome_id and the value is a pipeline_batch_genome_status
+genome_id is a string
+pipeline_batch_genome_status is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a genome_id
+	status has a value which is a string
+	download_handle has a value which is a Handle
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub pipeline_batch_status
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 1)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function pipeline_batch_status (received $n, expecting 1)");
+    }
+    {
+	my($batch_id) = @args;
+
+	my @_bad_arguments;
+        (!ref($batch_id)) or push(@_bad_arguments, "Invalid type for argument 1 \"batch_id\" (value was \"$batch_id\")");
+        if (@_bad_arguments) {
+	    my $msg = "Invalid arguments passed to pipeline_batch_status:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+								   method_name => 'pipeline_batch_status');
+	}
+    }
+
+    my $result = $self->{client}->call($self->{url}, {
+	method => "GenomeAnnotation.pipeline_batch_status",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'pipeline_batch_status',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method pipeline_batch_status",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'pipeline_batch_status',
+				       );
+    }
+}
+
+
+
 sub version {
     my ($self) = @_;
     my $result = $self->{client}->call($self->{url}, {
@@ -10700,16 +10959,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'run_pipeline',
+                method_name => 'pipeline_batch_status',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method run_pipeline",
+            error => "Error invoking method pipeline_batch_status",
             status_line => $self->{client}->status_line,
-            method_name => 'run_pipeline',
+            method_name => 'pipeline_batch_status',
         );
     }
 }
@@ -12211,6 +12470,40 @@ stages has a value which is a reference to a list where each element is a pipeli
 
 a reference to a hash where the following keys are defined:
 stages has a value which is a reference to a list where each element is a pipeline_stage
+
+
+=end text
+
+=back
+
+
+
+=head2 pipeline_batch_genome_status
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+genome_id has a value which is a genome_id
+status has a value which is a string
+download_handle has a value which is a Handle
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+genome_id has a value which is a genome_id
+status has a value which is a string
+download_handle has a value which is a Handle
 
 
 =end text
