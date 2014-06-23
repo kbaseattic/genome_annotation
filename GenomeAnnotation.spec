@@ -348,6 +348,12 @@ module GenomeAnnotation
     
     funcdef annotate_proteins_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);
 
+    typedef structure {
+	int placeholder;
+    } resolve_overlapping_features_parameters;
+
+    funcdef resolve_overlapping_features(genomeTO genome_in, resolve_overlapping_features_parameters params) returns (genomeTO genome_out);
+
     funcdef call_features_ProtoCDS_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);		/* RAST-style kmers */
     funcdef call_features_ProtoCDS_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);		/* Ross's new kmers */
 
@@ -412,6 +418,7 @@ module GenomeAnnotation
 
     typedef structure {
 	string name;
+	string condition;
 	repeat_region_SEED_parameters repeat_region_SEED_parameters;
 	glimmer3_parameters glimmer3_parameters;
 	kmer_v1_parameters kmer_v1_parameters;
@@ -425,4 +432,13 @@ module GenomeAnnotation
 
     funcdef default_workflow() returns (workflow);
     funcdef run_pipeline(genomeTO genome_in, workflow workflow) returns (genomeTO genome_out);
+    funcdef pipeline_batch_start(list<Handle> genomes, workflow workflow) returns (string batch_id);
+
+    typedef structure
+    {
+	genome_id genome_id;
+	string status;
+	Handle download_handle;
+    } pipeline_batch_genome_status;
+    funcdef pipeline_batch_status(string batch_id) returns (mapping<genome_id, pipeline_batch_genome_status>);
 };

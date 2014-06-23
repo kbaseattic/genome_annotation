@@ -15,6 +15,33 @@ rast2-create-genome [--output genome-file] [< genome-file] [> genome-file]
 
 Create a new empty genome object.
 
+The RAST2 pipeline requires a minimal amount of metadata in order to complete its analysis:
+
+=over 4
+
+=item *
+
+The scientific name of the genome. This takes the form minimally of "Genus species" and
+may include a strain specifier. For the most part the pipeline does not interpret the
+name, but some components of the annotation pipeline may produce better results if given
+an accurate scientific name.
+
+=item *
+
+The phylogenetic domain of the genome. Again, there are components of the annotation pipeline that
+produce more accurate results if the domain is specified accurately.  Valid values for this option
+are Bacteria and Archaea.
+
+=item *
+
+The genetic code of the genome. This is used to use the proper DNA to protein translation table.
+Valid values for this option are 11 for Archaea, most Bacteria, most Virii, and some Mitochondria;
+and 4 for Mycoplasmaea, Spiroplasmaea, Ureoplasmaea, and Fungal Mitochondria.
+
+=back
+
+
+
 =head1 COMMAND-LINE OPTIONS
 
 rast2-create-genome [-ho] [long options...] > output

@@ -46,6 +46,7 @@ our %return_counts = (
         'call_features_scan_for_matches' => 1,
         'annotate_proteins_kmer_v1' => 1,
         'annotate_proteins_kmer_v2' => 1,
+        'resolve_overlapping_features' => 1,
         'call_features_ProtoCDS_kmer_v1' => 1,
         'call_features_ProtoCDS_kmer_v2' => 1,
         'annotate_proteins' => 1,
@@ -62,6 +63,8 @@ our %return_counts = (
         'classify_full' => 3,
         'default_workflow' => 1,
         'run_pipeline' => 1,
+        'pipeline_batch_start' => 1,
+        'pipeline_batch_status' => 1,
         'version' => 1,
 );
 
@@ -101,6 +104,7 @@ sub _build_valid_methods
         'call_features_scan_for_matches' => 1,
         'annotate_proteins_kmer_v1' => 1,
         'annotate_proteins_kmer_v2' => 1,
+        'resolve_overlapping_features' => 1,
         'call_features_ProtoCDS_kmer_v1' => 1,
         'call_features_ProtoCDS_kmer_v2' => 1,
         'annotate_proteins' => 1,
@@ -117,6 +121,8 @@ sub _build_valid_methods
         'classify_full' => 1,
         'default_workflow' => 1,
         'run_pipeline' => 1,
+        'pipeline_batch_start' => 1,
+        'pipeline_batch_status' => 1,
         'version' => 1,
     };
     return $methods;

@@ -9,11 +9,7 @@ rast2-process-genome
 
 =head1 SYNOPSIS
 
-  rast2-process-genome --scientific-name "Genus species"
-                       --domain Bacteria
-		       --genetic-code 11
-		       --output-format genbank
-		       < genome.contigs.fa > genome.gbk
+  rast2-process-genome --output-format genbank < unannotated.genome.gto > genome.gbk
 
   rast2-process-genome --batch-input-directory my.genomes.dir
 
@@ -35,39 +31,14 @@ computation and to retrieve the results when they have been completed.
 
 =head2 Input Formats and Metadata
 
-The RAST2 pipeline takes as input genomic contigs in L<FASTA|http://en.wikipedia.org/wiki/FASTA_format> format. Each contig
-must have a unique identifier on each definition line.
+The RAST2 pipeline takes as input genomes in the KBase genome typed object format; these
+may be created from contigs data in FASTA format by the L<rast2-create-genome> script.
 
-In immediate mode, the contigs are provided either from the standard input (by default) or
+In immediate mode, the input is provided either from the standard input (by default) or
 via a file specfied using the C<--input> parameter.
 
 In batch mode, the location of the contig is defined by the batch-mode description files. See
 L<BATCH FORMAT> for more details.
-
-The RAST2 pipeline also requires a minimal amount of metadata in order to complete its analysis.
-
-=over 4
-
-=item *
-
-The scientific name of the genome. This takes the form minimally of "Genus species" and
-may include a strain specifier. For the most part the pipeline does not interpret the
-name, but some components of the annotation pipeline may produce better results if given
-an accurate scientific name.
-
-=item *
-
-The genetic code of the genome. This is used to use the proper DNA to protein translation table.
-Valid values for this option are 11 for Archaea, most Bacteria, most Virii, and some Mitochondria;
-and 4 for Mycoplasmaea, Spiroplasmaea, Ureoplasmaea, and Fungal Mitochondria.
-
-=item *
-
-The phylogenetic domain of the genome. Again, there are components of the annotation pipeline that
-produce more accurate results if the domain is specified accurately.  Valid values for this option
-are Bacteria and Archaea.
-
-=back
 
 In immediate mode the genome metadata must be specified using the C<--scientific-name>, C<--domain>,
 and C<--genetic-code> parameters.
