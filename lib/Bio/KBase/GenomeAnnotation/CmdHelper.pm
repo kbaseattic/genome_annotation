@@ -15,6 +15,7 @@ our @EXPORT_OK = qw(load_input write_output get_annotation_client write_text_out
 		    options_help options_common options_kmer_v1 options_kmer_v2 options_rrna_seed options_glimmer3
 		    options_repeat_regions_seed options_export options_classifier options_genome_metadata
 		    options_genome_in options_genome_out options_contigs options_export_formats
+		    options_workflow_specification
 		    get_input_fh get_output_fh 
 		   );
 our %EXPORT_TAGS = (all => \@EXPORT_OK);
@@ -44,6 +45,10 @@ sub options_contigs
     return(['contigs=s', 'Fasta file containing DNA contig data']);
 }
 	
+sub options_workflow_specification
+{
+    return(['workflow=s', 'File containing genome processing workflow specification']);
+}
 
 sub options_help
 {
