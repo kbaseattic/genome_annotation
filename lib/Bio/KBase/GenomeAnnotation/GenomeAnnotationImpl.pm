@@ -34,6 +34,8 @@ use KmerClassifier;
 use IPC::Run qw(run);
 use JSON::XS;
 use File::Slurp;
+use Bio::KBase::GenomeAnnotation::Awe;
+use Bio::KBase::GenomeAnnotation::Shock;
 
 use Bio::KBase::GenomeAnnotation::Glimmer;
 use GenomeTypeObject;
@@ -129,6 +131,7 @@ sub new
     $idserver_url = $i if $i;
 
     $self->{kmer_service_url} = $cfg->setting("kmer_service_url");
+    $self->{awe_server} = $cfg->setting("awe_server");
 
     print STDERR "kmer_v2_data_directory = $dir\n";
     print STDERR "idserver = $idserver_url\n";
@@ -11629,6 +11632,30 @@ sub pipeline_batch_start
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($batch_id);
     #BEGIN pipeline_batch_start
+
+    #
+    # Construct an AWE workflow and submit it to our AWE server.
+    #
+    # The genomes have already been uploaded - the genomes list here is a
+    # list of handle objects.
+    #
+    # The workflow we create will have one task per genome submitted. The data
+    # passed to each task are the serialized form of the handle and the
+    # workflow description.
+    #
+
+    my $json = JSON::XS->new->pretty(1);
+    my $shock = Bio::KBase::GenomeAnnotation::Awe->new($self->{shock_server}, $ctx->token);
+    my $awe = Bio::KBase::GenomeAnnotation::Awe->new($self->{awe_server}, $ctx->token);
+
+    for my $handle (@$genomes)
+    {
+	my $txt = $json->encode([$handle, $workflow]);
+	my $node = $shock->put_file_data($
+    }
+	
+    
+    
     #END pipeline_batch_start
     my @_bad_returns;
     (!ref($batch_id)) or push(@_bad_returns, "Invalid type for return variable \"batch_id\" (value was \"$batch_id\")");

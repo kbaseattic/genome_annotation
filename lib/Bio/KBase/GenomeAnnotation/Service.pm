@@ -4,6 +4,7 @@ use Data::Dumper;
 use Moose;
 use JSON;
 use Bio::KBase::Log;
+use Bio::KBase::AuthToken;
 
 extends 'RPC::Any::Server::JSONRPC::PSGI';
 
@@ -68,6 +69,57 @@ our %return_counts = (
         'version' => 1,
 );
 
+our %method_authentication = (
+        'genome_ids_to_genomes' => 'none',
+        'create_genome' => 'none',
+        'create_genome_from_SEED' => 'none',
+        'create_genome_from_RAST' => 'none',
+        'set_metadata' => 'none',
+        'add_contigs' => 'none',
+        'add_contigs_from_handle' => 'none',
+        'add_features' => 'none',
+        'genomeTO_to_reconstructionTO' => 'none',
+        'genomeTO_to_feature_data' => 'none',
+        'reconstructionTO_to_roles' => 'none',
+        'reconstructionTO_to_subsystems' => 'none',
+        'assign_functions_to_CDSs' => 'none',
+        'annotate_genome' => 'none',
+        'call_selenoproteins' => 'none',
+        'call_pyrrolysoproteins' => 'none',
+        'call_features_selenoprotein' => 'none',
+        'call_features_pyrrolysoprotein' => 'none',
+        'call_features_rRNA_SEED' => 'none',
+        'call_features_tRNA_trnascan' => 'none',
+        'call_RNAs' => 'none',
+        'call_features_CDS_glimmer3' => 'none',
+        'call_features_CDS_prodigal' => 'none',
+        'call_features_CDS_SEED_projection' => 'none',
+        'call_features_CDS_FragGeneScan' => 'none',
+        'call_features_repeat_region_SEED' => 'none',
+        'call_features_prophage_phispy' => 'none',
+        'call_features_scan_for_matches' => 'none',
+        'annotate_proteins_kmer_v1' => 'none',
+        'annotate_proteins_kmer_v2' => 'none',
+        'resolve_overlapping_features' => 'none',
+        'call_features_ProtoCDS_kmer_v1' => 'none',
+        'call_features_ProtoCDS_kmer_v2' => 'none',
+        'annotate_proteins' => 'none',
+        'estimate_crude_phylogenetic_position_kmer' => 'none',
+        'find_close_neighbors' => 'none',
+        'call_features_strep_suis_repeat' => 'none',
+        'call_features_strep_pneumo_repeat' => 'none',
+        'call_features_crispr' => 'none',
+        'export_genome' => 'none',
+        'enumerate_classifiers' => 'none',
+        'query_classifier_groups' => 'none',
+        'query_classifier_taxonomies' => 'none',
+        'classify_into_bins' => 'none',
+        'classify_full' => 'none',
+        'default_workflow' => 'none',
+        'run_pipeline' => 'none',
+        'pipeline_batch_start' => 'required',
+        'pipeline_batch_status' => 'none',
+);
 
 
 sub _build_valid_methods
@@ -247,7 +299,37 @@ sub call_method {
     
     my $args = $data->{arguments};
 
-    # Service GenomeAnnotation does not require authentication.
+{
+    # Service GenomeAnnotation requires authentication.
+
+    my $method_auth = $method_authentication{$method};
+    $ctx->authenticated(0);
+    if ($method_auth eq 'none')
+    {
+	# No authentication required here. Move along.
+    }
+    else
+    {
+	my $token = $self->_plack_req->header("Authorization");
+
+	if (!$token && $method_auth eq 'required')
+	{
+	    $self->exception('PerlError', "Authentication required for GenomeAnnotation but no authentication header was passed");
+	}
+
+	my $auth_token = Bio::KBase::AuthToken->new(token => $token, ignore_authrc => 1);
+	my $valid = $auth_token->validate();
+	# Only throw an exception if authentication was required and it fails
+	if ($method_auth eq 'required' && !$valid)
+	{
+	    $self->exception('PerlError', "Token validation failed: " . $auth_token->error_message);
+	} elsif ($valid) {
+	    $ctx->authenticated(1);
+	    $ctx->user_id($auth_token->user_id);
+	    $ctx->token( $token);
+	}
+    }
+}
     my $new_isa = $self->get_package_isa($module);
     no strict 'refs';
     local @{"${module}::ISA"} = @$new_isa;
