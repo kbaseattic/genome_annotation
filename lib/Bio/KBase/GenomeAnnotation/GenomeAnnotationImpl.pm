@@ -11651,7 +11651,7 @@ sub pipeline_batch_start
     for my $handle (@$genomes)
     {
 	my $txt = $json->encode([$handle, $workflow]);
-	my $node = $shock->put_file_data($
+#	my $node = $shock->put_file_data();
     }
 	
     
