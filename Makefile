@@ -17,6 +17,11 @@ SERVICE_NAME_PY = $(SERVICE_NAME)
 
 SERVICE_PSGI_FILE = $(SERVICE_NAME).psgi
 
+SRC_SERVICE_PERL = $(wildcard service-scripts/*.pl)
+BIN_SERVICE_PERL = $(addprefix $(BIN_DIR)/,$(basename $(notdir $(SRC_SERVICE_PERL))))
+DEPLOY_SERVICE_PERL = $(addprefix $(SERVICE_DIR)/bin/,$(basename $(notdir $(SRC_SERVICE_PERL))))
+
+
 ifdef TEMPDIR
 TPAGE_TEMPDIR = --define kb_tempdir=$(TEMPDIR)
 endif
@@ -66,7 +71,7 @@ compile-typespec: Makefile
 	-rm -f lib/$(SERVER_MODULE)Impl.py
 	-rm -f lib/CDMI_EntityAPIImpl.py
 
-bin: $(BIN_PERL) $(BIN_DIR)/kmer_guts
+bin: $(BIN_PERL) $(BIN_DIR)/kmer_guts $(BIN_SERVICE_PERL)
 
 $(BIN_DIR)/kmer_guts: src/kmer_guts
 	rm -f $(BIN_DIR)/kmer_guts
@@ -83,11 +88,24 @@ deploy-guts: deploy-dir
 	rm -f $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 	cp $(BIN_DIR)/kmer_guts $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 
-deploy-service: deploy-dir deploy-monit deploy-libs deploy-guts
+deploy-service: deploy-dir deploy-monit deploy-libs deploy-guts deploy-service-scripts
 	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
 	chmod +x $(TARGET)/services/$(SERVICE)/start_service
 	$(TPAGE) $(TPAGE_ARGS) service/stop_service.tt > $(TARGET)/services/$(SERVICE)/stop_service
 	chmod +x $(TARGET)/services/$(SERVICE)/stop_service
+
+deploy-service-scripts:
+	export KB_TOP=$(TARGET); \
+	export KB_RUNTIME=$(DEPLOY_RUNTIME); \
+	export KB_PERL_PATH=$(TARGET)/lib ; \
+	export PATH_PREFIX=$(TARGET)/services/$(SERVICE)/bin:$(TARGET)/services/cdmi_api/bin; \
+	for src in $(SRC_SERVICE_PERL) ; do \
+	        basefile=`basename $$src`; \
+	        base=`basename $$src .pl`; \
+	        echo install $$src $$base ; \
+	        cp $$src $(TARGET)/plbin ; \
+	        $(WRAP_PERL_SCRIPT) "$(TARGET)/plbin/$$basefile" $(TARGET)/services/$(SERVICE)/bin/$$base ; \
+	done
 
 deploy-monit:
 	$(TPAGE) $(TPAGE_ARGS) service/process.$(SERVICE).tt > $(TARGET)/services/$(SERVICE)/process.$(SERVICE)
