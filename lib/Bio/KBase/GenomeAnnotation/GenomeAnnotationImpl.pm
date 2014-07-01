@@ -11477,7 +11477,7 @@ sub run_pipeline
 
 	    if ($@)
 	    {
-		print STDERR "Error invoking method $method: $@";
+		die "Error invoking method $method: $@";
 	    }
 	    else
 	    {
