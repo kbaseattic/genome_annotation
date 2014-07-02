@@ -440,7 +440,7 @@ module GenomeAnnotation
 	Handle stdout;
 	Handle stderr;
 	Handle output;
-    } batch_status_entry;
+    } pipeline_batch_status_entry;
 
     funcdef pipeline_batch_start(list<Handle> genomes, workflow workflow)
 	returns (string batch_id) authentication required;
