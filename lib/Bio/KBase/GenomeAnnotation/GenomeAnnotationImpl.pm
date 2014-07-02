@@ -133,7 +133,7 @@ sub new
     $self->{kmer_service_url} = $cfg->setting("kmer_service_url");
     $self->{awe_server} = $cfg->setting("awe_server");
 
-    print STDERR "kmer_v2_data_directory = $dir\n";
+    print STDERR "kmer_v2_data_directory = $self->{kmer_v2_data_directory}\n";
     print STDERR "idserver = $idserver_url\n";
 
     my $h = `hostname`;

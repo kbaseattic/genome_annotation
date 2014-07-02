@@ -433,8 +433,19 @@ module GenomeAnnotation
     funcdef default_workflow() returns (workflow);
     funcdef run_pipeline(genomeTO genome_in, workflow workflow) returns (genomeTO genome_out);
 
+    typedef structure
+    {
+	string genome_id;
+	string status;
+	Handle stdout;
+	Handle stderr;
+	Handle output;
+    } batch_status_entry;
+
     funcdef pipeline_batch_start(list<Handle> genomes, workflow workflow)
 	returns (string batch_id) authentication required;
+    funcdef pipeline_batch_query(string batch_id)
+	returns (mapping<string genome_id, pipline_batch_status_entry genome_status> status) authentication required;
 
     typedef structure
     {
