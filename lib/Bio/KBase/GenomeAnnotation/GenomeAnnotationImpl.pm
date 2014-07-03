@@ -11866,7 +11866,7 @@ sub pipeline_batch_status
 	start_date => $job->{info}->{startedtime},
 	completion_date => $job->{info}->{completedtime},
 	details => $details,
-    }
+    };
     
     #END pipeline_batch_status
     my @_bad_returns;
