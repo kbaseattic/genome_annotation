@@ -153,7 +153,8 @@ sub TO_JSON
      
 sub add_task
 {
-    my($self, $description, $cmd, $args, $deps, $inputs, $outputs, $partinfo, $totalwork, $awe) = @_;
+    my($self, $description, $cmd, $args, $deps, $inputs, $outputs, $partinfo, $totalwork, $awe,
+       $userattr) = @_;
 
     $partinfo = {} unless ref($partinfo);
     

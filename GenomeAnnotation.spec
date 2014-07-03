@@ -436,22 +436,20 @@ module GenomeAnnotation
     typedef structure
     {
 	string genome_id;
+	Handle data;
+    } pipeline_batch_input;
+
+    typedef structure
+    {
+	string genome_id;
 	string status;
 	Handle stdout;
 	Handle stderr;
 	Handle output;
     } pipeline_batch_status_entry;
 
-    funcdef pipeline_batch_start(list<Handle> genomes, workflow workflow)
+    funcdef pipeline_batch_start(list<pipeline_batch_input> genomes, workflow workflow)
 	returns (string batch_id) authentication required;
-    funcdef pipeline_batch_query(string batch_id)
-	returns (mapping<string genome_id, pipeline_batch_status_entry genome_status> status) authentication required;
-
-    typedef structure
-    {
-	genome_id genome_id;
-	string status;
-	Handle download_handle;
-    } pipeline_batch_genome_status;
-    funcdef pipeline_batch_status(string batch_id) returns (mapping<genome_id, pipeline_batch_genome_status>);
+    funcdef pipeline_batch_status(string batch_id)
+	returns (pipeline_batch_status_entry genome_status) authentication required;
 };

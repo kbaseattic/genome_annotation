@@ -10715,9 +10715,12 @@ sub run_pipeline
 =begin html
 
 <pre>
-$genomes is a reference to a list where each element is a Handle
+$genomes is a reference to a list where each element is a pipeline_batch_input
 $workflow is a workflow
 $batch_id is a string
+pipeline_batch_input is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
+	data has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10760,9 +10763,12 @@ kmer_v2_parameters is a reference to a hash where the following keys are defined
 
 =begin text
 
-$genomes is a reference to a list where each element is a Handle
+$genomes is a reference to a list where each element is a pipeline_batch_input
 $workflow is a workflow
 $batch_id is a string
+pipeline_batch_input is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
+	data has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10860,7 +10866,7 @@ sub pipeline_batch_start
 
 =head2 pipeline_batch_status
 
-  $return = $obj->pipeline_batch_status($batch_id)
+  $genome_status = $obj->pipeline_batch_status($batch_id)
 
 =over 4
 
@@ -10870,12 +10876,13 @@ sub pipeline_batch_start
 
 <pre>
 $batch_id is a string
-$return is a reference to a hash where the key is a genome_id and the value is a pipeline_batch_genome_status
-genome_id is a string
-pipeline_batch_genome_status is a reference to a hash where the following keys are defined:
-	genome_id has a value which is a genome_id
+$genome_status is a pipeline_batch_status_entry
+pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
 	status has a value which is a string
-	download_handle has a value which is a Handle
+	stdout has a value which is a Handle
+	stderr has a value which is a Handle
+	output has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10891,12 +10898,13 @@ Handle is a reference to a hash where the following keys are defined:
 =begin text
 
 $batch_id is a string
-$return is a reference to a hash where the key is a genome_id and the value is a pipeline_batch_genome_status
-genome_id is a string
-pipeline_batch_genome_status is a reference to a hash where the following keys are defined:
-	genome_id has a value which is a genome_id
+$genome_status is a pipeline_batch_status_entry
+pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
 	status has a value which is a string
-	download_handle has a value which is a Handle
+	stdout has a value which is a Handle
+	stderr has a value which is a Handle
+	output has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10920,7 +10928,7 @@ sub pipeline_batch_status
 {
     my($self, @args) = @_;
 
-# Authentication: none
+# Authentication: required
 
     if ((my $n = @args) != 1)
     {
@@ -12493,7 +12501,7 @@ stages has a value which is a reference to a list where each element is a pipeli
 
 
 
-=head2 pipeline_batch_genome_status
+=head2 pipeline_batch_input
 
 =over 4
 
@@ -12505,9 +12513,8 @@ stages has a value which is a reference to a list where each element is a pipeli
 
 <pre>
 a reference to a hash where the following keys are defined:
-genome_id has a value which is a genome_id
-status has a value which is a string
-download_handle has a value which is a Handle
+genome_id has a value which is a string
+data has a value which is a Handle
 
 </pre>
 
@@ -12516,9 +12523,46 @@ download_handle has a value which is a Handle
 =begin text
 
 a reference to a hash where the following keys are defined:
-genome_id has a value which is a genome_id
+genome_id has a value which is a string
+data has a value which is a Handle
+
+
+=end text
+
+=back
+
+
+
+=head2 pipeline_batch_status_entry
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+genome_id has a value which is a string
 status has a value which is a string
-download_handle has a value which is a Handle
+stdout has a value which is a Handle
+stderr has a value which is a Handle
+output has a value which is a Handle
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+genome_id has a value which is a string
+status has a value which is a string
+stdout has a value which is a Handle
+stderr has a value which is a Handle
+output has a value which is a Handle
 
 
 =end text
