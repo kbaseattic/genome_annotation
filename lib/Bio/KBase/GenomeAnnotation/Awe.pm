@@ -168,7 +168,6 @@ sub add_task
 	    host => $inp->host,
 	    node => $inp->node,
 	    defined($inp->origin) ? (origin => "" . $inp->origin) : (),
-	    defined($userattr) ? (userattr => $userattr) : (),
 	};
     }
 
@@ -212,6 +211,7 @@ sub add_task
 	taskid => "" . $taskid,
 	skip => 0,
 	totalwork => ($totalwork || 1),
+	defined($userattr) ? (userattr => $userattr) : (),
     };
     push(@{$self->{tasks}}, $task);
     return $taskid;
