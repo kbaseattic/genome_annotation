@@ -11718,10 +11718,13 @@ sub pipeline_batch_start
 
 <pre>
 $batch_id is a string
-$genome_status is a pipeline_batch_status_entry
+$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
 	stdout has a value which is a Handle
 	stderr has a value which is a Handle
 	output has a value which is a Handle
@@ -11740,10 +11743,13 @@ Handle is a reference to a hash where the following keys are defined:
 =begin text
 
 $batch_id is a string
-$genome_status is a pipeline_batch_status_entry
+$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
 	stdout has a value which is a Handle
 	stderr has a value which is a Handle
 	output has a value which is a Handle
@@ -11788,11 +11794,58 @@ sub pipeline_batch_status
     my $awe = Bio::KBase::GenomeAnnotation::Awe->new($self->{awe_server}, $ctx->token);
     
     my $job = $awe->job($batch_id);
-    print STDERR Dumper($job);
+
+    #
+    # We could check to see if the job's user matches the authenticated user here. I
+    # don't think it's necessary at this point.
+    #
+
+    #
+    # Loop over the tasks collecting the status / file information to be formatted and returned.
+    #
+
+    my $tasks = $job->{tasks};
+
+    $genome_status = [];
+
+    for my $task (@$tasks)
+    {
+	my $tinfo = {
+	    genome_id => $task->{userattr}->{genome_id},
+	    status => $task->{state},
+	    creation_date => $task->{createddate},
+	    start_date => $task->{starteddate},
+	    completion_date => $task->{completeddate},
+	};
+
+	my @outfiles = keys %{$task->{outputs}};
+	for my $o (@outfiles)
+	{
+	    my $key;
+	    if ($o =~ /^stderr/) { $key = 'stderr'; }
+	    elsif ($o =~ /^stdout/ ) { $key = 'stdout'; }
+	    elsif ($o =~ /^pipeoutput/) { $key = 'output'; }
+	    else { next; }
+	
+	    my $f = $task->{outputs}->{$o};
+	    if ($f->{url} ne '')
+	    {
+		$tinfo->{$key} = {
+		    file_name => $o,
+		    id => $f->{node},
+		    type => 'shock',
+		    url => $f->{host},
+		    remote_md5 => '',
+		    remote_sha1 => '',
+		};
+	    }
+	}
+	push (@$genome_status, $tinfo);
+    }
     
     #END pipeline_batch_status
     my @_bad_returns;
-    (ref($genome_status) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_status\" (value was \"$genome_status\")");
+    (ref($genome_status) eq 'ARRAY') or push(@_bad_returns, "Invalid type for return variable \"genome_status\" (value was \"$genome_status\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to pipeline_batch_status:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -13361,6 +13414,9 @@ data has a value which is a Handle
 a reference to a hash where the following keys are defined:
 genome_id has a value which is a string
 status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
 stdout has a value which is a Handle
 stderr has a value which is a Handle
 output has a value which is a Handle
@@ -13374,6 +13430,9 @@ output has a value which is a Handle
 a reference to a hash where the following keys are defined:
 genome_id has a value which is a string
 status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
 stdout has a value which is a Handle
 stderr has a value which is a Handle
 output has a value which is a Handle

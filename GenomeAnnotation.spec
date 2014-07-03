@@ -443,6 +443,10 @@ module GenomeAnnotation
     {
 	string genome_id;
 	string status;
+	string creation_date;
+	string start_date;
+	string completion_date;
+	
 	Handle stdout;
 	Handle stderr;
 	Handle output;
@@ -451,5 +455,5 @@ module GenomeAnnotation
     funcdef pipeline_batch_start(list<pipeline_batch_input> genomes, workflow workflow)
 	returns (string batch_id) authentication required;
     funcdef pipeline_batch_status(string batch_id)
-	returns (pipeline_batch_status_entry genome_status) authentication required;
+	returns (list<pipeline_batch_status_entry> genome_status) authentication required;
 };
