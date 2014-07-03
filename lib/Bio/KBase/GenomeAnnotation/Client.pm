@@ -10876,10 +10876,13 @@ sub pipeline_batch_start
 
 <pre>
 $batch_id is a string
-$genome_status is a pipeline_batch_status_entry
+$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
 	stdout has a value which is a Handle
 	stderr has a value which is a Handle
 	output has a value which is a Handle
@@ -10898,10 +10901,13 @@ Handle is a reference to a hash where the following keys are defined:
 =begin text
 
 $batch_id is a string
-$genome_status is a pipeline_batch_status_entry
+$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
 	stdout has a value which is a Handle
 	stderr has a value which is a Handle
 	output has a value which is a Handle
@@ -12547,6 +12553,9 @@ data has a value which is a Handle
 a reference to a hash where the following keys are defined:
 genome_id has a value which is a string
 status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
 stdout has a value which is a Handle
 stderr has a value which is a Handle
 output has a value which is a Handle
@@ -12560,6 +12569,9 @@ output has a value which is a Handle
 a reference to a hash where the following keys are defined:
 genome_id has a value which is a string
 status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
 stdout has a value which is a Handle
 stderr has a value which is a Handle
 output has a value which is a Handle
