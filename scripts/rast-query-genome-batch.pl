@@ -38,5 +38,5 @@ my $batch_id = shift;
 
 my $client = get_annotation_client($opt);
 
-my $status = $client->pipeline_batch_query($batch_id);
-
+my $status = $client->pipeline_batch_status($batch_id);
+print Dumper($status);
