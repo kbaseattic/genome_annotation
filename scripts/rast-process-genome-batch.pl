@@ -76,8 +76,8 @@ for my $file (@files)
 
     my $gobj = parse_json_file($path);
     my $handle = $hservice->upload($path);
-    print "Uploaded $path: " . Dumper($handle);
-    push(@genomes, { genome_id => $goj->{id}, data => $handle});
+    print "Uploaded $path: " . Dumper($handle, $gobj->{id});
+    push(@genomes, { genome_id => $gobj->{id}, data => $handle});
 }
 
 my $batch_id = $client->pipeline_batch_start(\@genomes, $workflow);
@@ -89,6 +89,6 @@ sub parse_json_file
     local $/;
     undef $/;
     my $fh;
-    open($fh, "<", $file) or die "Cannot open $file: $!';
+    open($fh, "<", $file) or die "Cannot open $file: $!";
     return decode_json(scalar <$fh>);
 }
