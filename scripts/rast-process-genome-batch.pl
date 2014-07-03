@@ -51,18 +51,12 @@ my $workflow;
 
 if ($opt->workflow)
 {
-    open(F, "<", $opt->workflow) or die "Cannot open workflow file " . $opt->workflow . ": $!\n";
-    local $/;
-    undef $/;
-    $workflow = decode_json(scalar <F>);
-    close(F);
+    $workflow = parse_json_file($opt->workflow);
 }
 else
 {
     $workflow = $client->default_workflow();
 }
-
-die Dumper($workflow);
 
 #
 # For each file in the directory, we push to the handle service and retain
@@ -74,16 +68,27 @@ opendir(D, $dir) or die "Cannot open genome directory $dir: $!\n";
 
 my @files = sort { $a <=> $b } grep { !/^\./ && -f "$dir/$_" } readdir(D);
 
-my @handles;
+my @genomes;
 
 for my $file (@files)
 {
     my $path = "$dir/$file";
 
+    my $gobj = parse_json_file($path);
     my $handle = $hservice->upload($path);
     print "Uploaded $path: " . Dumper($handle);
-    push(@handles, $handle);
+    push(@genomes, { genome_id => $goj->{id}, data => $handle});
 }
 
-my $batch_id = $client->pipeline_batch_start(\@handles, $workflow);
+my $batch_id = $client->pipeline_batch_start(\@genomes, $workflow);
+print "$batch_id\n";
 
+sub parse_json_file
+{
+    my($file) = @_;
+    local $/;
+    undef $/;
+    my $fh;
+    open($fh, "<", $file) or die "Cannot open $file: $!';
+    return decode_json(scalar <$fh>);
+}

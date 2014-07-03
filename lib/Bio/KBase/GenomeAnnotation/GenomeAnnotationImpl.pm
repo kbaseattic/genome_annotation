@@ -11518,9 +11518,12 @@ sub run_pipeline
 =begin html
 
 <pre>
-$genomes is a reference to a list where each element is a Handle
+$genomes is a reference to a list where each element is a pipeline_batch_input
 $workflow is a workflow
 $batch_id is a string
+pipeline_batch_input is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
+	data has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11563,9 +11566,12 @@ kmer_v2_parameters is a reference to a hash where the following keys are defined
 
 =begin text
 
-$genomes is a reference to a list where each element is a Handle
+$genomes is a reference to a list where each element is a pipeline_batch_input
 $workflow is a workflow
 $batch_id is a string
+pipeline_batch_input is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
+	data has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11645,16 +11651,45 @@ sub pipeline_batch_start
     #
 
     my $json = JSON::XS->new->pretty(1);
-    my $shock = Bio::KBase::GenomeAnnotation::Awe->new($self->{shock_server}, $ctx->token);
+    my $shock = Bio::KBase::GenomeAnnotation::Shock->new($self->{shock_server}, $ctx->token);
     my $awe = Bio::KBase::GenomeAnnotation::Awe->new($self->{awe_server}, $ctx->token);
-
-    for my $handle (@$genomes)
-    {
-	my $txt = $json->encode([$handle, $workflow]);
-#	my $node = $shock->put_file_data();
-    }
-	
     
+    my $job = Bio::KBase::GenomeAnnotation::Awe::JobDescription->new(pipeline => 'rasttk',
+								     name => 'rasttk',
+								     project => 'rasttk',
+								     user => $ctx->user_id,
+								     clientgroups => '');
+    
+    my $i = 0;
+    for my $gspec (@$genomes)
+    {
+	my($genome_id, $handle) = @$gspec{'genome_id', 'data'};
+	
+	my $txt = $json->encode([$handle, $workflow]);
+	my $node = $shock->put_file_data($txt);
+	
+	my $in_file = Bio::KBase::GenomeAnnotation::Awe::JobFile->new("pipeinput_$i.json", $shock->server, $node);
+	my $out_file = Bio::KBase::GenomeAnnotation::Awe::JobFile->new("pipeoutput_$i.json", $shock->server);
+	my $stdout_file = Bio::KBase::GenomeAnnotation::Awe::JobFile->new("stdout_$i.txt", $shock->server);
+	my $stderr_file = Bio::KBase::GenomeAnnotation::Awe::JobFile->new("stderr_$i.txt", $shock->server);
+	$i++;
+	
+	my $id = $job->add_task("rast_run_pipeline_local",
+				"rast_run_pipeline_local",
+				join(" ",
+				     $in_file->in_name,
+				     $out_file->name,
+				     $stdout_file->name,
+				     $stderr_file->name),
+				[],
+				[$in_file],
+				[$out_file, $stdout_file, $stderr_file],
+				undef, undef, $awe,
+			        { genome_id => $genome_id });
+    }
+    
+    $batch_id = $awe->submit($job);
+    print STDERR "submitted $batch_id\n";
     
     #END pipeline_batch_start
     my @_bad_returns;
@@ -11672,7 +11707,7 @@ sub pipeline_batch_start
 
 =head2 pipeline_batch_status
 
-  $return = $obj->pipeline_batch_status($batch_id)
+  $genome_status = $obj->pipeline_batch_status($batch_id)
 
 =over 4
 
@@ -11682,12 +11717,13 @@ sub pipeline_batch_start
 
 <pre>
 $batch_id is a string
-$return is a reference to a hash where the key is a genome_id and the value is a pipeline_batch_genome_status
-genome_id is a string
-pipeline_batch_genome_status is a reference to a hash where the following keys are defined:
-	genome_id has a value which is a genome_id
+$genome_status is a pipeline_batch_status_entry
+pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
 	status has a value which is a string
-	download_handle has a value which is a Handle
+	stdout has a value which is a Handle
+	stderr has a value which is a Handle
+	output has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11703,12 +11739,13 @@ Handle is a reference to a hash where the following keys are defined:
 =begin text
 
 $batch_id is a string
-$return is a reference to a hash where the key is a genome_id and the value is a pipeline_batch_genome_status
-genome_id is a string
-pipeline_batch_genome_status is a reference to a hash where the following keys are defined:
-	genome_id has a value which is a genome_id
+$genome_status is a pipeline_batch_status_entry
+pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
+	genome_id has a value which is a string
 	status has a value which is a string
-	download_handle has a value which is a Handle
+	stdout has a value which is a Handle
+	stderr has a value which is a Handle
+	output has a value which is a Handle
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11744,17 +11781,17 @@ sub pipeline_batch_status
     }
 
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
-    my($return);
+    my($genome_status);
     #BEGIN pipeline_batch_status
     #END pipeline_batch_status
     my @_bad_returns;
-    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
+    (ref($genome_status) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_status\" (value was \"$genome_status\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to pipeline_batch_status:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
 							       method_name => 'pipeline_batch_status');
     }
-    return($return);
+    return($genome_status);
 }
 
 
@@ -13271,7 +13308,7 @@ stages has a value which is a reference to a list where each element is a pipeli
 
 
 
-=head2 pipeline_batch_genome_status
+=head2 pipeline_batch_input
 
 =over 4
 
@@ -13283,9 +13320,8 @@ stages has a value which is a reference to a list where each element is a pipeli
 
 <pre>
 a reference to a hash where the following keys are defined:
-genome_id has a value which is a genome_id
-status has a value which is a string
-download_handle has a value which is a Handle
+genome_id has a value which is a string
+data has a value which is a Handle
 
 </pre>
 
@@ -13294,9 +13330,46 @@ download_handle has a value which is a Handle
 =begin text
 
 a reference to a hash where the following keys are defined:
-genome_id has a value which is a genome_id
+genome_id has a value which is a string
+data has a value which is a Handle
+
+
+=end text
+
+=back
+
+
+
+=head2 pipeline_batch_status_entry
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+genome_id has a value which is a string
 status has a value which is a string
-download_handle has a value which is a Handle
+stdout has a value which is a Handle
+stderr has a value which is a Handle
+output has a value which is a Handle
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+genome_id has a value which is a string
+status has a value which is a string
+stdout has a value which is a Handle
+stderr has a value which is a Handle
+output has a value which is a Handle
 
 
 =end text

@@ -118,7 +118,7 @@ our %method_authentication = (
         'default_workflow' => 'none',
         'run_pipeline' => 'none',
         'pipeline_batch_start' => 'required',
-        'pipeline_batch_status' => 'none',
+        'pipeline_batch_status' => 'required',
 );
 
 
