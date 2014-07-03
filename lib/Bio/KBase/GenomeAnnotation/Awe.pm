@@ -168,6 +168,7 @@ sub add_task
 	    host => $inp->host,
 	    node => $inp->node,
 	    defined($inp->origin) ? (origin => "" . $inp->origin) : (),
+	    defined($userattr) ? (userattr => $userattr) : (),
 	};
     }
 
