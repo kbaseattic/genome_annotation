@@ -10866,7 +10866,7 @@ sub pipeline_batch_start
 
 =head2 pipeline_batch_status
 
-  $genome_status = $obj->pipeline_batch_status($batch_id)
+  $status = $obj->pipeline_batch_status($batch_id)
 
 =over 4
 
@@ -10876,7 +10876,13 @@ sub pipeline_batch_start
 
 <pre>
 $batch_id is a string
-$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
+$status is a pipeline_batch_status
+pipeline_batch_status is a reference to a hash where the following keys are defined:
+	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
+	details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
@@ -10901,7 +10907,13 @@ Handle is a reference to a hash where the following keys are defined:
 =begin text
 
 $batch_id is a string
-$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
+$status is a pipeline_batch_status
+pipeline_batch_status is a reference to a hash where the following keys are defined:
+	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
+	details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
@@ -12575,6 +12587,44 @@ completion_date has a value which is a string
 stdout has a value which is a Handle
 stderr has a value which is a Handle
 output has a value which is a Handle
+
+
+=end text
+
+=back
+
+
+
+=head2 pipeline_batch_status
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
+details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
+details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
 
 
 =end text

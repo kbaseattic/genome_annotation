@@ -11713,7 +11713,7 @@ sub pipeline_batch_start
 
 =head2 pipeline_batch_status
 
-  $genome_status = $obj->pipeline_batch_status($batch_id)
+  $status = $obj->pipeline_batch_status($batch_id)
 
 =over 4
 
@@ -11723,7 +11723,13 @@ sub pipeline_batch_start
 
 <pre>
 $batch_id is a string
-$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
+$status is a pipeline_batch_status
+pipeline_batch_status is a reference to a hash where the following keys are defined:
+	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
+	details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
@@ -11748,7 +11754,13 @@ Handle is a reference to a hash where the following keys are defined:
 =begin text
 
 $batch_id is a string
-$genome_status is a reference to a list where each element is a pipeline_batch_status_entry
+$status is a pipeline_batch_status
+pipeline_batch_status is a reference to a hash where the following keys are defined:
+	status has a value which is a string
+	creation_date has a value which is a string
+	start_date has a value which is a string
+	completion_date has a value which is a string
+	details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
 pipeline_batch_status_entry is a reference to a hash where the following keys are defined:
 	genome_id has a value which is a string
 	status has a value which is a string
@@ -11793,7 +11805,7 @@ sub pipeline_batch_status
     }
 
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
-    my($genome_status);
+    my($status);
     #BEGIN pipeline_batch_status
 
     my $awe = Bio::KBase::GenomeAnnotation::Awe->new($self->{awe_server}, $ctx->token);
@@ -11811,7 +11823,7 @@ sub pipeline_batch_status
 
     my $tasks = $job->{tasks};
 
-    $genome_status = [];
+    my $details = [];
 
     for my $task (@$tasks)
     {
@@ -11845,18 +11857,26 @@ sub pipeline_batch_status
 		};
 	    }
 	}
-	push (@$genome_status, $tinfo);
+	push (@$details, $tinfo);
+    }
+
+    $status = {
+	status => $job->{info}->{state},
+	submit_date => $job->{info}->{submittime},
+	start_date => $job->{info}->{startedtime},
+	completion_date => $job->{info}->{completedtime},
+	details => $details,
     }
     
     #END pipeline_batch_status
     my @_bad_returns;
-    (ref($genome_status) eq 'ARRAY') or push(@_bad_returns, "Invalid type for return variable \"genome_status\" (value was \"$genome_status\")");
+    (ref($status) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"status\" (value was \"$status\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to pipeline_batch_status:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
 							       method_name => 'pipeline_batch_status');
     }
-    return($genome_status);
+    return($status);
 }
 
 
@@ -13441,6 +13461,44 @@ completion_date has a value which is a string
 stdout has a value which is a Handle
 stderr has a value which is a Handle
 output has a value which is a Handle
+
+
+=end text
+
+=back
+
+
+
+=head2 pipeline_batch_status
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
+details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+status has a value which is a string
+creation_date has a value which is a string
+start_date has a value which is a string
+completion_date has a value which is a string
+details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
 
 
 =end text

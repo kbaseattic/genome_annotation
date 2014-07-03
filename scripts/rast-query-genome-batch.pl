@@ -40,15 +40,16 @@ my $batch_id = shift;
 
 my $client = get_annotation_client($opt);
 
-my $status = $client->pipeline_batch_status($batch_id);
+my $batch_status = $client->pipeline_batch_status($batch_id);
 
 if ($opt->raw)
 {
     my $json = JSON::XS->new->pretty(1);
-    print $json->encode($status);
+    print $json->encode($batch_status);
     exit 0;
 }
 
+my $status = $batch_status->{details};
 
 my %stats;
 
@@ -62,6 +63,10 @@ if ($opt->readable)
 	printf "    %-14s %4d\n", "$s:", $stats{$s};
     }
     print "\n";
+
+    print "Batch submit time:     $batch_status->{submit_date}\n";
+    print "Batch start time:      $batch_status->{start_date}\n";
+    print "Batch completion time: $batch_status->{completion_date}\n";
 }
 
 for my $ent (@$status)

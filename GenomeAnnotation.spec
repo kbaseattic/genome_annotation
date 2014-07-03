@@ -452,8 +452,18 @@ module GenomeAnnotation
 	Handle output;
     } pipeline_batch_status_entry;
 
+    typedef structure
+    {
+	string status;
+	string creation_date;
+	string start_date;
+	string completion_date;
+
+	list<pipeline_batch_status_entry> details;
+    } pipeline_batch_status;
+
     funcdef pipeline_batch_start(list<pipeline_batch_input> genomes, workflow workflow)
 	returns (string batch_id) authentication required;
     funcdef pipeline_batch_status(string batch_id)
-	returns (list<pipeline_batch_status_entry> genome_status) authentication required;
+	returns (pipeline_batch_status status) authentication required;
 };
