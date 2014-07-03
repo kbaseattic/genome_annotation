@@ -11784,6 +11784,12 @@ sub pipeline_batch_status
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($genome_status);
     #BEGIN pipeline_batch_status
+
+    my $awe = Bio::KBase::GenomeAnnotation::Awe->new($self->{awe_server}, $ctx->token);
+    
+    my $job = $awe->job($batch_id);
+    print STDERR Dumper($job);
+    
     #END pipeline_batch_status
     my @_bad_returns;
     (ref($genome_status) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_status\" (value was \"$genome_status\")");
