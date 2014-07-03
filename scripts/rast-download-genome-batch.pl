@@ -48,7 +48,7 @@ my $status = $client->pipeline_batch_status($batch_id);
 for my $ent (@$status)
 {
     my $gid = $ent->{genome_id};
-    if ($ent->{status} ne 'completed')
+    if ($ent->{status} ne 'completed' && 0)
     {
 	print STDERR "Skipping $gid: not complete (status is $ent->{status})\n" if $opt->verbose;
 	next;
@@ -62,6 +62,10 @@ for my $ent (@$status)
 sub save
 {
     my($h, $file) = @_;
+    if (!ref($h))
+    {
+	return;
+    }
     my $url = get_url($h);
 
     print "Save $url to $file\n" if $opt->verbose;

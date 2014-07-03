@@ -30,6 +30,7 @@ my @options = (options_help());
 
 my($opt, $usage) = describe_options("%c %o batch-id",
 				    ["readable|r", 'Show output in human-readable form'],
+				    ["raw", "Print the raw AWE status"],
 				    @options);
 
 print($usage->text), exit if $opt->help;
@@ -40,6 +41,28 @@ my $batch_id = shift;
 my $client = get_annotation_client($opt);
 
 my $status = $client->pipeline_batch_status($batch_id);
+
+if ($opt->raw)
+{
+    my $json = JSON::XS->new->pretty(1);
+    print $json->encode($status);
+    exit 0;
+}
+
+
+my %stats;
+
+$stats{$_->{status}}++ foreach @$status;
+
+if ($opt->readable)
+{
+    print "Status counts:\n";
+    for my $s (sort { $a cmp $b } keys %stats)
+    {
+	printf "    %-14s %4d\n", "$s:", $stats{$s};
+    }
+    print "\n";
+}
 
 for my $ent (@$status)
 {

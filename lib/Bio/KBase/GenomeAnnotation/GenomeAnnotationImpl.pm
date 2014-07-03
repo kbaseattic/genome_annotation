@@ -112,6 +112,11 @@ sub new
 	
     $self->{kmer_v2_data_directory} = $dir;
 
+    if (my $temp = $cfg->setting("tempdir"))
+    {
+	$ENV{TEMPDIR} = $ENV{TMPDIR} = $temp;
+    }
+
     my $dir = $cfg->setting("kmer_classifier_data_directory");
     #
     # Make these soft errors for now.
