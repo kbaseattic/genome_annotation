@@ -131,7 +131,8 @@ sub new
     $idserver_url = $i if $i;
 
     $self->{kmer_service_url} = $cfg->setting("kmer_service_url");
-    $self->{awe_server} = $cfg->setting("awe_server");
+    $self->{awe_server} = $cfg->setting("awe-server");
+    $self->{shock_server} = $cfg->setting("shock-server");
 
     print STDERR "kmer_v2_data_directory = $self->{kmer_v2_data_directory}\n";
     print STDERR "idserver = $idserver_url\n";
