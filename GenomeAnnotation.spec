@@ -419,6 +419,7 @@ module GenomeAnnotation
     typedef structure {
 	string name;
 	string condition;
+	int failure_is_not_fatal;
 	repeat_region_SEED_parameters repeat_region_SEED_parameters;
 	glimmer3_parameters glimmer3_parameters;
 	kmer_v1_parameters kmer_v1_parameters;
@@ -455,7 +456,7 @@ module GenomeAnnotation
     typedef structure
     {
 	string status;
-	string creation_date;
+	string submit_date;
 	string start_date;
 	string completion_date;
 

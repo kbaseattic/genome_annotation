@@ -11140,7 +11140,7 @@ sub default_workflow
 		condition => '$genome->{scientific_name} =~ /^Streptococcus\s/' },
 	      { name => 'call_features_strep_pneumo_repeat',
 		condition => '$genome->{scientific_name} =~ /^Streptococcus\s/' },
-	      { name => 'call_features_crispr' },
+	      { name => 'call_features_crispr', failure_is_not_fatal => 1 },
 	      { name => 'call_features_CDS_prodigal' },
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => {} },
 	      # { name => 'call_features_prophage_phispy' },
@@ -11483,7 +11483,14 @@ sub run_pipeline
 
 	    if ($@)
 	    {
-		die "Error invoking method $method: $@";
+		if ($stage->{failure_is_not_fatal})
+		{
+		    warn "Error invoking method $method: $@";
+		}
+		else
+		{
+		    die "Error invoking method $method: $@";
+		}
 	    }
 	    else
 	    {

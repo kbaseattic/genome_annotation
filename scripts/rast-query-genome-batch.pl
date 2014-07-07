@@ -18,18 +18,19 @@ rast-query-genome-batch batch-id
     
 =head1 COMMAND-LINE OPTIONS
 
-rast-process-genome-batch.pl [-h] [long options...] directory-of-genome-objects
-    --workflow      File containing genome processing workflow
-                    specification
+rast-query-genome-batch.pl [-hr] [long options...] batch-id
+    -r --readable   Show output in human-readable form
+    --summary       Show summary of job status only
+    --raw           Print the raw AWE status
     -h --help       print usage message and exit
     --url           URL for the genome annotation service
-    
 =cut
 
 my @options = (options_help());
 
 my($opt, $usage) = describe_options("%c %o batch-id",
 				    ["readable|r", 'Show output in human-readable form'],
+				    ["summary", 'Show summary of job status only'],
 				    ["raw", "Print the raw AWE status"],
 				    @options);
 
@@ -55,7 +56,7 @@ my %stats;
 
 $stats{$_->{status}}++ foreach @$status;
 
-if ($opt->readable)
+if ($opt->readable || $opt->summary)
 {
     print "Status counts:\n";
     for my $s (sort { $a cmp $b } keys %stats)
@@ -69,6 +70,8 @@ if ($opt->readable)
     print "Batch completion time: $batch_status->{completion_date}\n";
     print "\n";
 }
+
+exit if $opt->summary;
 
 for my $ent (@$status)
 {
