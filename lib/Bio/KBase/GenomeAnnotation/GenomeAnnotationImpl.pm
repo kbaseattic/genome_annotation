@@ -4019,7 +4019,6 @@ sub call_selenoproteins
     my $ok = run(['rast_call_special_proteins',
 		  '--seleno',
 		  '--input', $tmp,
-		  '--id-server', $idc->{url}],
 		 '>', \$genomeOut_json,
 		 '2>', \$stderr);
 
@@ -4266,7 +4265,6 @@ sub call_pyrrolysoproteins
     my($return);
     #BEGIN call_pyrrolysoproteins
     #my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
-    my $idc = IDclient->new($genomeTO);
     
     my $coder = _get_coder();
     
@@ -4282,7 +4280,6 @@ sub call_pyrrolysoproteins
     my $ok = run(['rast_call_special_proteins',
 		  '--pyrro',
 		  '--input', $tmp,
-		  '--id-server', $idc->{url}],
 		 '>', \$genomeOut_json,
 		 '2>', \$stderr);
 
