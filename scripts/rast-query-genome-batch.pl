@@ -67,6 +67,7 @@ if ($opt->readable)
     print "Batch submit time:     $batch_status->{submit_date}\n";
     print "Batch start time:      $batch_status->{start_date}\n";
     print "Batch completion time: $batch_status->{completion_date}\n";
+    print "\n";
 }
 
 for my $ent (@$status)

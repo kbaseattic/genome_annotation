@@ -57,10 +57,20 @@ sub run
     
     my $gtext = read_file($tmp);
     my $gobj = $json->decode($gtext);
-    
-    my $out = $impl->run_pipeline($gobj, $wobj);
 
-    print OF $json->encode($out);
+    my $out;
+    eval {
+	$out = $impl->run_pipeline($gobj, $wobj);
+    };
+    if ($@)
+    {
+	print STDERR "FAILURE running pipeline:\n$@\n";
+	print OF $json->encode({failure => $@});
+    }
+    else
+    {
+	print OF $json->encode($out);
+    }
     close(OF);
 }
 
