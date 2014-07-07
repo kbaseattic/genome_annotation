@@ -37,7 +37,11 @@ rast-process-genome-batch.pl [-h] [long options...] directory-of-genome-objects
 my @options = (options_workflow_specification(), options_help());
 
 my($opt, $usage) = describe_options("%c %o directory-of-genome-objects",
-				    @options);
+				    @options,
+				    ['offset=i' => 'Submit genomes starting with this one. Zero-based, order based on alphabetical sort of contents of directory', { default => 0 }],
+				    ['count=i' => 'Submit this many genomes, starting at the given offset.',
+				    {  default => -1 }],
+				   );
 
 print($usage->text), exit if $opt->help;
 print($usage->text), exit 1 if @ARGV != 1;
@@ -69,6 +73,16 @@ opendir(D, $dir) or die "Cannot open genome directory $dir: $!\n";
 my @files = sort { $a <=> $b } grep { !/^\./ && -f "$dir/$_" } readdir(D);
 
 my @genomes;
+
+if ($opt->offset > 0)
+{
+    splice(@files, 0, $opt->offset);
+}
+
+if ($opt->count != -1)
+{
+    splice(@files, $opt->count);
+}
 
 for my $file (@files)
 {
