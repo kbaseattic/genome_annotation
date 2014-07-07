@@ -4018,7 +4018,7 @@ sub call_selenoproteins
 
     my $ok = run(['rast_call_special_proteins',
 		  '--seleno',
-		  '--input', $tmp,
+		  '--input', $tmp],
 		 '>', \$genomeOut_json,
 		 '2>', \$stderr);
 
@@ -4279,7 +4279,7 @@ sub call_pyrrolysoproteins
 
     my $ok = run(['rast_call_special_proteins',
 		  '--pyrro',
-		  '--input', $tmp,
+		  '--input', $tmp],
 		 '>', \$genomeOut_json,
 		 '2>', \$stderr);
 
