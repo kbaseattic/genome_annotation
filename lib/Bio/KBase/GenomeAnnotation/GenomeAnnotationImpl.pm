@@ -11054,6 +11054,7 @@ workflow is a reference to a hash where the following keys are defined:
 pipeline_stage is a reference to a hash where the following keys are defined:
 	name has a value which is a string
 	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
 	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -11090,6 +11091,7 @@ workflow is a reference to a hash where the following keys are defined:
 pipeline_stage is a reference to a hash where the following keys are defined:
 	name has a value which is a string
 	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
 	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -11268,6 +11270,7 @@ workflow is a reference to a hash where the following keys are defined:
 pipeline_stage is a reference to a hash where the following keys are defined:
 	name has a value which is a string
 	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
 	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -11388,6 +11391,7 @@ workflow is a reference to a hash where the following keys are defined:
 pipeline_stage is a reference to a hash where the following keys are defined:
 	name has a value which is a string
 	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
 	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -11556,6 +11560,7 @@ workflow is a reference to a hash where the following keys are defined:
 pipeline_stage is a reference to a hash where the following keys are defined:
 	name has a value which is a string
 	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
 	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -11604,6 +11609,7 @@ workflow is a reference to a hash where the following keys are defined:
 pipeline_stage is a reference to a hash where the following keys are defined:
 	name has a value which is a string
 	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
 	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -11740,7 +11746,7 @@ $batch_id is a string
 $status is a pipeline_batch_status
 pipeline_batch_status is a reference to a hash where the following keys are defined:
 	status has a value which is a string
-	creation_date has a value which is a string
+	submit_date has a value which is a string
 	start_date has a value which is a string
 	completion_date has a value which is a string
 	details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
@@ -11771,7 +11777,7 @@ $batch_id is a string
 $status is a pipeline_batch_status
 pipeline_batch_status is a reference to a hash where the following keys are defined:
 	status has a value which is a string
-	creation_date has a value which is a string
+	submit_date has a value which is a string
 	start_date has a value which is a string
 	completion_date has a value which is a string
 	details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
@@ -13351,6 +13357,7 @@ placeholder has a value which is an int
 a reference to a hash where the following keys are defined:
 name has a value which is a string
 condition has a value which is a string
+failure_is_not_fatal has a value which is an int
 repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 glimmer3_parameters has a value which is a glimmer3_parameters
 kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -13365,6 +13372,7 @@ kmer_v2_parameters has a value which is a kmer_v2_parameters
 a reference to a hash where the following keys are defined:
 name has a value which is a string
 condition has a value which is a string
+failure_is_not_fatal has a value which is an int
 repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
 glimmer3_parameters has a value which is a glimmer3_parameters
 kmer_v1_parameters has a value which is a kmer_v1_parameters
@@ -13496,7 +13504,7 @@ output has a value which is a Handle
 <pre>
 a reference to a hash where the following keys are defined:
 status has a value which is a string
-creation_date has a value which is a string
+submit_date has a value which is a string
 start_date has a value which is a string
 completion_date has a value which is a string
 details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
@@ -13509,7 +13517,7 @@ details has a value which is a reference to a list where each element is a pipel
 
 a reference to a hash where the following keys are defined:
 status has a value which is a string
-creation_date has a value which is a string
+submit_date has a value which is a string
 start_date has a value which is a string
 completion_date has a value which is a string
 details has a value which is a reference to a list where each element is a pipeline_batch_status_entry
