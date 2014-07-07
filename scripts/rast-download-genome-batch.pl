@@ -43,7 +43,8 @@ my $dir = shift;
 my $client = get_annotation_client($opt);
 my $hservice = Bio::KBase::HandleService->new();
 
-my $status = $client->pipeline_batch_status($batch_id);
+my $batch_status = $client->pipeline_batch_status($batch_id);
+my $status = $batch_status->{details};
 
 for my $ent (@$status)
 {
