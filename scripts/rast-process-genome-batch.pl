@@ -41,6 +41,7 @@ my($opt, $usage) = describe_options("%c %o directory-of-genome-objects",
 				    ['offset=i' => 'Submit genomes starting with this one. Zero-based, order based on alphabetical sort of contents of directory', { default => 0 }],
 				    ['count=i' => 'Submit this many genomes, starting at the given offset.',
 				    {  default => -1 }],
+				    ['verbose|v' => 'Show verbose details during submission'],
 				   );
 
 print($usage->text), exit if $opt->help;
@@ -84,13 +85,20 @@ if ($opt->count != -1)
     splice(@files, $opt->count);
 }
 
+if ($opt->verbose)
+{
+    my $json = JSON::XS->new->pretty(1);
+    print "Submitting workflow: \n";
+    print $json->encode($workflow);
+}
+
 for my $file (@files)
 {
     my $path = "$dir/$file";
 
     my $gobj = parse_json_file($path);
     my $handle = $hservice->upload($path);
-    print "Uploaded $path: " . Dumper($handle, $gobj->{id});
+    print "Uploaded $path: " . Dumper($handle, $gobj->{id}) if $opt->verbose;
     push(@genomes, { genome_id => $gobj->{id}, data => $handle});
 }
 

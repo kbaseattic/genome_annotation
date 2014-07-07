@@ -39,6 +39,7 @@ use Bio::KBase::GenomeAnnotation::Shock;
 
 use Bio::KBase::GenomeAnnotation::Glimmer;
 use GenomeTypeObject;
+use IDclient;
 use ANNOserver;
 use SeedUtils;
 use gjoseqlib;
@@ -69,7 +70,8 @@ sub _call_using_strep_repeats
 	hostname => $self->{hostname},
     };
 
-    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $idc = IDclient->new($genome_in);
     my $event_id = $genome_in->add_analysis_event($event);
 
     my $type = 'repeat_unit';
@@ -3700,7 +3702,8 @@ sub annotate_genome
 	$feature_loc{$loc_id} = [$contig, $start, $strand, $len];
     }
 
-    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
+    # my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $id_server = IDclient->new($genome);
 
     #
     # Create features for PEGs
@@ -3999,7 +4002,8 @@ sub call_selenoproteins
     my($return);
     #BEGIN call_selenoproteins
 
-    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $idc = IDclient->new($genomeTO);
 
     my $coder = _get_coder();
     
@@ -4261,8 +4265,9 @@ sub call_pyrrolysoproteins
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_pyrrolysoproteins
-    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
-
+    #my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $idc = IDclient->new($genomeTO);
+    
     my $coder = _get_coder();
     
     my $genomeTO_json = $coder->encode($genomeTO);
@@ -5029,7 +5034,7 @@ sub call_features_rRNA_SEED
     }
 print STDERR Dumper(\@type_args, \%types);
     my @cmd = ("rast_call_rRNAs", "--input", $tmp_in, "--output", $tmp_out,
-	       "--id-prefix", $genome_in->{id}, "--id-server", $idserver_url, @type_args);
+	       "--id-prefix", $genome_in->{id}, @type_args);
     my $rc = system(@cmd);
     if ($rc != 0)
     {
@@ -5277,7 +5282,7 @@ sub call_features_tRNA_trnascan
     close($tmp_out);
 
     my @cmd = ("rast_call_tRNAs", "--input", $tmp_in, "--output", $tmp_out,
-	       "--id-prefix", $genome_in->{id}, "--id-server", $idserver_url);
+	       "--id-prefix", $genome_in->{id});
     my $rc = system(@cmd);
     if ($rc != 0)
     {
@@ -5567,8 +5572,9 @@ sub call_RNAs
 	$genome_in->{features} = $features;
     }
 
-    my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
-
+    # my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $id_server = IDclient->new($genome_in);
+    
     #
     # Create features for RNAs
     #
@@ -5851,7 +5857,9 @@ sub call_features_CDS_glimmer3
 	hostname => $self->{hostname},
     };
 
-    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $idc = IDclient->new($genome_in);
+    
     my $event_id = $genome_in->add_analysis_event($event);
     my $type = 'CDS';
 
@@ -6148,7 +6156,7 @@ sub call_features_CDS_prodigal
     close($tmp_out);
 
     my @cmd = ("rast_call_CDSs_using_prodigal", "--input", $tmp_in, "--output", $tmp_out,
-	       "--id-prefix", $genomeTO->{id}, "--id-server", $idserver_url);
+	       "--id-prefix", $genomeTO->{id});
     my $rc = system(@cmd);
     if ($rc != 0)
     {
@@ -6900,7 +6908,6 @@ sub call_features_repeat_region_SEED
 	hostname => $self->{hostname},
     };
 
-    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     my $event_id = $genome_in->add_analysis_event($event);
 
     # olson@bio-data-1:~/FIGdisk/dist/releases/dev2$ svr_condense_repeats < r
@@ -6926,7 +6933,6 @@ sub call_features_repeat_region_SEED
 	my $len = 1 + $right - $left;
 	my $loc = [[$contig, $left, '+', $len]];
 	$genome_in->add_feature({
-	    -id_client 	     => $idc,
 	    -id_prefix 	     => $genome_in->{id},
 	    -type 	     => $type,
 	    -location 	     => $loc,
@@ -7178,7 +7184,7 @@ sub call_features_prophage_phispy
     close($tmp_out);
 
     my @cmd = ("rast_call_prophage_using_phispy", "--input", $tmp_in, "--output", $tmp_out,
-	       "--id-prefix", $genome_in->{id}, "--id-server", $idserver_url);
+	       "--id-prefix", $genome_in->{id});
     my $rc = system(@cmd);
     if ($rc != 0)
     {
@@ -8547,7 +8553,9 @@ sub call_features_ProtoCDS_kmer_v1
 	hostname => $self->{hostname},
     };
 
-    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $idc = IDclient->new($genome_in);
+    
     my $event_id = $genome_in->add_analysis_event($event);
 
     my $type = 'protoCDS';
@@ -8888,7 +8896,8 @@ sub call_features_ProtoCDS_kmer_v2
 	hostname => $self->{hostname},
     };
 
-    my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
+    my $idc = IDclient->new($genome_in);
     my $event_id = $genome_in->add_analysis_event($event);
 
 #	NC_002952       2902278 2902407 -       1       37      LSU ribosomal protein L34p      116.145798
@@ -10352,7 +10361,7 @@ sub call_features_crispr
     close($tmp_out);
 
     my @cmd = ("rast_call_crisprs", "--input", $tmp_in, "--output", $tmp_out,
-	       "--id-prefix", $genome_in->{id}, "--id-server", $idserver_url);
+	       "--id-prefix", $genome_in->{id});
     my $rc = system(@cmd);
     if ($rc != 0)
     {
@@ -11485,7 +11494,8 @@ sub run_pipeline
 	    {
 		if ($stage->{failure_is_not_fatal})
 		{
-		    warn "Error invoking method $method: $@";
+		    warn "Error invoking method $method: $@\nContinuing because failure_is_not_fatal flag is set";
+		    
 		}
 		else
 		{
