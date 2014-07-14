@@ -128,7 +128,9 @@ module GenomeAnnotation
 
     typedef structure {
 	genome_id genome;
+	string genome_name;
 	float closeness_measure;
+	string analysis_method;
     } close_genome;
 
     typedef structure
@@ -145,6 +147,7 @@ module GenomeAnnotation
 	int genetic_code;
 	string source;
 	string source_id;
+	string taxonomy;
 
 	genome_quality_measure quality;
 	

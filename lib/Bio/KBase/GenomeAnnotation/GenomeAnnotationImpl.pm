@@ -182,6 +182,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -249,7 +250,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -273,6 +276,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -340,7 +344,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -422,6 +428,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -489,7 +496,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -520,6 +529,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -587,7 +597,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -674,6 +686,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -742,7 +755,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -765,6 +780,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -833,7 +849,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -904,6 +922,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -972,7 +991,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -995,6 +1016,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1063,7 +1085,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -1138,6 +1162,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1206,7 +1231,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -1237,6 +1264,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1305,7 +1333,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -1614,6 +1644,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1682,7 +1713,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -1706,6 +1739,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1774,7 +1808,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -1852,6 +1888,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1920,7 +1957,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -1944,6 +1983,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2012,7 +2052,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -2086,6 +2128,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2154,7 +2197,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -2184,6 +2229,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2252,7 +2298,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -2335,6 +2383,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2403,7 +2452,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -2447,6 +2498,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2515,7 +2567,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -2661,6 +2715,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2729,7 +2784,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -2761,6 +2818,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2829,7 +2887,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -3151,6 +3211,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3219,7 +3280,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -3242,6 +3305,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3310,7 +3374,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -3413,6 +3479,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3481,7 +3548,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -3504,6 +3573,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3572,7 +3642,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -3805,6 +3877,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3873,7 +3946,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -3896,6 +3971,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3964,7 +4040,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4068,6 +4146,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4136,7 +4215,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4159,6 +4240,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4227,7 +4309,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4329,6 +4413,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4397,7 +4482,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4420,6 +4507,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4488,7 +4576,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4562,6 +4652,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4630,7 +4721,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4653,6 +4746,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4721,7 +4815,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4796,6 +4892,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4864,7 +4961,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -4889,6 +4988,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4957,7 +5057,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -5073,6 +5175,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5141,7 +5244,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -5164,6 +5269,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5232,7 +5338,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -5321,6 +5429,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5389,7 +5498,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -5412,6 +5523,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5480,7 +5592,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -5635,6 +5749,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5703,7 +5818,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -5729,6 +5846,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5797,7 +5915,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -5947,6 +6067,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6015,7 +6136,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6038,6 +6161,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6106,7 +6230,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6196,6 +6322,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6264,7 +6391,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6287,6 +6416,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6355,7 +6485,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6427,6 +6559,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6495,7 +6628,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6518,6 +6653,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6586,7 +6722,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6659,6 +6797,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6727,7 +6866,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6754,6 +6895,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6822,7 +6964,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -6976,6 +7120,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7044,7 +7189,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -7067,6 +7214,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7135,7 +7283,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -7225,6 +7375,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7293,7 +7444,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -7318,6 +7471,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7386,7 +7540,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -7461,6 +7617,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7529,7 +7686,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -7564,6 +7723,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7632,7 +7792,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -7769,6 +7931,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7837,7 +8000,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -7864,6 +8029,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7932,7 +8098,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -8063,6 +8231,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8131,7 +8300,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -8157,6 +8328,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8225,7 +8397,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -8307,6 +8481,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8375,7 +8550,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -8410,6 +8587,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8478,7 +8656,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -8645,6 +8825,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8713,7 +8894,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -8740,6 +8923,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8808,7 +8992,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -8993,6 +9179,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9061,7 +9248,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9084,6 +9273,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9152,7 +9342,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9224,6 +9416,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9292,7 +9485,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9315,6 +9510,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9383,7 +9579,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9455,6 +9653,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9523,7 +9722,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9546,6 +9747,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9614,7 +9816,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9651,7 +9855,35 @@ sub find_close_neighbors
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN find_close_neighbors
-    die "Not implemented";
+
+    my $kmer_service = Bio::KBase::KmerAnnotationByFigfam::Client->new($self->{kmer_service_url});
+
+    if (! $kmer_service->can("estimate_closest_genomes"))
+    {
+	die "Kmer service does not support estimate_closest_genomes";
+    }
+
+    my @prots = map { [$_->{id}, $_->{function}, $_->{protein_translation}] }
+    		grep { $_->{protein_translation} }
+    		@{$genomeTO->{features}};
+    
+    my $dataset_name = $kmer_service->get_default_dataset_name();
+    my $close = $kmer_service->estimate_closest_genomes(\@prots, undef);
+
+    my $clist = $genomeTO->{close_genomes};
+    if (!ref($clist))
+    {
+	$clist = [];
+	$genomeTO->{close_genomes} = $clist;
+    }
+
+    push @$clist, { genome_id => $_->[0],
+		    closeness_measure => $_->[1],
+		    genome_name => $_->[2],
+		    analysis_method => "KmerAnnotationByFigfam::estimate_closest_genomes:$dataset_name" } foreach @$close;
+
+    $return = $genomeTO;
+
     #END find_close_neighbors
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -9686,6 +9918,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9754,7 +9987,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9777,6 +10012,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9845,7 +10081,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -9919,6 +10157,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9987,7 +10226,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -10010,6 +10251,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10078,7 +10320,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -10152,6 +10396,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10220,7 +10465,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -10243,6 +10490,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10311,7 +10559,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -10403,6 +10653,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10471,7 +10722,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -10496,6 +10749,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10564,7 +10818,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -11190,6 +11446,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11258,7 +11515,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -11311,6 +11570,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	taxonomy has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11379,7 +11639,9 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	weighted_hit_count has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
+	genome_name has a value which is a string
 	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
 analysis_event is a reference to a hash where the following keys are defined:
 	id has a value which is an analysis_event_id
 	tool_name has a value which is a string
@@ -12533,7 +12795,9 @@ complete has a value which is a bool
 <pre>
 a reference to a hash where the following keys are defined:
 genome has a value which is a genome_id
+genome_name has a value which is a string
 closeness_measure has a value which is a float
+analysis_method has a value which is a string
 
 </pre>
 
@@ -12543,7 +12807,9 @@ closeness_measure has a value which is a float
 
 a reference to a hash where the following keys are defined:
 genome has a value which is a genome_id
+genome_name has a value which is a string
 closeness_measure has a value which is a float
+analysis_method has a value which is a string
 
 
 =end text
@@ -12607,6 +12873,7 @@ domain has a value which is a string
 genetic_code has a value which is an int
 source has a value which is a string
 source_id has a value which is a string
+taxonomy has a value which is a string
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
 contigs_handle has a value which is a Handle
@@ -12627,6 +12894,7 @@ domain has a value which is a string
 genetic_code has a value which is an int
 source has a value which is a string
 source_id has a value which is a string
+taxonomy has a value which is a string
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
 contigs_handle has a value which is a Handle
