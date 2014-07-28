@@ -68,6 +68,7 @@ sub options_kmer_v1
 	   ['min-hits=i', 'minimum number of Kmer hits required for a call to be made'],
 	   ['max-gap=i',  'maximum size of a gap allowed for a call to be made'],
 	   ['min-size=i' => 'minimum size of DNA feature to call', { default => 48 }],
+	   ['annotate-hypothetical-only|H' => 'only annotate features tagged as hypothetical protein'],
 	  );
 }
 
@@ -75,6 +76,7 @@ sub options_kmer_v2
 {
     return (['min-hits=i', 'minimum number of Kmer hits required for a call to be made'],
 	    ['max-gap=i',  'maximum size of a gap allowed for a call to be made'],
+	    ['annotate-hypothetical-only|H' => 'only annotate features tagged as hypothetical protein'],
 	    );
 	    
 }
@@ -249,8 +251,10 @@ sub get_params_for_kmer_v2
 {
     my($opt) = @_;
     my $params = {};
-    $params->{min_hits} = $opt->{min_hits} if defined($opt->{min_hits});
-    $params->{max_gap} = $opt->{max_gap} if defined($opt->{max_gap});
+    for my $p (qw(min_hits max_gap annotate_hypothetical_only))
+    {
+	$params->{$p} = $opt->{$p} if defined($opt->{$p});
+    }
     return $params;
 }
 
@@ -258,7 +262,7 @@ sub get_params_for_kmer_v1
 {
     my($opt) = @_;
     my $params = {};
-    for my $p (qw(kmer_size dataset_name score_threshold hit_threshold sequential_hit_threshold max_gaps min_hits min_size))
+    for my $p (qw(kmer_size dataset_name score_threshold hit_threshold sequential_hit_threshold max_gaps min_hits min_size annotate_hypothetical_only))
     {
 	$params->{$p} = $opt->{$p} if defined($opt->{$p});
     }
