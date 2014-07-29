@@ -7885,6 +7885,15 @@ sub annotate_proteins_kmer_v1
 	my $trans = $feature->{protein_translation};
 	next unless $trans;
 
+	if ($params->{annotate_hypothetical_only})
+	{
+	    my $f = $feature->{function};
+	    if ($f ne '' && $f !~ /^\s*hypothetical\s+protein\s*$/i)
+	    {
+		next;
+	    }
+	}
+
 	push(@proteins, [$feature->{id}, $trans]);
 	if (@proteins >= $n_proteins_per_call)
 	{
@@ -8143,8 +8152,25 @@ sub annotate_proteins_kmer_v2
     #BEGIN annotate_proteins_kmer_v2
 
     $genome_in = GenomeTypeObject->initialize($genome_in);
-    
-    my $sequences_file = $genome_in->extract_protein_sequences_to_temp_file();
+
+    my $filter;
+    if ($params->{annotate_hypothetical_only})
+    {
+	$filter = sub {
+	    my($feature) = @_;
+	    my $f = $feature->{function};
+	    if ($f eq '' || $f =~ /^\s*hypothetical\s+protein\s*$/i)
+	    {
+		return 1;
+	    }
+	    else
+	    {
+		return 0;
+	    }
+	};
+    }
+    print STDERR "FILTER: " . Dumper($filter);
+    my $sequences_file = $genome_in->extract_protein_sequences_to_temp_file($filter);
     my $output_file = File::Temp->new();
 
     my $min_hits = 5;
@@ -8166,7 +8192,7 @@ sub annotate_proteins_kmer_v2
     my $ok = run(\@cmd,
 		 "<", $sequences_file,
 		 ">", $output_file);
-
+    
     unlink($sequences_file);
 
     if (!$ok)
@@ -11407,6 +11433,7 @@ sub default_workflow
 	      { name => 'call_features_crispr', failure_is_not_fatal => 1 },
 	      { name => 'call_features_CDS_prodigal' },
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => {} },
+	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
 	      # { name => 'call_features_prophage_phispy' },
 		 );
     $return = { stages => \@stages };

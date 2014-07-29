@@ -340,6 +340,7 @@ module GenomeAnnotation
 	int min_hits;
 	int min_size;
 	int max_gap;
+	int annotate_hypothetical_only;
     } kmer_v1_parameters;
 
     funcdef annotate_proteins_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);
@@ -347,6 +348,7 @@ module GenomeAnnotation
     typedef structure {
 	int min_hits;
 	int max_gap;
+	int annotate_hypothetical_only;
     } kmer_v2_parameters;
     
     funcdef annotate_proteins_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);
