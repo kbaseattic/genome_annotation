@@ -89,7 +89,7 @@ deploy-alt-scripts:
 		basefile=`basename $$src`; \
 		base=`basename $$src .pl`; \
 		alt=`echo $$base | sed 's/^rast2-/rast-/'`; \
-		echo install $$src $$base ; \
+		echo install $$src $$alt ; \
 		cp $$src $(TARGET)/plbin ; \
 		$(WRAP_PERL_SCRIPT) "$(TARGET)/plbin/$$basefile" $(TARGET)/bin/$$alt ; \
 	done 
