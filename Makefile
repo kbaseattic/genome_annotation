@@ -77,7 +77,22 @@ src/kmer_guts: src/kmer_guts.c
 
 deploy: deploy-client deploy-service
 deploy-all: deploy-client deploy-service
-deploy-client: compile-typespec deploy-docs deploy-libs deploy-scripts
+deploy-client: compile-typespec deploy-docs deploy-libs deploy-scripts deploy-alt-scripts
+
+
+RAST_SCRIPTS = $(filter scripts/rast2-%,$(SRC_PERL))
+deploy-alt-scripts:
+	export KB_TOP=$(TARGET); \
+	export KB_RUNTIME=$(DEPLOY_RUNTIME); \
+	export KB_PERL_PATH=$(TARGET)/lib ; \
+	for src in $(RAST_SCRIPTS) ; do \
+		basefile=`basename $$src`; \
+		base=`basename $$src .pl`; \
+		alt=`echo $$base | sed 's/^rast2-/rast-/'`; \
+		echo install $$src $$base ; \
+		cp $$src $(TARGET)/plbin ; \
+		$(WRAP_PERL_SCRIPT) "$(TARGET)/plbin/$$basefile" $(TARGET)/bin/$$alt ; \
+	done 
 
 deploy-guts: deploy-dir
 	rm -f $(TARGET)/services/$(SERVICE)/bin/kmer_guts
