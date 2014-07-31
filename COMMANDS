@@ -1,2 +1,29 @@
 #group-name	genome_annotation	Genome Annotation Scripts
 #command-set	scripts/(.*).pl	genome_annotation
+#ignore	scripts/rast2-.*.pl
+rast-add-contigs	genome_annotation
+rast-add-features	genome_annotation
+rast-annotate-proteins-kmer-v1	genome_annotation
+rast-annotate-proteins-kmer-v2	genome_annotation
+rast-call-features-CDS-glimmer3	genome_annotation
+rast-call-features-CDS-prodigal	genome_annotation
+rast-call-features-ProtoCDS-kmer-v1	genome_annotation
+rast-call-features-ProtoCDS-kmer-v2	genome_annotation
+rast-call-features-crispr	genome_annotation
+rast-call-features-prophage-phispy	genome_annotation
+rast-call-features-pyrrolysoprotein	genome_annotation
+rast-call-features-rRNA-SEED	genome_annotation
+rast-call-features-repeat-region-SEED	genome_annotation
+rast-call-features-selenoprotein	genome_annotation
+rast-call-features-strep-pneumo-repeat	genome_annotation
+rast-call-features-strep-suis-repeat	genome_annotation
+rast-call-features-tRNA-trnascan	genome_annotation
+rast-classify	genome_annotation
+rast-create-genome-from-RAST	genome_annotation
+rast-create-genome	genome_annotation
+rast-enumerate-classifiers	genome_annotation
+rast-export-genome	genome_annotation
+rast-process-genome	genome_annotation
+rast-query-classifier-groups	genome_annotation
+rast-resolve-overlapping-features	genome_annotation
+rast-set-metadata	genome_annotation
