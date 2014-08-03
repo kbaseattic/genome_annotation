@@ -7856,6 +7856,11 @@ sub annotate_proteins_kmer_v1
 	$params->{dataset_name} = $kmer_service->get_default_dataset_name();
     }
 
+    if (!defined($params->{kmer_size}))
+    {
+	$params->{kmer_size} = 8;
+    }
+
     my $event = {
 	tool_name => "KmerAnnotationByFigfam",
 	execution_time => scalar gettimeofday,
@@ -11433,6 +11438,7 @@ sub default_workflow
 	      { name => 'call_features_crispr', failure_is_not_fatal => 1 },
 	      { name => 'call_features_CDS_prodigal' },
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => {} },
+	      { name => 'annotate_proteins_kmer_v1', kmer_v1_parameters => { annotate_hypothetical_only => 1 } },
 	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
 	      # { name => 'call_features_prophage_phispy' },
 		 );
