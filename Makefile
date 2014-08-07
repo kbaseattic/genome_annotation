@@ -138,5 +138,10 @@ deploy-dir:
 	if [ ! -d $(SERVICE_DIR)/webroot ] ; then mkdir $(SERVICE_DIR)/webroot ; fi
 	if [ ! -d $(SERVICE_DIR)/bin ] ; then mkdir $(SERVICE_DIR)/bin ; fi
 
+$(BIN_DIR)/%: service-scripts/%.pl $(TOP_DIR)/user-env.sh
+	$(WRAP_PERL_SCRIPT) '$$KB_TOP/modules/$(CURRENT_DIR)/$<' $@
+
+$(BIN_DIR)/%: service-scripts/%.py $(TOP_DIR)/user-env.sh
+	$(WRAP_PYTHON_SCRIPT) '$$KB_TOP/modules/$(CURRENT_DIR)/$<' $@
 
 include $(TOP_DIR)/tools/Makefile.common.rules

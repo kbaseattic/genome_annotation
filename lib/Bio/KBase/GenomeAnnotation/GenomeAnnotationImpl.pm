@@ -7706,6 +7706,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -7812,6 +7813,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -8026,6 +8028,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -8124,6 +8127,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -8601,6 +8605,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -8707,6 +8712,7 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -8937,6 +8943,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -9035,6 +9042,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -11362,9 +11370,11 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -11399,9 +11409,11 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -11583,9 +11595,11 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -11707,9 +11721,11 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -11876,9 +11892,11 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -11925,9 +11943,11 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 	min_hits has a value which is an int
 	min_size has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -13556,6 +13576,7 @@ detailed has a value which is an int
 min_hits has a value which is an int
 min_size has a value which is an int
 max_gap has a value which is an int
+annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -13574,6 +13595,7 @@ detailed has a value which is an int
 min_hits has a value which is an int
 min_size has a value which is an int
 max_gap has a value which is an int
+annotate_hypothetical_only has a value which is an int
 
 
 =end text
@@ -13596,6 +13618,7 @@ max_gap has a value which is an int
 a reference to a hash where the following keys are defined:
 min_hits has a value which is an int
 max_gap has a value which is an int
+annotate_hypothetical_only has a value which is an int
 
 </pre>
 
@@ -13606,6 +13629,7 @@ max_gap has a value which is an int
 a reference to a hash where the following keys are defined:
 min_hits has a value which is an int
 max_gap has a value which is an int
+annotate_hypothetical_only has a value which is an int
 
 
 =end text
