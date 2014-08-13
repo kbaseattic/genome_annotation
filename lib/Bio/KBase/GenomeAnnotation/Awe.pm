@@ -189,11 +189,10 @@ sub add_task
 
     my @environ = ();
 #print STDERR Dumper($awe);
-    if (0 && $awe->auth_token)
+    if ($awe->auth_token)
     {
 	@environ = (environ => { 
-				 private => { FOO => "bar" },
-				 public => { KB_AUTH_TOKEN => "xx" }, # $awe->auth_token },
+				 private => { KB_AUTH_TOKEN => $awe->auth_token },
 				 } );
     }
 

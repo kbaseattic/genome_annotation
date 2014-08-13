@@ -1,5 +1,5 @@
 #group-name	genome_annotation	Genome Annotation Scripts
-#command-set	scripts/(.*)	genome_annotation
+#command-set	scripts/(.*).pl	genome_annotation
 #ignore	scripts/rast2-.*.pl
 rast-add-contigs	genome_annotation
 rast-add-features	genome_annotation
