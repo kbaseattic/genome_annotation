@@ -28,16 +28,30 @@ rast-query-genome-batch.pl [-hr] [long options...] batch-id
 
 my @options = (options_help());
 
-my($opt, $usage) = describe_options("%c %o batch-id",
+my($opt, $usage) = describe_options("%c %o [batch-id] [< batch-id-file]",
 				    ["readable|r", 'Show output in human-readable form'],
 				    ["summary", 'Show summary of job status only'],
 				    ["raw", "Print the raw AWE status"],
-				    @options);
+				    @options,
+				    [],
+				    ["Query the status of the job. If the batch-id is not given on the command line, read the batch-id from standard input"]);
 
 print($usage->text), exit if $opt->help;
-print($usage->text), exit 1 if @ARGV != 1;
+print($usage->text), exit 1 if (@ARGV != 0 && @ARGV != 1);
 
-my $batch_id = shift;
+my $batch_id;
+
+if (@ARGV)
+{
+    $batch_id = shift;
+}
+else
+{
+    $batch_id = <STDIN>;
+    chomp $batch_id;
+    $batch_id =~ s/^\s*//;
+    $batch_id =~ s/\s*$//;
+}
 
 my $client = get_annotation_client($opt);
 
