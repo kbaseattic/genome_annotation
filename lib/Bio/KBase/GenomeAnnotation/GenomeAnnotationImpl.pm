@@ -5965,6 +5965,8 @@ sub call_features_CDS_glimmer3
     $gparams->{genetic_code} = $genome_in->{genetic_code};
     my $calls = Bio::KBase::GenomeAnnotation::Glimmer::call_genes_with_glimmer($sequences_file, $gparams);
 
+    unlink($sequences_file);
+
     my $trans_table = SeedUtils::genetic_code($genome_in->{genetic_code});
     
     my $event = {
@@ -7880,7 +7882,12 @@ sub annotate_proteins_kmer_v1
 	    my($id, $func, $otu, $score, $nonover, $over, $details) = @$hit;
 	    if ($func)
 	    {
-		$genome_in->update_function("GenomeAnnotationImpl", $id, $func, $event_id);
+		$genome_in->update_function("annotate_proteins_kmer_v1", $id, $func, $event_id);
+		my $feature = $genome_in->find_feature($id);
+		if (ref($feature) eq 'HASH')
+		{
+		    $feature->{ quality }->{ hit_count } = $score;
+		}
 	    }
 	}
     };
@@ -8223,7 +8230,7 @@ sub annotate_proteins_kmer_v2
 	chomp;
 	#  my($fid, $function) = split(/\t/);
 	my($fid, $function, $hits, $hitsW) = split(/\t/);
-	$genome_in->update_function("GenomeAnnotationImpl", $fid, $function, $event_id);
+	$genome_in->update_function("annotate_proteins_kmer_v2", $fid, $function, $event_id);
 
 	my $feature = $genome_in->find_feature($fid);
 	if (ref($feature) eq 'HASH')
