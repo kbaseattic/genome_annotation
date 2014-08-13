@@ -66,6 +66,7 @@ compile-typespec: Makefile
 		--py biokbase/$(SERVICE_NAME_PY)/client \
 		--js javascript/$(SERVICE_NAME)/Client \
 		--url $(SERVICE_URL) \
+		--enable-retries \
 		$(SERVER_SPEC) lib
 	-rm -f lib/$(SERVER_MODULE)Server.py
 	-rm -f lib/$(SERVER_MODULE)Impl.py
