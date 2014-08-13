@@ -15,3 +15,9 @@ fi
 pid=`cat $pid_file`
 
 kill -QUIT $pid
+
+while kill -0 $pid ; do 
+	echo "Waiting for $pid to complete"
+	pstree -p -a $pid
+	sleep 3
+done
