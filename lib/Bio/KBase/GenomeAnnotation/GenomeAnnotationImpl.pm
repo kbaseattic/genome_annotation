@@ -8224,8 +8224,13 @@ sub annotate_proteins_kmer_v2
 	#  my($fid, $function) = split(/\t/);
 	my($fid, $function, $hits, $hitsW) = split(/\t/);
 	$genome_in->update_function("GenomeAnnotationImpl", $fid, $function, $event_id);
-	$fid->{ quality }->{ hit_count } = $hits;
-	$fid->{ quality }->{ weighted_hit_count } = $hitsW;
+
+	my $feature = $genome_in->find_feature($fid);
+	if (ref($feature) eq 'HASH')
+	{
+	    $feature->{ quality }->{ hit_count } = $hits;
+	    $feature->{ quality }->{ weighted_hit_count } = $hitsW;
+	}
     }
 
     $genome_out = $genome_in->prepare_for_return();
