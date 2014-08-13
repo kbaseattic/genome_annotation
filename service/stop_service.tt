@@ -14,4 +14,4 @@ fi
 
 pid=`cat $pid_file`
 
-kill $pid
+kill -QUIT $pid
