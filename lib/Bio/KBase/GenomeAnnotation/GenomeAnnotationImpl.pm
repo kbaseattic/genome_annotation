@@ -6545,6 +6545,7 @@ sub call_features_CDS_genemark
     my($gc) = $genome_in->compute_contigs_gc();
 
     $gc = int($gc + 0.5);
+    print STDERR "gc=$gc\n";
 
     #
     # Genemark 3.2.5 supports gc 30-70 inclusive.
@@ -6569,7 +6570,6 @@ sub call_features_CDS_genemark
     my $tmp_in = $genome_in->extract_contig_sequences_to_temp_file();
     my $tmp_out = File::Temp->new();
     close($tmp_out);
-    
 
     my @cmd = ("$gmark_home/gmhmmp",
 	       "-f" => "G",
@@ -6594,6 +6594,8 @@ sub call_features_CDS_genemark
     my $type = 'CDS';
 
     my $ok = run(@cmds);
+    # print Dumper(\@cmds);
+    system("cp $tmp_out /tmp/foo");
 
     if (!$ok)
     {
@@ -6616,7 +6618,7 @@ sub call_features_CDS_genemark
     while (defined($l))
     {
 	next if $l =~ /^\s*$/;
-	last if $l =~ /^\#/;
+	next if $l =~ /^\#/;
 	
 	my(@fields) = split(/\t/, $l);
 
@@ -6647,6 +6649,17 @@ sub call_features_CDS_genemark
 	$l = <$fh>;
     }
 
+    # print STDERR Dumper(\%by_gene);
+   
+
+    close($fh);
+    open($fh, "<", $tmp_out) or die "Cannot open $tmp_out: $!";
+    my $l;
+    while (defined($l = <$fh>))
+    {
+	last unless $l =~ /^#/;
+    }
+
     #
     # We've read features. Set up for creating the IDs etc, then read the proteins and
     # add features to the GTO.
@@ -6663,6 +6676,8 @@ sub call_features_CDS_genemark
     my $cur_type;
     my $cur_prot;
     while (defined($l)) {
+	next if $l !~ /^\#\#/;
+	    
 	if ($l =~ /^\#\#(\S+)\s+(\S+)/)
 	{
 	    $cur_type = $1;
@@ -6694,6 +6709,10 @@ sub call_features_CDS_genemark
 	    if ($cur_type eq 'Protein')
 	    {
 		$cur_prot .= $1;
+	    }
+	    else
+	    {
+		print STDERR "Skip '$cur_type' $l\n";
 	    }
 	}
     } continue {
