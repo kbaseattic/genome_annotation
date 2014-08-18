@@ -93,6 +93,7 @@ module GenomeAnnotation
 
 	float hit_count;
 	float weighted_hit_count;
+	float genemark_score;
     } feature_quality_measure;
 
     /* A feature object represents a feature on the genome. It contains 
@@ -314,6 +315,7 @@ module GenomeAnnotation
     funcdef call_features_CDS_glimmer3(genomeTO, glimmer3_parameters params) returns (genomeTO);
     
     funcdef call_features_CDS_prodigal(genomeTO) returns (genomeTO);
+    funcdef call_features_CDS_genemark(genomeTO) returns (genomeTO);
     funcdef call_features_CDS_SEED_projection(genomeTO) returns (genomeTO);
     funcdef call_features_CDS_FragGeneScan(genomeTO) returns (genomeTO);
 
