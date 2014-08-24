@@ -165,7 +165,7 @@ module GenomeAnnotation
 
     /*
      * Genome metadata. We use this structure to define common metadata
-     * settings used in the API calls below. It's possible this data should
+     * settings used in the API calls below. It is possible this data should
      * have been separated in this way in the genome object itself, but there
      * is an extant body of code that assumes the current structure of the genome
      * object.
@@ -329,7 +329,17 @@ module GenomeAnnotation
     funcdef call_features_prophage_phispy(genomeTO genome_in) returns (genomeTO genome_out);
 
     funcdef call_features_scan_for_matches(genomeTO genome_in, string pattern, string feature_type) returns (genomeTO genome_out);
+
     
+    typedef structure
+    {
+	int annotate_hypothetical_only;
+    } similarity_parameters;
+    /*
+     * Annotate based on similarity to annotation databases.
+     */
+    funcdef annotate_proteins_similarity(genomeTO, similarity_parameters params) returns (genomeTO);
+
     typedef structure
     {
 	int kmer_size;
