@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(load_input write_output get_annotation_client write_text_out
 		    get_params_for_kmer_v1 get_params_for_kmer_v2 get_params_for_glimmer3 get_params_for_genome_metadata
 		    get_params_for_contigs
 		    options_help options_common options_kmer_v1 options_kmer_v2 options_rrna_seed options_glimmer3
+		    options_similarity get_params_for_similarity
 		    options_repeat_regions_seed options_export options_classifier options_genome_metadata
 		    options_genome_in options_genome_out options_contigs options_export_formats
 		    options_workflow_specification
@@ -56,6 +57,12 @@ sub options_help
 	    ['url=s', 'URL for the genome annotation service'],
 	    );
 	    
+}
+
+sub options_similarity
+{
+    return(['annotate-hypothetical-only|H' => 'only annotate features tagged as hypothetical protein'],
+	  );
 }
 
 sub options_kmer_v1
@@ -245,6 +252,17 @@ sub write_text_output
     {
 	write_file(\*STDOUT, \$text);
     }
+}
+
+sub get_params_for_similarity
+{
+    my($opt) = @_;
+    my $params = {};
+    for my $p (qw(annotate_hypothetical_only))
+    {
+	$params->{$p} = $opt->{$p} if defined($opt->{$p});
+    }
+    return $params;
 }
 
 sub get_params_for_kmer_v2
