@@ -134,6 +134,19 @@ sub new
 	
     $self->{kmer_classifier_data_directory} = $dir;
 
+    $dir = $cfg->setting("nr-annotation-directory");
+    if (!$dir)
+    {
+	warn "Configuration parameter for nr-annotation-directory not set";
+    }
+    elsif (! -d $dir)
+    {
+	warn "Directory $dir for nr-annotation_directory does not exist";
+    }
+	
+    $self->{nr_annotation_directory} = $dir;
+
+
     my $i = $cfg->setting("idserver_url");
     $idserver_url = $i if $i;
 
@@ -249,6 +262,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -343,6 +357,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -495,6 +510,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -596,6 +612,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -754,6 +771,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -848,6 +866,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -990,6 +1009,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1084,6 +1104,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1230,6 +1251,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1332,6 +1354,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1712,6 +1735,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1807,6 +1831,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1956,6 +1981,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2051,6 +2077,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2196,6 +2223,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2297,6 +2325,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2451,6 +2480,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2566,6 +2596,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2783,6 +2814,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2886,6 +2918,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3279,6 +3312,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3373,6 +3407,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3547,6 +3582,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3641,6 +3677,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3945,6 +3982,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4039,6 +4077,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4214,6 +4253,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4308,6 +4348,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4481,6 +4522,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4575,6 +4617,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4720,6 +4763,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4814,6 +4858,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4960,6 +5005,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5056,6 +5102,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5243,6 +5290,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5337,6 +5385,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5497,6 +5546,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5591,6 +5641,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5817,6 +5868,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5914,6 +5966,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6137,6 +6190,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6231,6 +6285,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6392,6 +6447,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6486,6 +6542,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6823,6 +6880,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6917,6 +6975,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7060,6 +7119,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7154,6 +7214,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7298,6 +7359,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7396,6 +7458,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7621,6 +7684,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7715,6 +7779,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7876,6 +7941,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7972,6 +8038,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8025,6 +8092,289 @@ sub call_features_scan_for_matches
 							       method_name => 'call_features_scan_for_matches');
     }
     return($genome_out);
+}
+
+
+
+
+=head2 annotate_proteins_similarity
+
+  $return = $obj->annotate_proteins_similarity($genomeTO, $params)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genomeTO is a genomeTO
+$params is a similarity_parameters
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+similarity_parameters is a reference to a hash where the following keys are defined:
+	annotate_hypothetical_only has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$genomeTO is a genomeTO
+$params is a similarity_parameters
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+similarity_parameters is a reference to a hash where the following keys are defined:
+	annotate_hypothetical_only has a value which is an int
+
+
+=end text
+
+
+
+=item Description
+
+Annotate based on similarity to annotation databases.
+
+=back
+
+=cut
+
+sub annotate_proteins_similarity
+{
+    my $self = shift;
+    my($genomeTO, $params) = @_;
+
+    my @_bad_arguments;
+    (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"params\" (value was \"$params\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to annotate_proteins_similarity:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_proteins_similarity');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($return);
+    #BEGIN annotate_proteins_similarity
+
+    my $coder = _get_coder();
+    
+    my $dir = $self->{nr_annotation_directory};
+    if (! -d $dir)
+    {
+	warn "NR annotation directory '$dir' empty or missing\n";
+	$return = $genomeTO;
+    }
+    else
+    {
+	my $genomeTO_json = $coder->encode($genomeTO);
+
+	my $genomeOut_json;
+	my $stderr;
+
+	my $tmp = File::Temp->new();
+	print $tmp $genomeTO_json;
+	close($tmp);
+
+	print STDERR "Starting $dir $tmp\n";
+	my $ok = run(['rast_annotate_proteins_similarity',
+		      "--nr-dir", $dir,
+		      ($params->{annotate_hypothetical_only} ? ("-H") : ()),
+		      '--input', $tmp],
+		     '>', \$genomeOut_json,
+		     '2>', \$stderr);
+
+	undef $tmp;
+	undef $genomeTO;
+
+	if ($ok) {
+	    $return = $coder->decode($genomeOut_json);
+	} else {
+	    die "rast_call_special_proteins failed: $stderr";
+	}
+    }
+
+    #END annotate_proteins_similarity
+    my @_bad_returns;
+    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to annotate_proteins_similarity:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_proteins_similarity');
+    }
+    return($return);
 }
 
 
@@ -8118,6 +8468,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8225,6 +8576,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8453,6 +8805,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8552,6 +8905,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8780,6 +9134,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8877,6 +9232,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9030,6 +9386,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9137,6 +9494,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9376,6 +9734,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9475,6 +9834,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9732,6 +10092,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9826,6 +10187,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9969,6 +10331,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10063,6 +10426,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10206,6 +10570,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10300,6 +10665,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10471,6 +10837,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10565,6 +10932,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10710,6 +11078,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10804,6 +11173,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10949,6 +11319,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11043,6 +11414,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11206,6 +11578,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11302,6 +11675,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12005,6 +12379,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12131,6 +12506,7 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	existence_priority has a value which is a float
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13146,6 +13522,7 @@ overlap_rules has a value which is a reference to a list where each element is a
 existence_priority has a value which is a float
 hit_count has a value which is a float
 weighted_hit_count has a value which is a float
+genemark_score has a value which is a float
 
 </pre>
 
@@ -13164,6 +13541,7 @@ overlap_rules has a value which is a reference to a list where each element is a
 existence_priority has a value which is a float
 hit_count has a value which is a float
 weighted_hit_count has a value which is a float
+genemark_score has a value which is a float
 
 
 =end text
@@ -13418,7 +13796,7 @@ analysis_events has a value which is a reference to a list where each element is
 =item Description
 
 * Genome metadata. We use this structure to define common metadata
-* settings used in the API calls below. It's possible this data should
+* settings used in the API calls below. It is possible this data should
 * have been separated in this way in the genome object itself, but there
 * is an extant body of code that assumes the current structure of the genome
 * object.
@@ -13993,6 +14371,36 @@ min_length has a value which is an int
 a reference to a hash where the following keys are defined:
 min_identity has a value which is a float
 min_length has a value which is an int
+
+
+=end text
+
+=back
+
+
+
+=head2 similarity_parameters
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+annotate_hypothetical_only has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+annotate_hypothetical_only has a value which is an int
 
 
 =end text
