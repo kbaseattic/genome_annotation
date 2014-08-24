@@ -8362,7 +8362,7 @@ sub annotate_proteins_similarity
 	if ($ok) {
 	    $return = $coder->decode($genomeOut_json);
 	} else {
-	    die "rast_call_special_proteins failed: $stderr";
+	    die "rast_annotate_proteins_similarity failed: $stderr";
 	}
     }
 
