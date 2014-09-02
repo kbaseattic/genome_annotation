@@ -12409,7 +12409,7 @@ sub complete_workflow_template
 	      { name => 'call_features_strep_pneumo_repeat',
 		condition => '$genome->{scientific_name} =~ /^Streptococcus\s/' },
 	      { name => 'call_features_crispr', failure_is_not_fatal => 1 },
-	      { name => 'call_features_CDS_glimmer3, glimmer3_parameters => { min_training_len => 2000 } },
+	      { name => 'call_features_CDS_glimmer3', glimmer3_parameters => { min_training_len => 2000 } },
 	      { name => 'call_features_CDS_prodigal' },
 	      { name => 'call_features_CDS_genemark' },
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => { annotate_hypothetical_only => 0 } },
