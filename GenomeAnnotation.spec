@@ -441,6 +441,7 @@ module GenomeAnnotation
 	glimmer3_parameters glimmer3_parameters;
 	kmer_v1_parameters kmer_v1_parameters;
 	kmer_v2_parameters kmer_v2_parameters;
+	similarity_parameters similarity_parameters;
     } pipeline_stage;
     
     typedef structure
@@ -449,6 +450,13 @@ module GenomeAnnotation
     } workflow;
 
     funcdef default_workflow() returns (workflow);
+
+    /*
+     * Return a workflow that includes all available stages. Not meant
+     * (necessarily) for actual execution, but as a comprehensive list
+     * of parts for users to use in assembling their own workflows.
+     */
+    funcdef complete_workflow_template() returns (workflow);
     funcdef run_pipeline(genomeTO genome_in, workflow workflow) returns (genomeTO genome_out);
 
     typedef structure

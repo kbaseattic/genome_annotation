@@ -12291,6 +12291,149 @@ sub default_workflow
 
 
 
+=head2 complete_workflow_template
+
+  $return = $obj->complete_workflow_template()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$return is a workflow
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$return is a workflow
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+
+
+=end text
+
+
+
+=item Description
+
+Return a workflow that includes all available stages. Not meant
+(necessarily) for actual execution, but as a comprehensive list
+of parts for users to use in assembling their own workflows.
+
+=back
+
+=cut
+
+sub complete_workflow_template
+{
+    my $self = shift;
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($return);
+    #BEGIN complete_workflow_template
+
+    my @stages = (
+	      { name => 'call_features_rRNA_SEED' },
+	      { name => 'call_features_tRNA_trnascan' },
+	      { name => 'call_features_repeat_region_SEED',
+		    repeat_region_SEED_parameters => { } },
+	      { name => 'call_selenoproteins' },
+	      { name => 'call_pyrrolysoproteins' },
+	      { name => 'call_features_strep_suis_repeat',
+		condition => '$genome->{scientific_name} =~ /^Streptococcus\s/' },
+	      { name => 'call_features_strep_pneumo_repeat',
+		condition => '$genome->{scientific_name} =~ /^Streptococcus\s/' },
+	      { name => 'call_features_crispr', failure_is_not_fatal => 1 },
+	      { name => 'call_features_CDS_glimmer3, glimmer3_parameters => { min_training_len => 2000 } },
+	      { name => 'call_features_CDS_prodigal' },
+	      { name => 'call_features_CDS_genemark' },
+	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => { annotate_hypothetical_only => 0 } },
+	      { name => 'annotate_proteins_kmer_v1', kmer_v1_parameters => { annotate_hypothetical_only => 1 } },
+	      { name => 'annotate_proteins_similarity', similarity_parameters => { annotate_hypothetical_only => 1 } },
+	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
+	      # { name => 'call_features_prophage_phispy' },
+		 );
+    $return = { stages => \@stages };
+
+    #END complete_workflow_template
+    my @_bad_returns;
+    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to complete_workflow_template:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'complete_workflow_template');
+    }
+    return($return);
+}
+
+
+
+
 =head2 run_pipeline
 
   $genome_out = $obj->run_pipeline($genome_in, $workflow)
@@ -12586,6 +12729,7 @@ sub run_pipeline
 		      call_features_repeat_region_SEED => 'repeat_regions_SEED_parameters',
 		      call_features_CDS_glimmer3 => 'glimmer3_parameters',
 		      call_features_repeat_region_SEED => 'repeat_region_SEED_parameters',
+		      resolve_overlapping_features => 'resolve_overlapping_features_parameters',
 		      );
 
     my $cur = $genome_in;
