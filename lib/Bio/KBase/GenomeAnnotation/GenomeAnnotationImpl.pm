@@ -26,6 +26,7 @@ use File::Slurp;
 use Data::Dumper;
 use Digest::MD5 'md5_hex';
 use Time::HiRes 'gettimeofday';
+use POSIX;
 
 use Bio::KBase::IDServer::Client;
 use Bio::KBase::KmerAnnotationByFigfam::Client;
@@ -95,6 +96,113 @@ sub _call_using_strep_repeats
     return $genome_in;
 }
 
+
+package Bio::KBase::GenomeAnnotation::StderrWrapper;
+
+use strict;
+use POSIX;
+use Time::HiRes 'gettimeofday';
+
+sub new
+{
+    my($class, $impl, $ctx) = @_;
+    my $self = {};
+    my $dest = $ENV{KBRPC_ERROR_DEST};
+    my $tag = $ENV{KBRPC_TAG};
+    my ($t, $us) = gettimeofday();
+    $us = sprintf("%06d", $us);
+    my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
+
+    my $name = join(".", $ctx->module, $ctx->method, $impl->{hostname}, $ts);
+
+    if ($dest =~ m,^/,)
+    {
+	#
+	# File destination
+	#
+	my $fh;
+
+	if ($tag)
+	{
+	    $tag =~ s,/,_,g;
+	    $dest = "$dest/$tag";
+	    if (! -d $dest)
+	    {
+		mkdir($dest);
+	    }
+	}
+	if (open($fh, ">", "$dest/$name"))
+	{
+	    $self->{file} = "$dest/$name";
+	    $self->{dest} = $fh;
+	}
+	else
+	{
+	    warn "Cannot open log file $dest/$name: $!";
+	}
+    }
+    else
+    {
+	#
+	# Log to string.
+	#
+	my $stderr;
+	$self->{dest} = \$stderr;
+    }
+    
+    return bless $self, $class;
+}
+
+sub redirect
+{
+    my($self) = @_;
+    if ($self->{dest})
+    {
+	return("2>", $self->{dest});
+    }
+    else
+    {
+	return ();
+    }
+}
+
+sub log
+{
+    my($self, $str) = @_;
+    my $d = $self->{dest};
+    if (ref($d) eq 'SCALAR')
+    {
+	$$d .= $str . "\n";
+    }
+    elsif ($d)
+    {
+	print $d $str . "\n";
+    }
+	 
+}
+
+sub dest
+{
+    my($self) = @_;
+    return $self->{dest};
+}
+
+sub text_value
+{
+    my($self) = @_;
+    if (ref($self->{dest}) eq 'SCALAR')
+    {
+	my $r = $self->{dest};
+	return $$r;
+    }
+    else
+    {
+	return $self->{file};
+    }
+}
+	    
+
+package Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl;
 
 #END_HEADER
 
@@ -4397,6 +4505,7 @@ sub call_pyrrolysoproteins
     my $genomeTO_json = $coder->encode($genomeTO);
 
     my $genomeOut_json;
+
     my $stderr;
 
     my $tmp = File::Temp->new();
@@ -6336,12 +6445,17 @@ sub call_features_CDS_prodigal
     my $tmp_out = File::Temp->new();
     close($tmp_out);
 
+    my $stderr = Bio::KBase::GenomeAnnotation::StderrWrapper->new($self, $ctx);
+
     my @cmd = ("rast_call_CDSs_using_prodigal", "--input", $tmp_in, "--output", $tmp_out,
 	       "--id-prefix", $genomeTO->{id});
-    my $rc = system(@cmd);
-    if ($rc != 0)
+    $stderr->log(join(" ", @cmd));
+
+    my $ok = run(\@cmd, $stderr->redirect);
+    
+    if (!$ok)
     {
-	die "error calling CDSs: $rc\non command @cmd";
+	die "error calling CDSs: $?\non command @cmd\n" . $stderr->text_value . "\n";
     }
 
     $return = $coder->decode(scalar read_file("" . $tmp_out));
@@ -6628,6 +6742,8 @@ sub call_features_CDS_genemark
     my $tmp_out = File::Temp->new();
     close($tmp_out);
 
+    my $stderr = Bio::KBase::GenomeAnnotation::StderrWrapper->new($self, $ctx);
+
     my @cmd = ("$gmark_home/gmhmmp",
 	       "-f" => "G",
 	       "-r",
@@ -6636,6 +6752,9 @@ sub call_features_CDS_genemark
 	       "-m", $h_path,
 	       "-o", "$tmp_out",
 	       $tmp_in);
+
+    $stderr->log(join(" ", @cmd));
+
     my @cmds = (\@cmd,
 		init => sub {
 		    $ENV{$_} = $env{$_} foreach keys %env;
@@ -6650,13 +6769,11 @@ sub call_features_CDS_genemark
     my $event_id = $genome_in->add_analysis_event($event);
     my $type = 'CDS';
 
-    my $ok = run(@cmds);
-    # print Dumper(\@cmds);
-    system("cp $tmp_out /tmp/foo");
+    my $ok = run(@cmds, $stderr->redirect);
 
     if (!$ok)
     {
-	die "Error running pipeline: @cmd";
+	die "Error running pipeline: @cmd\n" . $stderr->text_value . "\n";
     }
 
     my $fh;
@@ -12175,6 +12292,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12195,6 +12313,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 </pre>
@@ -12214,6 +12334,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12234,6 +12355,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 
@@ -12313,6 +12436,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12333,6 +12457,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 </pre>
@@ -12352,6 +12478,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12372,6 +12499,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 
@@ -12544,6 +12673,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12564,6 +12694,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 </pre>
@@ -12671,6 +12803,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12691,6 +12824,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 
@@ -12843,6 +12978,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12863,6 +12999,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 </pre>
@@ -12894,6 +13032,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -12914,6 +13053,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 
@@ -14686,6 +14827,7 @@ repeat_region_SEED_parameters has a value which is a repeat_region_SEED_paramete
 glimmer3_parameters has a value which is a glimmer3_parameters
 kmer_v1_parameters has a value which is a kmer_v1_parameters
 kmer_v2_parameters has a value which is a kmer_v2_parameters
+similarity_parameters has a value which is a similarity_parameters
 
 </pre>
 
@@ -14701,6 +14843,7 @@ repeat_region_SEED_parameters has a value which is a repeat_region_SEED_paramete
 glimmer3_parameters has a value which is a glimmer3_parameters
 kmer_v1_parameters has a value which is a kmer_v1_parameters
 kmer_v2_parameters has a value which is a kmer_v2_parameters
+similarity_parameters has a value which is a similarity_parameters
 
 
 =end text

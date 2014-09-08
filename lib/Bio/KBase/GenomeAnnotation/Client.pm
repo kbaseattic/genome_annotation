@@ -1,10 +1,17 @@
 package Bio::KBase::GenomeAnnotation::Client;
 
 use JSON::RPC::Client;
+use POSIX;
 use strict;
 use Data::Dumper;
 use URI;
 use Bio::KBase::Exceptions;
+my $get_time = sub { time, 0 };
+eval {
+    require Time::HiRes;
+    $get_time = sub { Time::HiRes::gettimeofday() };
+};
+
 use Bio::KBase::AuthToken;
 
 # Client version should match Impl version
@@ -39,7 +46,41 @@ sub new
     my $self = {
 	client => Bio::KBase::GenomeAnnotation::Client::RpcClient->new,
 	url => $url,
+	headers => [],
     };
+
+    chomp($self->{hostname} = `hostname`);
+    $self->{hostname} ||= 'unknown-host';
+
+    #
+    # Set up for propagating KBRPC_TAG and KBRPC_METADATA environment variables through
+    # to invoked services. If these values are not set, we create a new tag
+    # and a metadata field with basic information about the invoking script.
+    #
+    if ($ENV{KBRPC_TAG})
+    {
+	$self->{kbrpc_tag} = $ENV{KBRPC_TAG};
+    }
+    else
+    {
+	my ($t, $us) = &$get_time();
+	$us = sprintf("%06d", $us);
+	my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
+	$self->{kbrpc_tag} = "C:$0:$self->{hostname}:$$:$ts";
+    }
+    push(@{$self->{headers}}, 'Kbrpc-Tag', $self->{kbrpc_tag});
+
+    if ($ENV{KBRPC_METADATA})
+    {
+	$self->{kbrpc_metadata} = $ENV{KBRPC_METADATA};
+	push(@{$self->{headers}}, 'Kbrpc-Metadata', $self->{kbrpc_metadata});
+    }
+
+    if ($ENV{KBRPC_ERROR_DEST})
+    {
+	$self->{kbrpc_error_dest} = $ENV{KBRPC_ERROR_DEST};
+	push(@{$self->{headers}}, 'Kbrpc-Errordest', $self->{kbrpc_error_dest});
+    }
 
     #
     # This module requires authentication.
@@ -296,7 +337,7 @@ sub genome_ids_to_genomes
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.genome_ids_to_genomes",
 	params => \@args,
     });
@@ -563,7 +604,7 @@ sub create_genome
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.create_genome",
 	params => \@args,
     });
@@ -816,7 +857,7 @@ sub create_genome_from_SEED
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.create_genome_from_SEED",
 	params => \@args,
     });
@@ -1069,7 +1110,7 @@ sub create_genome_from_RAST
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.create_genome_from_RAST",
 	params => \@args,
     });
@@ -1339,7 +1380,7 @@ sub set_metadata
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.set_metadata",
 	params => \@args,
     });
@@ -1595,7 +1636,7 @@ sub add_contigs
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.add_contigs",
 	params => \@args,
     });
@@ -1852,7 +1893,7 @@ sub add_contigs_from_handle
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.add_contigs_from_handle",
 	params => \@args,
     });
@@ -2120,7 +2161,7 @@ sub add_features
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.add_features",
 	params => \@args,
     });
@@ -2415,7 +2456,7 @@ sub genomeTO_to_reconstructionTO
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.genomeTO_to_reconstructionTO",
 	params => \@args,
     });
@@ -2686,7 +2727,7 @@ sub genomeTO_to_feature_data
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.genomeTO_to_feature_data",
 	params => \@args,
     });
@@ -2809,7 +2850,7 @@ sub reconstructionTO_to_roles
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.reconstructionTO_to_roles",
 	params => \@args,
     });
@@ -2932,7 +2973,7 @@ sub reconstructionTO_to_subsystems
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.reconstructionTO_to_subsystems",
 	params => \@args,
     });
@@ -3186,7 +3227,7 @@ sub assign_functions_to_CDSs
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.assign_functions_to_CDSs",
 	params => \@args,
     });
@@ -3439,7 +3480,7 @@ sub annotate_genome
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.annotate_genome",
 	params => \@args,
     });
@@ -3692,7 +3733,7 @@ sub call_selenoproteins
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_selenoproteins",
 	params => \@args,
     });
@@ -3945,7 +3986,7 @@ sub call_pyrrolysoproteins
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_pyrrolysoproteins",
 	params => \@args,
     });
@@ -4198,7 +4239,7 @@ sub call_features_selenoprotein
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_selenoprotein",
 	params => \@args,
     });
@@ -4451,7 +4492,7 @@ sub call_features_pyrrolysoprotein
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_pyrrolysoprotein",
 	params => \@args,
     });
@@ -4716,7 +4757,7 @@ sub call_features_rRNA_SEED
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_rRNA_SEED",
 	params => \@args,
     });
@@ -4970,7 +5011,7 @@ sub call_features_tRNA_trnascan
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_tRNA_trnascan",
 	params => \@args,
     });
@@ -5224,7 +5265,7 @@ sub call_RNAs
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_RNAs",
 	params => \@args,
     });
@@ -5484,7 +5525,7 @@ sub call_features_CDS_glimmer3
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_CDS_glimmer3",
 	params => \@args,
     });
@@ -5737,7 +5778,7 @@ sub call_features_CDS_prodigal
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_CDS_prodigal",
 	params => \@args,
     });
@@ -5990,7 +6031,7 @@ sub call_features_CDS_genemark
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_CDS_genemark",
 	params => \@args,
     });
@@ -6243,7 +6284,7 @@ sub call_features_CDS_SEED_projection
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_CDS_SEED_projection",
 	params => \@args,
     });
@@ -6496,7 +6537,7 @@ sub call_features_CDS_FragGeneScan
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_CDS_FragGeneScan",
 	params => \@args,
     });
@@ -6758,7 +6799,7 @@ sub call_features_repeat_region_SEED
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_repeat_region_SEED",
 	params => \@args,
     });
@@ -7011,7 +7052,7 @@ sub call_features_prophage_phispy
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_prophage_phispy",
 	params => \@args,
     });
@@ -7270,7 +7311,7 @@ sub call_features_scan_for_matches
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_scan_for_matches",
 	params => \@args,
     });
@@ -7530,7 +7571,7 @@ sub annotate_proteins_similarity
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.annotate_proteins_similarity",
 	params => \@args,
     });
@@ -7810,7 +7851,7 @@ sub annotate_proteins_kmer_v1
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.annotate_proteins_kmer_v1",
 	params => \@args,
     });
@@ -8074,7 +8115,7 @@ sub annotate_proteins_kmer_v2
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.annotate_proteins_kmer_v2",
 	params => \@args,
     });
@@ -8334,7 +8375,7 @@ sub resolve_overlapping_features
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.resolve_overlapping_features",
 	params => \@args,
     });
@@ -8614,7 +8655,7 @@ sub call_features_ProtoCDS_kmer_v1
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_ProtoCDS_kmer_v1",
 	params => \@args,
     });
@@ -8878,7 +8919,7 @@ sub call_features_ProtoCDS_kmer_v2
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_ProtoCDS_kmer_v2",
 	params => \@args,
     });
@@ -9131,7 +9172,7 @@ sub annotate_proteins
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.annotate_proteins",
 	params => \@args,
     });
@@ -9384,7 +9425,7 @@ sub estimate_crude_phylogenetic_position_kmer
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.estimate_crude_phylogenetic_position_kmer",
 	params => \@args,
     });
@@ -9637,7 +9678,7 @@ sub find_close_neighbors
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.find_close_neighbors",
 	params => \@args,
     });
@@ -9890,7 +9931,7 @@ sub call_features_strep_suis_repeat
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_strep_suis_repeat",
 	params => \@args,
     });
@@ -10143,7 +10184,7 @@ sub call_features_strep_pneumo_repeat
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_strep_pneumo_repeat",
 	params => \@args,
     });
@@ -10396,7 +10437,7 @@ sub call_features_crispr
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.call_features_crispr",
 	params => \@args,
     });
@@ -10658,7 +10699,7 @@ sub export_genome
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.export_genome",
 	params => \@args,
     });
@@ -10727,7 +10768,7 @@ sub enumerate_classifiers
 							       "Invalid argument count for function enumerate_classifiers (received $n, expecting 0)");
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.enumerate_classifiers",
 	params => \@args,
     });
@@ -10815,7 +10856,7 @@ sub query_classifier_groups
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.query_classifier_groups",
 	params => \@args,
     });
@@ -10896,7 +10937,7 @@ sub query_classifier_taxonomies
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.query_classifier_taxonomies",
 	params => \@args,
     });
@@ -10984,7 +11025,7 @@ sub classify_into_bins
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.classify_into_bins",
 	params => \@args,
     });
@@ -11077,7 +11118,7 @@ sub classify_full
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.classify_full",
 	params => \@args,
     });
@@ -11123,6 +11164,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11143,6 +11185,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 </pre>
@@ -11162,6 +11206,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11182,6 +11227,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 
@@ -11207,7 +11254,7 @@ sub default_workflow
 							       "Invalid argument count for function default_workflow (received $n, expecting 0)");
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.default_workflow",
 	params => \@args,
     });
@@ -11225,6 +11272,144 @@ sub default_workflow
         Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method default_workflow",
 					    status_line => $self->{client}->status_line,
 					    method_name => 'default_workflow',
+				       );
+    }
+}
+
+
+
+=head2 complete_workflow_template
+
+  $return = $obj->complete_workflow_template()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$return is a workflow
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
+	annotate_hypothetical_only has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$return is a workflow
+workflow is a reference to a hash where the following keys are defined:
+	stages has a value which is a reference to a list where each element is a pipeline_stage
+pipeline_stage is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	condition has a value which is a string
+	failure_is_not_fatal has a value which is an int
+	repeat_region_SEED_parameters has a value which is a repeat_region_SEED_parameters
+	glimmer3_parameters has a value which is a glimmer3_parameters
+	kmer_v1_parameters has a value which is a kmer_v1_parameters
+	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
+repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
+	min_identity has a value which is a float
+	min_length has a value which is an int
+glimmer3_parameters is a reference to a hash where the following keys are defined:
+	min_training_len has a value which is an int
+kmer_v1_parameters is a reference to a hash where the following keys are defined:
+	kmer_size has a value which is an int
+	dataset_name has a value which is a string
+	return_scores_for_all_proteins has a value which is an int
+	score_threshold has a value which is an int
+	hit_threshold has a value which is an int
+	sequential_hit_threshold has a value which is an int
+	detailed has a value which is an int
+	min_hits has a value which is an int
+	min_size has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+kmer_v2_parameters is a reference to a hash where the following keys are defined:
+	min_hits has a value which is an int
+	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
+	annotate_hypothetical_only has a value which is an int
+
+
+=end text
+
+=item Description
+
+Return a workflow that includes all available stages. Not meant
+(necessarily) for actual execution, but as a comprehensive list
+of parts for users to use in assembling their own workflows.
+
+=back
+
+=cut
+
+sub complete_workflow_template
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 0)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function complete_workflow_template (received $n, expecting 0)");
+    }
+
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
+	method => "GenomeAnnotation.complete_workflow_template",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'complete_workflow_template',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method complete_workflow_template",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'complete_workflow_template',
 				       );
     }
 }
@@ -11341,6 +11526,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11361,6 +11547,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 </pre>
@@ -11468,6 +11656,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11488,6 +11677,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 
@@ -11525,7 +11716,7 @@ sub run_pipeline
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.run_pipeline",
 	params => \@args,
     });
@@ -11583,6 +11774,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11603,6 +11795,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 </pre>
@@ -11634,6 +11828,7 @@ pipeline_stage is a reference to a hash where the following keys are defined:
 	glimmer3_parameters has a value which is a glimmer3_parameters
 	kmer_v1_parameters has a value which is a kmer_v1_parameters
 	kmer_v2_parameters has a value which is a kmer_v2_parameters
+	similarity_parameters has a value which is a similarity_parameters
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11654,6 +11849,8 @@ kmer_v1_parameters is a reference to a hash where the following keys are defined
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
+	annotate_hypothetical_only has a value which is an int
+similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
 
@@ -11691,7 +11888,7 @@ sub pipeline_batch_start
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.pipeline_batch_start",
 	params => \@args,
     });
@@ -11816,7 +12013,7 @@ sub pipeline_batch_status
 	}
     }
 
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
 	method => "GenomeAnnotation.pipeline_batch_status",
 	params => \@args,
     });
@@ -11842,7 +12039,7 @@ sub pipeline_batch_status
 
 sub version {
     my ($self) = @_;
-    my $result = $self->{client}->call($self->{url}, {
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
         method => "GenomeAnnotation.version",
         params => [],
     });
@@ -13361,6 +13558,7 @@ repeat_region_SEED_parameters has a value which is a repeat_region_SEED_paramete
 glimmer3_parameters has a value which is a glimmer3_parameters
 kmer_v1_parameters has a value which is a kmer_v1_parameters
 kmer_v2_parameters has a value which is a kmer_v2_parameters
+similarity_parameters has a value which is a similarity_parameters
 
 </pre>
 
@@ -13376,6 +13574,7 @@ repeat_region_SEED_parameters has a value which is a repeat_region_SEED_paramete
 glimmer3_parameters has a value which is a glimmer3_parameters
 kmer_v1_parameters has a value which is a kmer_v1_parameters
 kmer_v2_parameters has a value which is a kmer_v2_parameters
+similarity_parameters has a value which is a similarity_parameters
 
 
 =end text
@@ -13540,7 +13739,7 @@ use strict;
 #
 
 sub call {
-    my ($self, $uri, $obj) = @_;
+    my ($self, $uri, $headers, $obj) = @_;
     my $result;
 
 
@@ -13550,7 +13749,7 @@ sub call {
 	}
 	else {
 	    Carp::croak "not hashref." unless (ref $obj eq 'HASH');
-	    $result = $self->_post($uri, $obj);
+	    $result = $self->_post($uri, $headers, $obj);
 	}
 
     }
@@ -13580,7 +13779,7 @@ sub call {
 
 
 sub _post {
-    my ($self, $uri, $obj) = @_;
+    my ($self, $uri, $headers, $obj) = @_;
     my $json = $self->json;
 
     $obj->{version} ||= $self->{version} || '1.1';
@@ -13607,6 +13806,7 @@ sub _post {
         Content_Type   => $self->{content_type},
         Content        => $content,
         Accept         => 'application/json',
+	@$headers,
 	($self->{token} ? (Authorization => $self->{token}) : ()),
     );
 }

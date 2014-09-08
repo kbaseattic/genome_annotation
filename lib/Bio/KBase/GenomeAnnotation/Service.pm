@@ -2,8 +2,16 @@ package Bio::KBase::GenomeAnnotation::Service;
 
 use Data::Dumper;
 use Moose;
+use POSIX;
 use JSON;
 use Bio::KBase::Log;
+use Config::Simple;
+my $get_time = sub { time, 0 };
+eval {
+    require Time::HiRes;
+    $get_time = sub { Time::HiRes::gettimeofday };
+};
+
 use Bio::KBase::AuthToken;
 
 extends 'RPC::Any::Server::JSONRPC::PSGI';
@@ -13,6 +21,7 @@ has 'user_auth' => (is => 'ro', isa => 'UserAuth');
 has 'valid_methods' => (is => 'ro', isa => 'HashRef', lazy => 1,
 			builder => '_build_valid_methods');
 has 'loggers' => (is => 'ro', required => 1, builder => '_build_loggers');
+has 'config' => (is => 'ro', required => 1, builder => '_build_config');
 
 our $CallContext;
 
@@ -65,6 +74,7 @@ our %return_counts = (
         'classify_into_bins' => 1,
         'classify_full' => 3,
         'default_workflow' => 1,
+        'complete_workflow_template' => 1,
         'run_pipeline' => 1,
         'pipeline_batch_start' => 1,
         'pipeline_batch_status' => 1,
@@ -120,6 +130,7 @@ our %method_authentication = (
         'classify_into_bins' => 'none',
         'classify_full' => 'none',
         'default_workflow' => 'none',
+        'complete_workflow_template' => 'none',
         'run_pipeline' => 'none',
         'pipeline_batch_start' => 'required',
         'pipeline_batch_status' => 'required',
@@ -178,6 +189,7 @@ sub _build_valid_methods
         'classify_into_bins' => 1,
         'classify_full' => 1,
         'default_workflow' => 1,
+        'complete_workflow_template' => 1,
         'run_pipeline' => 1,
         'pipeline_batch_start' => 1,
         'pipeline_batch_status' => 1,
@@ -202,9 +214,25 @@ sub get_service_name
 {
     my ($self) = @_;
     if(!defined $ENV{$SERVICE}) {
-        return undef;
+        return 'GenomeAnnotation';
     }
     return $ENV{$SERVICE};
+}
+
+sub _build_config
+{
+    my ($self) = @_;
+    my $sn = $self->get_service_name();
+    my $cf = $self->get_config_file();
+    if (!($cf)) {
+        return {};
+    }
+    my $cfg = new Config::Simple($cf);
+    my $cfgdict = $cfg->get_block($sn);
+    if (!($cfgdict)) {
+        return {};
+    }
+    return $cfgdict;
 }
 
 sub logcallback
@@ -216,26 +244,28 @@ sub logcallback
 
 sub log
 {
-    my ($self, $level, $context, $message) = @_;
+    my ($self, $level, $context, $message, $tag) = @_;
     my $user = defined($context->user_id()) ? $context->user_id(): undef; 
     $self->loggers()->{serverlog}->log_message($level, $message, $user, 
         $context->module(), $context->method(), $context->call_id(),
-        $context->client_ip());
+        $context->client_ip(), $tag);
 }
 
 sub _build_loggers
 {
     my ($self) = @_;
-    my $submod = $self->get_service_name() || 'GenomeAnnotation';
+    my $submod = $self->get_service_name();
     my $loggers = {};
     my $callback = sub {$self->logcallback();};
     $loggers->{userlog} = Bio::KBase::Log->new(
             $submod, {}, {ip_address => 1, authuser => 1, module => 1,
             method => 1, call_id => 1, changecallback => $callback,
+	    tag => 1,
             config => $self->get_config_file()});
     $loggers->{serverlog} = Bio::KBase::Log->new(
             $submod, {}, {ip_address => 1, authuser => 1, module => 1,
             method => 1, call_id => 1,
+	    tag => 1,
             logfile => $loggers->{userlog}->get_log_file()});
     $loggers->{serverlog}->set_log_level(6);
     return $loggers;
@@ -292,13 +322,41 @@ sub encode_output_from_exception {
     return $self->encode_output_from_object($json_error);
 }
 
+sub trim {
+    my ($str) = @_;
+    if (!(defined $str)) {
+        return $str;
+    }
+    $str =~ s/^\s+|\s+$//g;
+    return $str;
+}
+
+sub getIPAddress {
+    my ($self) = @_;
+    my $xFF = trim($self->_plack_req->header("X-Forwarded-For"));
+    my $realIP = trim($self->_plack_req->header("X-Real-IP"));
+    my $nh = $self->config->{"dont_trust_x_ip_headers"};
+    my $trustXHeaders = !(defined $nh) || $nh ne "true";
+
+    if ($trustXHeaders) {
+        if ($xFF) {
+            my @tmp = split(",", $xFF);
+            return trim($tmp[0]);
+        }
+        if ($realIP) {
+            return $realIP;
+        }
+    }
+    return $self->_plack_req->address;
+}
+
 sub call_method {
     my ($self, $data, $method_info) = @_;
 
     my ($module, $method, $modname) = @$method_info{qw(module method modname)};
     
     my $ctx = Bio::KBase::GenomeAnnotation::ServiceContext->new($self->{loggers}->{userlog},
-                           client_ip => $self->_plack_req->address);
+                           client_ip => $self->getIPAddress());
     $ctx->module($modname);
     $ctx->method($method);
     $ctx->call_id($self->{_last_call}->{id});
@@ -342,15 +400,37 @@ sub call_method {
     local $CallContext = $ctx;
     my @result;
     {
+	# 
+	# Process tag and metadata information if present.
+	#
+	my $tag = $self->_plack_req->header("Kbrpc-Tag");
+	if (!$tag)
+	{
+	    my ($t, $us) = &$get_time();
+	    $us = sprintf("%06d", $us);
+	    my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
+	    $tag = "S:$self->{hostname}:$$:$ts";
+	}
+	local $ENV{KBRPC_TAG} = $tag;
+	local $ENV{KBRPC_METADATA} = $self->_plack_req->header("Kbrpc-Metadata");
+	local $ENV{KBRPC_ERROR_DEST} = $self->_plack_req->header("Kbrpc-Errordest");
+
+        my $xFF = $self->_plack_req->header("X-Forwarded-For");
+        if ($xFF) {
+            $self->log($Bio::KBase::Log::INFO, $ctx,
+                "X-Forwarded-For: " . $xFF, $tag);
+        }
+	
         my $err;
         eval {
-            $self->log($Bio::KBase::Log::INFO, $ctx, "start method");
+            $self->log($Bio::KBase::Log::INFO, $ctx, "start method", $tag);
             @result = $module->$method(@{ $data->{arguments} });
-            $self->log($Bio::KBase::Log::INFO, $ctx, "end method");
+            $self->log($Bio::KBase::Log::INFO, $ctx, "end method", $tag);
         };
         if ($@)
         {
             my $err = $@;
+            $self->log($Bio::KBase::Log::INFO, $ctx, "fail method", $tag);
             my $nicerr;
             if(ref($err) eq "Bio::KBase::Exceptions::KBaseException") {
                 $nicerr = {code => -32603, # perl error from RPC::Any::Exception
@@ -462,6 +542,8 @@ sub new
     my $self = {
         %opts,
     };
+    chomp($self->{hostname} = `hostname`);
+    $self->{hostname} ||= 'unknown-host';
     $self->{_logger} = $logger;
     $self->{_debug_levels} = {7 => 1, 8 => 1, 9 => 1,
                               'DEBUG' => 1, 'DEBUG2' => 1, 'DEBUG3' => 1};
