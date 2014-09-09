@@ -1,5 +1,6 @@
 package Bio::KBase::GenomeAnnotation::Service;
 
+
 use Data::Dumper;
 use Moose;
 use POSIX;
@@ -415,6 +416,9 @@ sub call_method {
 	local $ENV{KBRPC_METADATA} = $self->_plack_req->header("Kbrpc-Metadata");
 	local $ENV{KBRPC_ERROR_DEST} = $self->_plack_req->header("Kbrpc-Errordest");
 
+	my $stderr = Bio::KBase::GenomeAnnotation::ServiceStderrWrapper->new($ctx);
+	$ctx->stderr($stderr);
+
         my $xFF = $self->_plack_req->header("X-Forwarded-For");
         if ($xFF) {
             $self->log($Bio::KBase::Log::INFO, $ctx,
@@ -424,12 +428,22 @@ sub call_method {
         my $err;
         eval {
             $self->log($Bio::KBase::Log::INFO, $ctx, "start method", $tag);
+	    local $SIG{__WARN__} = sub {
+		my($msg) = @_;
+		$stderr->log($msg);
+		print STDERR $msg;
+	    };
+
             @result = $module->$method(@{ $data->{arguments} });
             $self->log($Bio::KBase::Log::INFO, $ctx, "end method", $tag);
         };
+	
         if ($@)
         {
             my $err = $@;
+	    $stderr->log($err);
+	    $ctx->stderr(undef);
+	    undef $stderr;
             $self->log($Bio::KBase::Log::INFO, $ctx, "fail method", $tag);
             my $nicerr;
             if(ref($err) eq "Bio::KBase::Exceptions::KBaseException") {
@@ -451,6 +465,8 @@ sub call_method {
             }
             die $nicerr;
         }
+	$ctx->stderr(undef);
+	undef $stderr;
     }
     my $result;
     if ($return_counts{$method} == 1)
@@ -533,7 +549,7 @@ is available via $context->client_ip.
 use base 'Class::Accessor';
 
 __PACKAGE__->mk_accessors(qw(user_id client_ip authenticated token
-                             module method call_id));
+                             module method call_id hostname stderr));
 
 sub new
 {
@@ -609,5 +625,155 @@ sub clear_log_level
     my ($self) = @_;
     $self->{_logger}->clear_user_log_level();
 }
+
+package Bio::KBase::GenomeAnnotation::ServiceStderrWrapper;
+
+use strict;
+use POSIX;
+use Time::HiRes 'gettimeofday';
+
+sub new
+{
+    my($class, $ctx) = @_;
+    my $self = {};
+    my $dest = $ENV{KBRPC_ERROR_DEST};
+    my $tag = $ENV{KBRPC_TAG};
+    my ($t, $us) = gettimeofday();
+    $us = sprintf("%06d", $us);
+    my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
+
+    my $name = join(".", $ctx->module, $ctx->method, $ctx->hostname, $ts);
+
+    if ($dest =~ m,^/,)
+    {
+	#
+	# File destination
+	#
+	my $fh;
+
+	if ($tag)
+	{
+	    $tag =~ s,/,_,g;
+	    $dest = "$dest/$tag";
+	    if (! -d $dest)
+	    {
+		mkdir($dest);
+	    }
+	}
+	if (open($fh, ">", "$dest/$name"))
+	{
+	    $self->{file} = "$dest/$name";
+	    $self->{dest} = $fh;
+	}
+	else
+	{
+	    warn "Cannot open log file $dest/$name: $!";
+	}
+    }
+    else
+    {
+	#
+	# Log to string.
+	#
+	my $stderr;
+	$self->{dest} = \$stderr;
+    }
+    
+    bless $self, $class;
+
+    for my $e (sort { $a cmp $b } keys %ENV)
+    {
+	$self->log_cmd($e, $ENV{$e});
+    }
+    return $self;
+}
+
+sub redirect
+{
+    my($self) = @_;
+    if ($self->{dest})
+    {
+	return("2>", $self->{dest});
+    }
+    else
+    {
+	return ();
+    }
+}
+
+sub redirect_both
+{
+    my($self) = @_;
+    if ($self->{dest})
+    {
+	return(">&", $self->{dest});
+    }
+    else
+    {
+	return ();
+    }
+}
+
+sub log
+{
+    my($self, $str) = @_;
+    my $d = $self->{dest};
+    if (ref($d) eq 'SCALAR')
+    {
+	$$d .= $str . "\n";
+	return 1;
+    }
+    elsif ($d)
+    {
+	print $d $str . "\n";
+	return 1;
+    }
+    return 0;
+}
+
+sub log_cmd
+{
+    my($self, @cmd) = @_;
+    my $d = $self->{dest};
+    my $str;
+    if (ref($cmd[0]))
+    {
+	$str = join(" ", @{$cmd[0]});
+    }
+    else
+    {
+	$str = join(" ", @cmd);
+    }
+    if (ref($d) eq 'SCALAR')
+    {
+	$$d .= $str . "\n";
+    }
+    elsif ($d)
+    {
+	print $d $str . "\n";
+    }
+	 
+}
+
+sub dest
+{
+    my($self) = @_;
+    return $self->{dest};
+}
+
+sub text_value
+{
+    my($self) = @_;
+    if (ref($self->{dest}) eq 'SCALAR')
+    {
+	my $r = $self->{dest};
+	return $$r;
+    }
+    else
+    {
+	return $self->{file};
+    }
+}
+
 
 1;

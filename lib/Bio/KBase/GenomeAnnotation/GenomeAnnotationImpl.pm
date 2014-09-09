@@ -46,6 +46,7 @@ use SeedUtils;
 use gjoseqlib;
 use StrepRepeats;
 use overlap_resolution;
+use Capture::Tiny 'capture_stderr';
 
 use Bio::KBase::DeploymentConfig;
 
@@ -95,114 +96,6 @@ sub _call_using_strep_repeats
 
     return $genome_in;
 }
-
-
-package Bio::KBase::GenomeAnnotation::StderrWrapper;
-
-use strict;
-use POSIX;
-use Time::HiRes 'gettimeofday';
-
-sub new
-{
-    my($class, $impl, $ctx) = @_;
-    my $self = {};
-    my $dest = $ENV{KBRPC_ERROR_DEST};
-    my $tag = $ENV{KBRPC_TAG};
-    my ($t, $us) = gettimeofday();
-    $us = sprintf("%06d", $us);
-    my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
-
-    my $name = join(".", $ctx->module, $ctx->method, $impl->{hostname}, $ts);
-
-    if ($dest =~ m,^/,)
-    {
-	#
-	# File destination
-	#
-	my $fh;
-
-	if ($tag)
-	{
-	    $tag =~ s,/,_,g;
-	    $dest = "$dest/$tag";
-	    if (! -d $dest)
-	    {
-		mkdir($dest);
-	    }
-	}
-	if (open($fh, ">", "$dest/$name"))
-	{
-	    $self->{file} = "$dest/$name";
-	    $self->{dest} = $fh;
-	}
-	else
-	{
-	    warn "Cannot open log file $dest/$name: $!";
-	}
-    }
-    else
-    {
-	#
-	# Log to string.
-	#
-	my $stderr;
-	$self->{dest} = \$stderr;
-    }
-    
-    return bless $self, $class;
-}
-
-sub redirect
-{
-    my($self) = @_;
-    if ($self->{dest})
-    {
-	return("2>", $self->{dest});
-    }
-    else
-    {
-	return ();
-    }
-}
-
-sub log
-{
-    my($self, $str) = @_;
-    my $d = $self->{dest};
-    if (ref($d) eq 'SCALAR')
-    {
-	$$d .= $str . "\n";
-    }
-    elsif ($d)
-    {
-	print $d $str . "\n";
-    }
-	 
-}
-
-sub dest
-{
-    my($self) = @_;
-    return $self->{dest};
-}
-
-sub text_value
-{
-    my($self) = @_;
-    if (ref($self->{dest}) eq 'SCALAR')
-    {
-	my $r = $self->{dest};
-	return $$r;
-    }
-    else
-    {
-	return $self->{file};
-    }
-}
-	    
-
-package Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl;
 
 #END_HEADER
 
@@ -4236,17 +4129,18 @@ sub call_selenoproteins
     my $genomeTO_json = $coder->encode($genomeTO);
 
     my $genomeOut_json;
-    my $stderr;
 
     my $tmp = File::Temp->new();
     print $tmp $genomeTO_json;
     close($tmp);
 
-    my $ok = run(['rast_call_special_proteins',
-		  '--seleno',
-		  '--input', $tmp],
+    my @cmd = ('rast_call_special_proteins',
+	       '--seleno',
+	       '--input', $tmp);
+    $ctx->stderr->log_cmd(@cmd);
+    my $ok = run(\@cmd,
 		 '>', \$genomeOut_json,
-		 '2>', \$stderr);
+		 $ctx->stderr->redirect);
 
     undef $tmp;
     undef $genomeTO;
@@ -4257,7 +4151,7 @@ sub call_selenoproteins
     }
     else
     {
-	die "rast_call_special_proteins failed: $stderr";
+	die "rast_call_special_proteins failed: ", $ctx->stderr->text_value;
     }
     
     #END call_selenoproteins
@@ -4506,17 +4400,18 @@ sub call_pyrrolysoproteins
 
     my $genomeOut_json;
 
-    my $stderr;
-
     my $tmp = File::Temp->new();
     print $tmp $genomeTO_json;
     close($tmp);
 
-    my $ok = run(['rast_call_special_proteins',
-		  '--pyrro',
-		  '--input', $tmp],
+    my @cmd = ('rast_call_special_proteins',
+	       '--pyrro',
+	       '--input', $tmp);
+    $ctx->stderr->log_cmd(@cmd);
+			  
+    my $ok = run(\@cmd,
 		 '>', \$genomeOut_json,
-		 '2>', \$stderr);
+		 $ctx->stderr->redirect);
 
     undef $tmp;
     undef $genomeTO;
@@ -4527,7 +4422,7 @@ sub call_pyrrolysoproteins
     }
     else
     {
-	die "rast_call_special_proteins failed: $stderr";
+	die "rast_call_special_proteins failed: " . $ctx->stderr->text_value;
     }
 
     #END call_pyrrolysoproteins
@@ -5288,13 +5183,14 @@ sub call_features_rRNA_SEED
 	    }
 	}
     }
-print STDERR Dumper(\@type_args, \%types);
+
     my @cmd = ("rast_call_rRNAs", "--input", $tmp_in, "--output", $tmp_out,
 	       "--id-prefix", $genome_in->{id}, @type_args);
-    my $rc = system(@cmd);
-    if ($rc != 0)
+    $ctx->stderr->log_cmd(@cmd);
+    my $ok = run(\@cmd, $ctx->stderr->redirect);
+    if (!$ok)
     {
-	die "error calling rRNAs: $rc\non command @cmd";
+	die "error calling rRNAs: $?\non command @cmd\n" . $ctx->stderr->text_value;
     }
 
     $genome_out = $coder->decode(scalar read_file("" . $tmp_out));
@@ -5547,10 +5443,14 @@ sub call_features_tRNA_trnascan
 
     my @cmd = ("rast_call_tRNAs", "--input", $tmp_in, "--output", $tmp_out,
 	       "--id-prefix", $genome_in->{id});
-    my $rc = system(@cmd);
-    if ($rc != 0)
+
+    $ctx->stderr->log_cmd(@cmd);
+
+    my $ok = run(\@cmd, $ctx->stderr->redirect);
+
+    if (!$ok)
     {
-	die "error calling tRNAs: $rc\non command @cmd";
+	die "error calling tRNAs: $?\non command @cmd\n" . $ctx->stderr->text_value;
     }
 
     $genome_out = $coder->decode(scalar read_file("" . $tmp_out));
@@ -6126,7 +6026,15 @@ sub call_features_CDS_glimmer3
 
     my $gparams = { %$params };
     $gparams->{genetic_code} = $genome_in->{genetic_code};
-    my $calls = Bio::KBase::GenomeAnnotation::Glimmer::call_genes_with_glimmer($sequences_file, $gparams);
+    my $calls;
+
+    my $stderr = capture_stderr {
+	$calls = Bio::KBase::GenomeAnnotation::Glimmer::call_genes_with_glimmer($sequences_file, $gparams, $ctx);
+    };
+    if (!$ctx->stderr->log($stderr))
+    {
+	print STDERR $stderr;
+    }
 
     unlink($sequences_file);
 
@@ -6445,7 +6353,7 @@ sub call_features_CDS_prodigal
     my $tmp_out = File::Temp->new();
     close($tmp_out);
 
-    my $stderr = Bio::KBase::GenomeAnnotation::StderrWrapper->new($self, $ctx);
+    my $stderr = $ctx->stderr;
 
     my @cmd = ("rast_call_CDSs_using_prodigal", "--input", $tmp_in, "--output", $tmp_out,
 	       "--id-prefix", $genomeTO->{id});
@@ -6742,8 +6650,6 @@ sub call_features_CDS_genemark
     my $tmp_out = File::Temp->new();
     close($tmp_out);
 
-    my $stderr = Bio::KBase::GenomeAnnotation::StderrWrapper->new($self, $ctx);
-
     my @cmd = ("$gmark_home/gmhmmp",
 	       "-f" => "G",
 	       "-r",
@@ -6753,7 +6659,7 @@ sub call_features_CDS_genemark
 	       "-o", "$tmp_out",
 	       $tmp_in);
 
-    $stderr->log(join(" ", @cmd));
+    $ctx->stderr->log(join(" ", @cmd));
 
     my @cmds = (\@cmd,
 		init => sub {
@@ -6769,11 +6675,11 @@ sub call_features_CDS_genemark
     my $event_id = $genome_in->add_analysis_event($event);
     my $type = 'CDS';
 
-    my $ok = run(@cmds, $stderr->redirect);
+    my $ok = run(@cmds, $ctx->stderr->redirect);
 
     if (!$ok)
     {
-	die "Error running pipeline: @cmd\n" . $stderr->text_value . "\n";
+	die "Error running pipeline: @cmd\n" . $ctx->stderr->text_value . "\n";
     }
 
     my $fh;
@@ -6863,7 +6769,11 @@ sub call_features_CDS_genemark
 	    if ($1 eq 'Protein' && $cur_type eq 'Protein')
 	    {
 		my $info = $by_gene{$cur};
-		$info or die "No info for gene $info";
+		if (!$info)
+		{
+		    warn "No info for gene $info";
+		    next;
+		}
 
 		my $id = join(".", $typed_prefix, $cur_id_suffix);
 		$cur_id_suffix++;
@@ -7631,7 +7541,11 @@ sub call_features_repeat_region_SEED
     push(@opts, "-i", $params->{min_identity}) if defined($params->{min_identity});
     push(@opts, "-l", $params->{min_length}) if defined($params->{min_length});
 
+    my $stderr = $ctx->stderr;
+
     my @cmd = ("svr_big_repeats", @opts);
+
+    $stderr->log_cmd(@cmd);
 
     my $tmpdir = File::Temp->newdir(undef, CLEANUP => 1);
 
@@ -7642,14 +7556,14 @@ sub call_features_repeat_region_SEED
 		 "|",
 		 ["svr_condense_repeats"],
 		 ">", $output_file,
+		 $stderr->redirect,
 		);
-    print STDERR "ok=$ok\n" . `cat $output_file`;
 
     unlink($sequences_file);
 
     if (!$ok)
     {
-	die "Error running svr_big_repeats: @cmd\n";
+	die "Error running svr_big_repeats: @cmd\n" . $stderr->text_value . "\n";
     }
 
     close($output_file);
@@ -7948,10 +7862,15 @@ sub call_features_prophage_phispy
 
     my @cmd = ("rast_call_prophage_using_phispy", "--input", $tmp_in, "--output", $tmp_out,
 	       "--id-prefix", $genome_in->{id});
-    my $rc = system(@cmd);
-    if ($rc != 0)
+
+    my $stderr = $ctx->stderr;
+    $stderr->log_cmd(@cmd);
+
+    my $ok = run(\@cmd, $stderr->redirect);
+
+    if (!$ok)
     {
-	die "error calling prophages: $rc\non command @cmd";
+	die "error calling prophages: $?\non command @cmd\n" . $stderr->text_value . "\n";
     }
 
     $genome_out = $coder->decode(scalar read_file("" . $tmp_out));
@@ -8447,6 +8366,7 @@ sub annotate_proteins_similarity
     #BEGIN annotate_proteins_similarity
 
     my $coder = _get_coder();
+    my $stderr = $ctx->stderr;
     
     my $dir = $self->{nr_annotation_directory};
     if (! -d $dir)
@@ -8466,12 +8386,13 @@ sub annotate_proteins_similarity
 	close($tmp);
 
 	print STDERR "Starting $dir $tmp\n";
-	my $ok = run(['rast_annotate_proteins_similarity',
-		      "--nr-dir", $dir,
-		      ($params->{annotate_hypothetical_only} ? ("-H") : ()),
-		      '--input', $tmp],
+	my @cmd = ('rast_annotate_proteins_similarity',
+		   "--nr-dir", $dir,
+		   ($params->{annotate_hypothetical_only} ? ("-H") : ()),
+		   '--input', $tmp);
+	my $ok = run(\@cmd,
 		     '>', \$genomeOut_json,
-		     '2>', \$stderr);
+		     $stderr->redirect);
 
 	undef $tmp;
 	undef $genomeTO;
@@ -8479,7 +8400,7 @@ sub annotate_proteins_similarity
 	if ($ok) {
 	    $return = $coder->decode($genomeOut_json);
 	} else {
-	    die "rast_annotate_proteins_similarity failed: $stderr";
+	    die "rast_annotate_proteins_similarity failed ($?):\n" . $stderr->text_value;
 	}
     }
 
@@ -8766,6 +8687,7 @@ sub annotate_proteins_kmer_v1
 	$params->{kmer_size} = 8;
     }
 
+    warn "Annotating using dataset $params->{dataset_name} kmer_size $params->{kmer_size}\n";
     my $event = {
 	tool_name => "KmerAnnotationByFigfam",
 	execution_time => scalar gettimeofday,
@@ -9088,7 +9010,6 @@ sub annotate_proteins_kmer_v2
 	    }
 	};
     }
-    print STDERR "FILTER: " . Dumper($filter);
     my $sequences_file = $genome_in->extract_protein_sequences_to_temp_file($filter);
     my $output_file = File::Temp->new();
 
@@ -9108,15 +9029,17 @@ sub annotate_proteins_kmer_v2
     my @params = ("-a", "-g", $max_gap, "-m", $min_hits, "-d", $self->{kmer_v2_data_directory});
 
     my @cmd = ("kmer_search", @params);
+    $ctx->stderr->log_cmd(@cmd);
     my $ok = run(\@cmd,
 		 "<", $sequences_file,
-		 ">", $output_file);
+		 ">", $output_file,
+		 $ctx->stderr->redirect);
     
     unlink($sequences_file);
 
     if (!$ok)
     {
-	die "Error running kmer_search: @cmd\n";
+	die "Error running kmer_search ($?): @cmd\n" . $ctx->stderr->text_value;
     }
 
     close($output_file);
@@ -9397,7 +9320,16 @@ sub resolve_overlapping_features
 
     $genome_in = GenomeTypeObject->initialize($genome_in);
 
-    $genome_out = overlap_resolution::resolve_overlapping_features($genome_in, $params);
+    my $stderr;
+
+    $ctx->stderr->log_cmd("resolve_overlapping_features", Dumper($genome_in, $params));
+    $stderr = capture_stderr {
+	$genome_out = overlap_resolution::resolve_overlapping_features($genome_in, $params);
+    };
+    if (!$ctx->stderr->log($stderr))
+    {
+	print STDERR $stderr;
+    }
 
     $genome_out = $genome_out->prepare_for_return();
 
