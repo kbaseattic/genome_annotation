@@ -12793,6 +12793,7 @@ sub run_pipeline
 
     my %param_defs = (annotate_proteins_kmer_v1 => 'kmer_v1_parameters',
 		      annotate_proteins_kmer_v2 => 'kmer_v2_parameters',
+		      annotate_proteins_similarity => 'similarity_parameters',
 		      call_features_repeat_region_SEED => 'repeat_regions_SEED_parameters',
 		      call_features_CDS_glimmer3 => 'glimmer3_parameters',
 		      call_features_repeat_region_SEED => 'repeat_region_SEED_parameters',
