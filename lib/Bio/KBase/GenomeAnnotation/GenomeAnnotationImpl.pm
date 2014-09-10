@@ -8379,7 +8379,6 @@ sub annotate_proteins_similarity
 	my $genomeTO_json = $coder->encode($genomeTO);
 
 	my $genomeOut_json;
-	my $stderr;
 
 	my $tmp = File::Temp->new();
 	print $tmp $genomeTO_json;
