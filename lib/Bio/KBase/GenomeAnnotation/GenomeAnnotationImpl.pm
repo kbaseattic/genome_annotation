@@ -9321,7 +9321,7 @@ sub resolve_overlapping_features
 
     my $stderr;
 
-    $ctx->stderr->log_cmd("resolve_overlapping_features", Dumper($genome_in, $params));
+    $ctx->stderr->log_cmd("resolve_overlapping_features", Dumper($params));
     $stderr = capture_stderr {
 	$genome_out = overlap_resolution::resolve_overlapping_features($genome_in, $params);
     };
