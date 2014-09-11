@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-set-metadata
+rast-set-metadata
 
 =head1 SYNOPSIS
 
-rast2-set-metadata [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-set-metadata [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Set the given metadata fields in the genome object.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-set-metadata [-hio] [long options...] < input > output
+rast-set-metadata [-hio] [long options...] < input > output
 	-i --input             file from which the input is to be read
 	-o --output            file to which the output is to be written
 	-h --help              print usage message and exit
@@ -36,7 +36,7 @@ rast2-set-metadata [-hio] [long options...] < input > output
 
 my @options = (options_common(), options_genome_metadata());
 
-my($opt, $usage) = describe_options("rast2-set-metadata %o < input > output",
+my($opt, $usage) = describe_options("rast-set-metadata %o < input > output",
 				    @options);
 
 print($usage->text), exit if $opt->help;

@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-add-features
+rast-add-features
 
 =head1 SYNOPSIS
 
-rast2-add-features [--input genome-file] [--output genome-file] features-file [< genome-file] [> genome-file]
+rast-add-features [--input genome-file] [--output genome-file] features-file [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Add a set of features to the genome.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
+rast-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
 	-i --input      file from which the input is to be read
 	-o --output     file to which the output is to be written
 	--help          print usage message and exit
@@ -40,7 +40,7 @@ push(@options,
     );
      
 
-my($opt, $usage) = describe_options("rast2-add-features %o features-file < input > output",
+my($opt, $usage) = describe_options("rast-add-features %o features-file < input > output",
 				    @options);
 
 

@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-call-features-repeat-regions-SEED
+rast-call-features-repeat-regions-SEED
 
 =head1 SYNOPSIS
 
-rast2-call-features-repeat-regions-SEED [--min-identity iden] [--min-length len] [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-call-features-repeat-regions-SEED [--min-identity iden] [--min-length len] [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Call features from the contigs in the given genome using the Prodigal gene calle
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-call-features-repeat-regions-SEED [-io] [long options...] < input > output
+rast-call-features-repeat-regions-SEED [-io] [long options...] < input > output
 
             -i --input      file from which the input is to be read
             -o --output     file to which the output is to be written
@@ -31,7 +31,7 @@ rast2-call-features-repeat-regions-SEED [-io] [long options...] < input > output
 
 my @options = (options_common(), options_repeat_regions_seed());
 
-my($opt, $usage) = describe_options("rast2-call-features-repeat-regions-SEED %o < input > output",
+my($opt, $usage) = describe_options("rast-call-features-repeat-regions-SEED %o < input > output",
 				    @options);
 
 print($usage->text), exit if $opt->help;

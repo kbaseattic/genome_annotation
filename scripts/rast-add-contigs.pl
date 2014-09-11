@@ -7,11 +7,11 @@ use gjoseqlib;
 
 =head1 NAME
 
-rast2-add-contigs
+rast-add-contigs
 
 =head1 SYNOPSIS
 
-rast2-add-contigs [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-add-contigs [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -19,7 +19,7 @@ Add the given contig data to the genome object.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
+rast-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
 	-i --input      file from which the input is to be read
 	-o --output     file to which the output is to be written
 	--help          print usage message and exit
@@ -31,7 +31,7 @@ rast2-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
 
 my @options = (options_common(), options_contigs(1));
 
-my($opt, $usage) = describe_options("rast2-add-contigs %o < input > output",
+my($opt, $usage) = describe_options("rast-add-contigs %o < input > output",
 				    @options);
 
 print($usage->text), exit if $opt->help;

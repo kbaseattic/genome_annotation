@@ -5,15 +5,15 @@ use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 
 =head1 NAME
 
-rast2-process-genome
+rast-process-genome
 
 =head1 SYNOPSIS
 
-  rast2-process-genome --output-format genbank < unannotated.genome.gto > genome.gbk
+  rast-process-genome --output-format genbank < unannotated.genome.gto > genome.gbk
 
-  rast2-process-genome --batch-input-directory my.genomes.dir
+  rast-process-genome --batch-input-directory my.genomes.dir
 
-  rast2-process-genome --batch-input-file my.genomes.file
+  rast-process-genome --batch-input-file my.genomes.file
 
 =head1 DESCRIPTION
 
@@ -21,18 +21,18 @@ Annotate bacterial genomes using the RAST2 pipeline. Eukaryotic genomes are not 
 
 This program may be used in one of two modes.
 
-In immediate mode a single genome is processed in real time. The rast2-process-genome
+In immediate mode a single genome is processed in real time. The rast-process-genome
 script will not return until processing has completed.
 
 In batch mode one or more genomes are submitted for processing by the backend
-annotation services. The rast2-process-genome script returns after the data has been
+annotation services. The rast-process-genome script returns after the data has been
 uploaded, and emits a job identifier that may be used to query the status of the
 computation and to retrieve the results when they have been completed.
 
 =head2 Input Formats and Metadata
 
 The RAST2 pipeline takes as input genomes in the KBase genome typed object format; these
-may be created from contigs data in FASTA format by the L<rast2-create-genome> script.
+may be created from contigs data in FASTA format by the L<rast-create-genome> script.
 
 In immediate mode, the input is provided either from the standard input (by default) or
 via a file specfied using the C<--input> parameter.
@@ -49,8 +49,8 @@ In batch mode the metadata is defined by the metadata files in the input batch f
 
 The RAST2 pipeline supports the processing of numerous genomes in a single run. Since this
 may be time consuming, the processing is done in the background on the RAST2 service. Once the
-genomes are submitted, the rast2-process-genome script will return a job identifier which may be used by
-the L<rast2-status> script.
+genomes are submitted, the rast-process-genome script will return a job identifier which may be used by
+the L<rast-status> script.
 
 To use the batch format, one must specify the set of input data files to be processed
 as well as the metadata for each. We support two different mechanisms for providing this information.

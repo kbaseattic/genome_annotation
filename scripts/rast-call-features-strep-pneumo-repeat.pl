@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-call-features-strep-pneumo-repeat
+rast-call-features-strep-pneumo-repeat
 
 =head1 SYNOPSIS
 
-rast2-call-features-strep-pneumo-repeat [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-call-features-strep-pneumo-repeat [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Call Streptococcus pneumoniae repeat regions.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-call-features-strep-pneumo-repeat [-hio] [long options...] < input > output
+rast-call-features-strep-pneumo-repeat [-hio] [long options...] < input > output
 	-i --input      file from which the input is to be read
 	-o --output     file to which the output is to be written
 	-h --help       print usage message and exit

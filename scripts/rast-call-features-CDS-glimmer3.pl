@@ -5,11 +5,11 @@ use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 
 =head1 NAME
 
-rast2-call-features-CDS-glimmer3
+rast-call-features-CDS-glimmer3
 
 =head1 SYNOPSIS
 
-rast2-call-features-CDS-glimmer3 [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-call-features-CDS-glimmer3 [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Call features from the contigs in the given genome using the Glimmer3 gene calle
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-call-features-CDS-glimmer3 [-io] [long options...] < input > output
+rast-call-features-CDS-glimmer3 [-io] [long options...] < input > output
 	-i --input              file from which the input is to be read
 	-o --output             file to which the output is to be written
 	--help                  print usage message and exit
@@ -29,7 +29,7 @@ rast2-call-features-CDS-glimmer3 [-io] [long options...] < input > output
 my @options = (options_common(), options_glimmer3());
 
 
-my($opt, $usage) = describe_options("rast2-call-features-CDS-glimmer3 %o < input > output",
+my($opt, $usage) = describe_options("rast-call-features-CDS-glimmer3 %o < input > output",
 				    @options);
 
 print($usage->text), exit if $opt->help;

@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-create-genome
+rast-create-genome
 
 =head1 SYNOPSIS
 
-rast2-create-genome [--output genome-file] [< genome-file] [> genome-file]
+rast-create-genome [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -44,7 +44,7 @@ and 4 for Mycoplasmaea, Spiroplasmaea, Ureoplasmaea, and Fungal Mitochondria.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-create-genome [-ho] [long options...] > output
+rast-create-genome [-ho] [long options...] > output
 	-o --output            file to which the output is to be written
 	-h --help              print usage message and exit
 	--url                  URL for the genome annotation service
@@ -64,7 +64,7 @@ rast2-create-genome [-ho] [long options...] > output
 =cut
 
 my @options = (options_genome_out(), options_help(), options_genome_metadata(), options_contigs());
-my($opt, $usage) = describe_options("rast2-create-genome %o > output",
+my($opt, $usage) = describe_options("rast-create-genome %o > output",
 				    @options);
 
 print($usage->text), exit if $opt->help;

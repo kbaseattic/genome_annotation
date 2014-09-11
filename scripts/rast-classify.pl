@@ -6,11 +6,11 @@ use gjoseqlib;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-classify 
+rast-classify 
 
 =head1 SYNOPSIS
 
-rast2-classify > classifiers
+rast-classify > classifiers
 
 =head1 DESCRIPTION
 
@@ -18,7 +18,7 @@ Enumerate the available kmer classifiers.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-classify [-h] [long options...] classifier < input > output
+rast-classify [-h] [long options...] classifier < input > output
 	-h --help   print usage message and exit
 	--url       URL for the genome annotation service
 

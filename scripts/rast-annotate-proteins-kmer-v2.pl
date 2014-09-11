@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-annotate-proteins-kmer-v2 
+rast-annotate-proteins-kmer-v2 
 
 =head1 SYNOPSIS
 
-rast2-annotate-proteins-kmer-v2 [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-annotate-proteins-kmer-v2 [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Annotate proteins using the SEED version-2 kmers.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
+rast-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
 	-i --input      file from which the input is to be read
 	-o --output     file to which the output is to be written
 	--help          print usage message and exit
@@ -30,7 +30,7 @@ rast2-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
 my @options = (options_common(), options_kmer_v2());
 
 
-my($opt, $usage) = describe_options("rast2-annotate-proteins-kmer-v2 %o < input > output",
+my($opt, $usage) = describe_options("rast-annotate-proteins-kmer-v2 %o < input > output",
 				    @options);
 
 print($usage->text), exit if $opt->help;

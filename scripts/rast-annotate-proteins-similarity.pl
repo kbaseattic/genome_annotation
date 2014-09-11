@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-annotate-proteins-similarity 
+rast-annotate-proteins-similarity 
 
 =head1 SYNOPSIS
 
-rast2-annotate-proteins-similarity [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-annotate-proteins-similarity [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Annotate proteins using the SEED version-2 kmers.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-annotate-proteins-similarity [-io] [long options...] < input > output
+rast-annotate-proteins-similarity [-io] [long options...] < input > output
 	-i --input      file from which the input is to be read
 	-o --output     file to which the output is to be written
 	--help          print usage message and exit

@@ -6,11 +6,11 @@ use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 
 =head1 NAME
 
-rast2-export-genome
+rast-export-genome
 
 =head1 SYNOPSIS
 
-rast2-export-genome [--input genome-file] [--output exported-data] format [< genome-file] [> exportdata]
+rast-export-genome [--input genome-file] [--output exported-data] format [< genome-file] [> exportdata]
 
 =head1 DESCRIPTION
 
@@ -34,7 +34,7 @@ A GFF3 file.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-export-genome [-hio] [long options...] format < input > output
+rast-export-genome [-hio] [long options...] format < input > output
 	-i --input           file from which the input is to be read
 	-o --output          file to which the output is to be written
 	-h --help            print usage message and exit
@@ -59,7 +59,7 @@ my %valid_format = map { $_->[0] => 1 } @Bio::KBase::GenomeAnnotation::CmdHelper
 
 my @options = (options_common(), options_export(), [], options_export_formats());
 
-my($opt, $usage) = describe_options("rast2-export-genome %o format < input > output",
+my($opt, $usage) = describe_options("rast-export-genome %o format < input > output",
 				    @options);
 
 print($usage->text), exit  if $opt->help;

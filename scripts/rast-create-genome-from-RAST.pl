@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-create-genome-from-RAST
+rast-create-genome-from-RAST
 
 =head1 SYNOPSIS
 
-rast2-create-genome-from-RAST [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
+rast-create-genome-from-RAST [--input genome-file] [--output genome-file] [< genome-file] [> genome-file]
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Create a genome object based on a RAST job.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
+rast-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
 	-i --input      file from which the input is to be read
 	-o --output     file to which the output is to be written
 	--help          print usage message and exit
@@ -29,7 +29,7 @@ rast2-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
 
 my @options = (options_genome_out(), options_help());
 
-my($opt, $usage) = describe_options("rast2-create-genome-from-RAST %o job-number-or-genome-id < input > output",
+my($opt, $usage) = describe_options("rast-create-genome-from-RAST %o job-number-or-genome-id < input > output",
 				    @options);
 
 print($usage->text), exit if $opt->help;

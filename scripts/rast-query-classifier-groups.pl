@@ -5,11 +5,11 @@ use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
 =head1 NAME
 
-rast2-query-classifier-groups 
+rast-query-classifier-groups 
 
 =head1 SYNOPSIS
 
-rast2-query-classifier-groups classifier-name > classifiers
+rast-query-classifier-groups classifier-name > classifiers
 
 =head1 DESCRIPTION
 
@@ -17,7 +17,7 @@ Enumerate the available kmer classifiers.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-query-classifier-groups [-io] [long options...] < input > output
+rast-query-classifier-groups [-io] [long options...] < input > output
 	--help          print usage message and exit
 
 =cut

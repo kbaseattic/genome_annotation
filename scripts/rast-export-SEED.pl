@@ -19,7 +19,7 @@ Export the given genome as a SEED directory.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast2-export-genome [-hio] [long options...] format < input > output
+rast-export-genome [-hio] [long options...] format < input > output
 	-i --input           file from which the input is to be read
 	-o --output          file to which the output is to be written
 	-h --help            print usage message and exit
