@@ -12324,8 +12324,11 @@ sub default_workflow
 		condition => '$genome->{scientific_name} =~ /^Streptococcus\s/' },
 	      { name => 'call_features_crispr', failure_is_not_fatal => 1 },
 	      { name => 'call_features_CDS_prodigal' },
+	      { name => 'call_features_CDS_glimmer3' },
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => {} },
 	      { name => 'annotate_proteins_kmer_v1', kmer_v1_parameters => { annotate_hypothetical_only => 1 } },
+	      { name => 'annotate_proteins_similarity', similarity_parameters => { annotate_hypothetical_only => 1 } },
+	      { name => 'resolve_overlapping_features', resolve_overlapping_features_parameters => {} },
 	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
 	      # { name => 'call_features_prophage_phispy' },
 		 );
