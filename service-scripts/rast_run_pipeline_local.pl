@@ -34,7 +34,10 @@ sub run
 
     my $impl = Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl->new();
     my $hservice = Bio::KBase::HandleService->new();
-    
+
+    my $ctx = ContextObj->new;
+    $Bio::KBase::GenomeAnnotation::Service::CallContext = $ctx;
+
     open(OF, ">", $out_file) or die "Cannot open $out_file: $!";
     
     my($hobj, $wobj);
@@ -74,4 +77,25 @@ sub run
     close(OF);
 }
 
+#
+# Do a fairly minor emulation of the call context.
+# We will need to at some point properly configure the auth stuff so that
+# incoming authentication tokens (via the AWE environment) are propagated
+# properly.
+# 
+package ContextObj;
+use strict;
 
+use base 'Class::Accessor';
+
+__PACKAGE__->mk_accessors(qw(user_id client_ip authenticated token
+                             module method call_id hostname stderr));
+
+sub new
+{
+    my($class) = @_;
+    my $h = `hostname`;
+    chomp $h;
+    my $self = { hostname => $h };
+    return bless $class, $self;
+}
