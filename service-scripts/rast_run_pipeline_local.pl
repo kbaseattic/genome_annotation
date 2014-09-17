@@ -37,7 +37,6 @@ sub run
 
     my $ctx = ContextObj->new;
     $Bio::KBase::GenomeAnnotation::Service::CallContext = $ctx;
-
     open(OF, ">", $out_file) or die "Cannot open $out_file: $!";
     
     my($hobj, $wobj);
@@ -85,11 +84,13 @@ sub run
 # 
 package ContextObj;
 use strict;
-
+use Data::Dumper;
 use base 'Class::Accessor';
 
-__PACKAGE__->mk_accessors(qw(user_id client_ip authenticated token
-                             module method call_id hostname stderr));
+BEGIN {
+    ContextObj->mk_accessors(qw(user_id client_ip authenticated token
+				module method call_id hostname stderr));
+};
 
 sub new
 {
@@ -97,5 +98,166 @@ sub new
     my $h = `hostname`;
     chomp $h;
     my $self = { hostname => $h };
-    return bless $self, $class;
+
+    bless $self, $class;
+
+    $self->module("run_pipeline");
+    $self->method("unknown");
+
+    my $stderr = ServiceStderrWrapper->new($self);
+    $self->stderr($stderr);
+
+    return $self;
 }
+
+
+package ServiceStderrWrapper;
+
+use strict;
+use POSIX;
+use Time::HiRes 'gettimeofday';
+
+sub new
+{
+    my($class, $ctx) = @_;
+    my $self = {};
+    my $dest = $ENV{KBRPC_ERROR_DEST};
+    my $tag = $ENV{KBRPC_TAG};
+    my ($t, $us) = gettimeofday();
+    $us = sprintf("%06d", $us);
+    my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
+
+    my $name = join(".", $ctx->module, $ctx->method, $ctx->hostname, $ts);
+
+    if ($dest =~ m,^/,)
+    {
+	#
+	# File destination
+	#
+	my $fh;
+
+	if ($tag)
+	{
+	    $tag =~ s,/,_,g;
+	    $dest = "$dest/$tag";
+	    if (! -d $dest)
+	    {
+		mkdir($dest);
+	    }
+	}
+	if (open($fh, ">", "$dest/$name"))
+	{
+	    $self->{file} = "$dest/$name";
+	    $self->{dest} = $fh;
+	}
+	else
+	{
+	    warn "Cannot open log file $dest/$name: $!";
+	}
+    }
+    else
+    {
+	#
+	# Log to string.
+	#
+	my $stderr;
+	$self->{dest} = \$stderr;
+    }
+    
+    bless $self, $class;
+
+    for my $e (sort { $a cmp $b } keys %ENV)
+    {
+	$self->log_cmd($e, $ENV{$e});
+    }
+    return $self;
+}
+
+sub redirect
+{
+    my($self) = @_;
+    if ($self->{dest})
+    {
+	return("2>", $self->{dest});
+    }
+    else
+    {
+	return ();
+    }
+}
+
+sub redirect_both
+{
+    my($self) = @_;
+    if ($self->{dest})
+    {
+	return(">&", $self->{dest});
+    }
+    else
+    {
+	return ();
+    }
+}
+
+sub log
+{
+    my($self, $str) = @_;
+    my $d = $self->{dest};
+    if (ref($d) eq 'SCALAR')
+    {
+	$$d .= $str . "\n";
+	return 1;
+    }
+    elsif ($d)
+    {
+	print $d $str . "\n";
+	return 1;
+    }
+    return 0;
+}
+
+sub log_cmd
+{
+    my($self, @cmd) = @_;
+    my $d = $self->{dest};
+    my $str;
+    if (ref($cmd[0]))
+    {
+	$str = join(" ", @{$cmd[0]});
+    }
+    else
+    {
+	$str = join(" ", @cmd);
+    }
+    if (ref($d) eq 'SCALAR')
+    {
+	$$d .= $str . "\n";
+    }
+    elsif ($d)
+    {
+	print $d $str . "\n";
+    }
+	 
+}
+
+sub dest
+{
+    my($self) = @_;
+    return $self->{dest};
+}
+
+sub text_value
+{
+    my($self) = @_;
+    if (ref($self->{dest}) eq 'SCALAR')
+    {
+	my $r = $self->{dest};
+	return $$r;
+    }
+    else
+    {
+	return $self->{file};
+    }
+}
+
+
