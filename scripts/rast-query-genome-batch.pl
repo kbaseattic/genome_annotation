@@ -92,6 +92,7 @@ for my $ent (@$status)
     if ($opt->readable)
     {
 	print "$ent->{genome_id}:\n";
+	print "    input filename:  $ent->{filename}\n";
 	print "    status:          $ent->{status}\n";
 	print "    creation date:   $ent->{creation_date}\n";
 	print "    start date:      $ent->{start_date}\n";
@@ -104,7 +105,8 @@ for my $ent (@$status)
     else
     {
 	print join("\t", @$ent{qw(genome_id status creation_date completion_date)},
-		   map { get_url($_) } @$ent{qw(stdout stderr output)},
+		   (map { get_url($_) } @$ent{qw(stdout stderr output)}),
+		   $ent->{filename},
 		   ), "\n";
 				   
     }
