@@ -97,5 +97,5 @@ sub new
     my $h = `hostname`;
     chomp $h;
     my $self = { hostname => $h };
-    return bless $class, $self;
+    return bless $self, $class;
 }
