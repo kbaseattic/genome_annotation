@@ -374,6 +374,36 @@ module GenomeAnnotation
     funcdef call_features_ProtoCDS_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);		/* RAST-style kmers */
     funcdef call_features_ProtoCDS_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);		/* Ross's new kmers */
 
+    /* Need a call to enumerate the available databases */
+    typedef tuple <
+	string protein_id,
+	string database_name,
+	string database_id,
+	string protein_coverage,
+	string database_coverage,
+	float identity,
+	float p_value > special_protein_hit;
+    funcdef compute_special_proteins(genomeTO genome_in, list<string> database_names) returns (list<special_protein_hit> results);
+
+    typedef tuple <
+	string protein_id,
+	string domain_id,
+	float identity,
+	int alignment_len,
+	int mismatches,
+	int gap_openings,
+	int protein_start,
+	int protein_end,
+	int domain_start,
+	int domain_end,
+	float e_value,
+	float bit_score,
+	string accession,
+	string short_name,
+	string description,
+	int pssm_length > cdd_hit;
+    funcdef compute_cdd(genomeTO genome_in) returns (list<cdd_hit>);
+
     funcdef annotate_proteins(genomeTO) returns (genomeTO);
 
     /* Determine close genomes. */
@@ -388,6 +418,9 @@ module GenomeAnnotation
     funcdef call_features_strep_pneumo_repeat(genomeTO) returns (genomeTO);
     funcdef call_features_crispr(genomeTO genome_in) returns (genomeTO genome_out);
 
+    funcdef update_function(genomeTO genome_in, list<tuple<feature_id, string function>>)
+	returns (genomeTO genome_out);
+    
     /*
      * Export genome typed object to one of the supported output formats:
      * genbank, embl, or gff.
@@ -463,6 +496,7 @@ module GenomeAnnotation
     {
 	string genome_id;
 	Handle data;
+	string filename;
     } pipeline_batch_input;
 
     typedef structure
@@ -476,6 +510,8 @@ module GenomeAnnotation
 	Handle stdout;
 	Handle stderr;
 	Handle output;
+
+	string filename;
     } pipeline_batch_status_entry;
 
     typedef structure

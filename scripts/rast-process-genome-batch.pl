@@ -99,7 +99,7 @@ for my $file (@files)
     my $gobj = parse_json_file($path);
     my $handle = $hservice->upload($path);
     print "Uploaded $path: " . Dumper($handle, $gobj->{id}) if $opt->verbose;
-    push(@genomes, { genome_id => $gobj->{id}, data => $handle});
+    push(@genomes, { genome_id => $gobj->{id}, data => $handle, filename => $file });
 }
 
 my $batch_id = $client->pipeline_batch_start(\@genomes, $workflow);

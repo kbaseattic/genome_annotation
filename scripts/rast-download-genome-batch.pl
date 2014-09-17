@@ -49,15 +49,20 @@ my $status = $batch_status->{details};
 for my $ent (@$status)
 {
     my $gid = $ent->{genome_id};
+    my $filename = $ent->{filename};
+    
     if ($ent->{status} ne 'completed' && 0)
     {
 	print STDERR "Skipping $gid: not complete (status is $ent->{status})\n" if $opt->verbose;
 	next;
     }
+
+    my $out_file = $gid;
+    $out_file = $filename if $filename;
     
-    save($ent->{stdout}, "$dir/$gid.stdout");
-    save($ent->{stderr}, "$dir/$gid.stderr");
-    save($ent->{output}, "$dir/$gid.gto");
+    save($ent->{stdout}, "$dir/$out_file.stdout");
+    save($ent->{stderr}, "$dir/$out_file.stderr");
+    save($ent->{output}, "$dir/$out_file.gto");
 }
 
 sub save
