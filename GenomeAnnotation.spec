@@ -277,6 +277,11 @@ module GenomeAnnotation
      */
     funcdef call_features_pyrrolysoprotein(genomeTO) returns (genomeTO);
 
+    /*
+     * Given a genome typed object, call insertion sequences.
+     */
+    funcdef call_features_insertion_sequences(genomeTO) returns (genomeTO);
+
     /* [ validate.enum("5S", "SSU", "LSU", "ALL") ] */
     typedef string rna_type;
     
