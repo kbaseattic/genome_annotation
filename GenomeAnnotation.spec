@@ -423,7 +423,7 @@ module GenomeAnnotation
     funcdef call_features_strep_pneumo_repeat(genomeTO) returns (genomeTO);
     funcdef call_features_crispr(genomeTO genome_in) returns (genomeTO genome_out);
 
-    funcdef update_function(genomeTO genome_in, list<tuple<feature_id, string function>>)
+    funcdef update_functions(genomeTO genome_in, list<tuple<feature_id, string function>> functions, analysis_event event)
 	returns (genomeTO genome_out);
     
     /*

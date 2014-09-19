@@ -6972,7 +6972,7 @@ sub call_features_CDS_genemark
 
     my $event = {
 	tool_name => "genemark",
-	execute_time => scalar gettimeofday,
+	execution_time => scalar gettimeofday,
 	parameters => \@cmd,
 	hostname => $self->{hostname},
     };
@@ -12370,9 +12370,9 @@ sub call_features_crispr
 
 
 
-=head2 update_function
+=head2 update_functions
 
-  $genome_out = $obj->update_function($genome_in, $arg_2)
+  $genome_out = $obj->update_functions($genome_in, $functions, $event)
 
 =over 4
 
@@ -12382,9 +12382,10 @@ sub call_features_crispr
 
 <pre>
 $genome_in is a genomeTO
-$arg_2 is a reference to a list where each element is a reference to a list containing 2 items:
+$functions is a reference to a list where each element is a reference to a list containing 2 items:
 	0: a feature_id
 	1: (function) a string
+$event is an analysis_event
 $genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -12480,9 +12481,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 =begin text
 
 $genome_in is a genomeTO
-$arg_2 is a reference to a list where each element is a reference to a list containing 2 items:
+$functions is a reference to a list where each element is a reference to a list containing 2 items:
 	0: a feature_id
 	1: (function) a string
+$event is an analysis_event
 $genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -12584,30 +12586,57 @@ analysis_event is a reference to a hash where the following keys are defined:
 
 =cut
 
-sub update_function
+sub update_functions
 {
     my $self = shift;
-    my($genome_in, $arg_2) = @_;
+    my($genome_in, $functions, $event) = @_;
 
     my @_bad_arguments;
     (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
-    (ref($arg_2) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"arg_2\" (value was \"$arg_2\")");
+    (ref($functions) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"functions\" (value was \"$functions\")");
+    (ref($event) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"event\" (value was \"$event\")");
     if (@_bad_arguments) {
-	my $msg = "Invalid arguments passed to update_function:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	my $msg = "Invalid arguments passed to update_functions:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'update_function');
+							       method_name => 'update_functions');
     }
 
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($genome_out);
-    #BEGIN update_function
-    #END update_function
+    #BEGIN update_functions
+
+    $genome_in = GenomeTypeObject->initialize($genome_in);
+
+    #
+    # If we don't have a valid event, create one here.
+    #
+    if (!$event->{tool_name})
+    {
+	$event = {
+	    tool_name => "GenomeAnnotation::update_functions",
+	    execution_time => scalar gettimeofday,
+	    parameters => [],
+	    hostname => $self->{hostname},
+	};
+    }
+    my $event_id = $genome_in->add_analysis_event($event);
+
+    for my $ent (@$functions)
+    {
+	my($fid, $function) = @$ent;
+	$genome_in->update_function($ctx->user_id, $fid, $function, $event_id);
+    }
+
+    $genome_out = $genome_in;
+    $genome_out = $genome_out->prepare_for_return();
+
+    #END update_functions
     my @_bad_returns;
     (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
     if (@_bad_returns) {
-	my $msg = "Invalid returns passed to update_function:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	my $msg = "Invalid returns passed to update_functions:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'update_function');
+							       method_name => 'update_functions');
     }
     return($genome_out);
 }

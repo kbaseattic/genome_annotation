@@ -11273,9 +11273,9 @@ sub call_features_crispr
 
 
 
-=head2 update_function
+=head2 update_functions
 
-  $genome_out = $obj->update_function($genome_in, $arg_2)
+  $genome_out = $obj->update_functions($genome_in, $functions, $event)
 
 =over 4
 
@@ -11285,9 +11285,10 @@ sub call_features_crispr
 
 <pre>
 $genome_in is a genomeTO
-$arg_2 is a reference to a list where each element is a reference to a list containing 2 items:
+$functions is a reference to a list where each element is a reference to a list containing 2 items:
 	0: a feature_id
 	1: (function) a string
+$event is an analysis_event
 $genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -11383,9 +11384,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 =begin text
 
 $genome_in is a genomeTO
-$arg_2 is a reference to a list where each element is a reference to a list containing 2 items:
+$functions is a reference to a list where each element is a reference to a list containing 2 items:
 	0: a feature_id
 	1: (function) a string
+$event is an analysis_event
 $genome_out is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -11485,48 +11487,49 @@ analysis_event is a reference to a hash where the following keys are defined:
 
 =cut
 
-sub update_function
+sub update_functions
 {
     my($self, @args) = @_;
 
 # Authentication: none
 
-    if ((my $n = @args) != 2)
+    if ((my $n = @args) != 3)
     {
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
-							       "Invalid argument count for function update_function (received $n, expecting 2)");
+							       "Invalid argument count for function update_functions (received $n, expecting 3)");
     }
     {
-	my($genome_in, $arg_2) = @args;
+	my($genome_in, $functions, $event) = @args;
 
 	my @_bad_arguments;
         (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 1 \"genome_in\" (value was \"$genome_in\")");
-        (ref($arg_2) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument 2 \"arg_2\" (value was \"$arg_2\")");
+        (ref($functions) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument 2 \"functions\" (value was \"$functions\")");
+        (ref($event) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument 3 \"event\" (value was \"$event\")");
         if (@_bad_arguments) {
-	    my $msg = "Invalid arguments passed to update_function:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	    my $msg = "Invalid arguments passed to update_functions:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	    Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-								   method_name => 'update_function');
+								   method_name => 'update_functions');
 	}
     }
 
     my $result = $self->{client}->call($self->{url}, $self->{headers}, {
-	method => "GenomeAnnotation.update_function",
+	method => "GenomeAnnotation.update_functions",
 	params => \@args,
     });
     if ($result) {
 	if ($result->is_error) {
 	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
 					       code => $result->content->{error}->{code},
-					       method_name => 'update_function',
+					       method_name => 'update_functions',
 					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
 					      );
 	} else {
 	    return wantarray ? @{$result->result} : $result->result->[0];
 	}
     } else {
-        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method update_function",
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method update_functions",
 					    status_line => $self->{client}->status_line,
-					    method_name => 'update_function',
+					    method_name => 'update_functions',
 				       );
     }
 }

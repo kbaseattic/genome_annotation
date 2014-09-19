@@ -71,7 +71,7 @@ our %return_counts = (
         'call_features_strep_suis_repeat' => 1,
         'call_features_strep_pneumo_repeat' => 1,
         'call_features_crispr' => 1,
-        'update_function' => 1,
+        'update_functions' => 1,
         'export_genome' => 1,
         'enumerate_classifiers' => 1,
         'query_classifier_groups' => 1,
@@ -131,7 +131,7 @@ our %method_authentication = (
         'call_features_strep_suis_repeat' => 'none',
         'call_features_strep_pneumo_repeat' => 'none',
         'call_features_crispr' => 'none',
-        'update_function' => 'none',
+        'update_functions' => 'none',
         'export_genome' => 'none',
         'enumerate_classifiers' => 'none',
         'query_classifier_groups' => 'none',
@@ -194,7 +194,7 @@ sub _build_valid_methods
         'call_features_strep_suis_repeat' => 1,
         'call_features_strep_pneumo_repeat' => 1,
         'call_features_crispr' => 1,
-        'update_function' => 1,
+        'update_functions' => 1,
         'export_genome' => 1,
         'enumerate_classifiers' => 1,
         'query_classifier_groups' => 1,
@@ -425,10 +425,12 @@ sub call_method {
 	    $tag = "S:$self->{hostname}:$$:$ts";
 	}
 	local $ENV{KBRPC_TAG} = $tag;
-	local $ENV{KBRPC_METADATA} = $self->_plack_req->header("Kbrpc-Metadata");
-	local $ENV{KBRPC_ERROR_DEST} = $self->_plack_req->header("Kbrpc-Errordest");
+	my $kb_metadata = $self->_plack_req->header("Kbrpc-Metadata");
+	my $kb_errordest = $self->_plack_req->header("Kbrpc-Errordest");
+	local $ENV{KBRPC_METADATA} = $kb_metadata if $kb_metadata;
+	local $ENV{KBRPC_ERROR_DEST} = $kb_errordest if $kb_errordest;
 
-	my $stderr = Bio::KBase::GenomeAnnotation::ServiceStderrWrapper->new($ctx);
+	my $stderr = Bio::KBase::GenomeAnnotation::ServiceStderrWrapper->new($ctx, $get_time);
 	$ctx->stderr($stderr);
 
         my $xFF = $self->_plack_req->header("X-Forwarded-For");
@@ -646,17 +648,19 @@ use Time::HiRes 'gettimeofday';
 
 sub new
 {
-    my($class, $ctx) = @_;
-    my $self = {};
-    my $dest = $ENV{KBRPC_ERROR_DEST};
-    my $tag = $ENV{KBRPC_TAG};
+    my($class, $ctx, $get_time) = @_;
+    my $self = {
+	get_time => $get_time,
+    };
+    my $dest = $ENV{KBRPC_ERROR_DEST} if exists $ENV{KBRPC_ERROR_DEST};
+    my $tag = $ENV{KBRPC_TAG} if exists $ENV{KBRPC_TAG};
     my ($t, $us) = gettimeofday();
     $us = sprintf("%06d", $us);
     my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
 
     my $name = join(".", $ctx->module, $ctx->method, $ctx->hostname, $ts);
 
-    if ($dest =~ m,^/,)
+    if ($dest && $dest =~ m,^/,)
     {
 	#
 	# File destination
@@ -726,18 +730,28 @@ sub redirect_both
     }
 }
 
+sub timestamp
+{
+    my($self) = @_;
+    my ($t, $us) = $self->{get_time}->();
+    $us = sprintf("%06d", $us);
+    my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
+    return $ts;
+}
+
 sub log
 {
     my($self, $str) = @_;
     my $d = $self->{dest};
+    my $ts = $self->timestamp();
     if (ref($d) eq 'SCALAR')
     {
-	$$d .= $str . "\n";
+	$$d .= "[$ts] " . $str . "\n";
 	return 1;
     }
     elsif ($d)
     {
-	print $d $str . "\n";
+	print $d "[$ts] " . $str . "\n";
 	return 1;
     }
     return 0;
@@ -748,6 +762,7 @@ sub log_cmd
     my($self, @cmd) = @_;
     my $d = $self->{dest};
     my $str;
+    my $ts = $self->timestamp();
     if (ref($cmd[0]))
     {
 	$str = join(" ", @{$cmd[0]});
@@ -758,11 +773,11 @@ sub log_cmd
     }
     if (ref($d) eq 'SCALAR')
     {
-	$$d .= $str . "\n";
+	$$d .= "[$ts] " . $str . "\n";
     }
     elsif ($d)
     {
-	print $d $str . "\n";
+	print $d "[$ts] " . $str . "\n";
     }
 	 
 }

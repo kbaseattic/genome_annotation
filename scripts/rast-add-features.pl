@@ -17,13 +17,18 @@ Add a set of features to the genome.
 
 =head1 COMMAND-LINE OPTIONS
 
-rast-annotate-proteins-kmer-v2 [-io] [long options...] < input > output
+rast-add-features [-hio] [long options...] features-file < input > output
 	-i --input      file from which the input is to be read
 	-o --output     file to which the output is to be written
-	--help          print usage message and exit
-	--min-hits      minimum number of Kmer hits required for a call to be
-	                made
-	--max-gap       maximum size of a gap allowed for a call to be made
+	-h --help       print usage message and exit
+	--url           URL for the genome annotation service
+	              
+	Each line in the features-file contains the following fields:
+	 id           ID of the feature. A new feature ID will be assigned for this feature
+	 location     Location of the feature on the contig, in the format ContigID_<start-pos>[+-]<length>
+	 feature-type Type of this feature (CDS, rna, etc.)
+	 function     Function assigned to this feature.
+	 aliases      Comma-separated list of aliases for this feature
 
 =cut
 
@@ -44,7 +49,8 @@ my($opt, $usage) = describe_options("rast-add-features %o features-file < input 
 				    @options);
 
 
-print($usage->text), exit if ($opt->help || @ARGV != 1);
+print($usage->text), exit if $opt->help;
+print($usage->text), exit 1 if (@ARGV != 1);
 
 my $features_file = shift;
 
