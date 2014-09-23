@@ -40,8 +40,15 @@ my @functions;
 while (<F>)
 {
     chomp;
-    my($id, $func) = split(/\t/);
-    push(@functions, [$id, $func]);
+    if (/^(\S+)\s+(.*)$/)
+    {
+	push(@functions, [$1, $2]);
+    }
+    else
+    {
+	print STDERR "Cannot parse line $.\n";
+    }
+
 }
 close(F);
 
