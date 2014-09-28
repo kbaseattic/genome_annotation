@@ -425,7 +425,13 @@ module GenomeAnnotation
 
     funcdef update_functions(genomeTO genome_in, list<tuple<feature_id, string function>> functions, analysis_event event)
 	returns (genomeTO genome_out);
-    
+
+    /*
+     * Renumber features such that their identifiers are contiguous along contigs.
+     *
+     */
+    funcdef renumber_features(genomeTO genome_in) returns (genomeTO genome_out);
+
     /*
      * Export genome typed object to one of the supported output formats:
      * genbank, embl, or gff.
