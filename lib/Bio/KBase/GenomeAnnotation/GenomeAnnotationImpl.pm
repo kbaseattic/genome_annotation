@@ -12872,18 +12872,13 @@ sub renumber_features
 
     $genome_in = GenomeTypeObject->initialize($genome_in);
 
-    #
-    # If we don't have a valid event, create one here.
-    #
-    if (!$event->{tool_name})
-    {
-	$event = {
-	    tool_name => "GenomeAnnotation::renumber_features",
-	    execution_time => scalar gettimeofday,
-	    parameters => [],
-	    hostname => $self->{hostname},
-	};
-    }
+    my $event = {
+	tool_name => "GenomeAnnotation::renumber_features",
+	execution_time => scalar gettimeofday,
+	parameters => [],
+	hostname => $self->{hostname},
+    };
+
     my $event_id = $genome_in->add_analysis_event($event);
 
     $genome_in->renumber_features($ctx->user_id, $event_id);
