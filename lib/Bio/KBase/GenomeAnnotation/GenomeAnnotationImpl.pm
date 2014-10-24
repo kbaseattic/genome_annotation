@@ -147,6 +147,11 @@ sub new
 	
     $self->{nr_annotation_directory} = $dir;
 
+    $self->{special_protein_dbdir} = $cfg->setting("special_protein_dbdir");
+    $self->{special_protein_cache_db} = $cfg->setting("special_protein_cache_db");
+    $self->{special_protein_cache_dbhost} = $cfg->setting("special_protein_cache_dbhost");
+    $self->{special_protein_cache_dbuser} = $cfg->setting("special_protein_cache_dbuser");
+    $self->{special_protein_cache_dbpass} = $cfg->setting("special_protein_cache_dbpass");
 
     my $i = $cfg->setting("idserver_url");
     $idserver_url = $i if $i;
@@ -10210,7 +10215,7 @@ kmer_v2_parameters is a reference to a hash where the following keys are defined
 
 =item Description
 
-RAST-style kmers
+
 
 =back
 
@@ -10352,6 +10357,72 @@ sub call_features_ProtoCDS_kmer_v2
 							       method_name => 'call_features_ProtoCDS_kmer_v2');
     }
     return($genome_out);
+}
+
+
+
+
+=head2 enumerate_special_protein_databases
+
+  $database_names = $obj->enumerate_special_protein_databases()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$database_names is a reference to a list where each element is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$database_names is a reference to a list where each element is a string
+
+
+=end text
+
+
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub enumerate_special_protein_databases
+{
+    my $self = shift;
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($database_names);
+    #BEGIN enumerate_special_protein_databases
+
+    $database_names = [];
+
+    my $dir = $self->{special_protein_dbdir};
+    if ($dir && opendir(my $dh, $dir))
+    {
+	my @list = map { s/\.faa$//; $_ } grep { -f "$dir/$_" && /\.faa$/ } readdir($dh);
+	push(@$database_names, @list);
+	closedir($dh);
+    }
+
+    #END enumerate_special_protein_databases
+    my @_bad_returns;
+    (ref($database_names) eq 'ARRAY') or push(@_bad_returns, "Invalid type for return variable \"database_names\" (value was \"$database_names\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to enumerate_special_protein_databases:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'enumerate_special_protein_databases');
+    }
+    return($database_names);
 }
 
 
@@ -10600,6 +10671,50 @@ sub compute_special_proteins
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($results);
     #BEGIN compute_special_proteins
+
+    $genome_in = GenomeTypeObject->initialize($genome_in);
+
+    my $dir = $self->{special_protein_dbdir};
+    
+    my $prots = File::Temp->new();
+    close($prots);
+    $genome_in->write_protein_translations_to_file($prots);
+
+    my $out = File::Temp->new();
+
+    my @dbargs = map { ("--db", $_) } @$database_names;
+
+    my @cmd = ('rast_compute_specialty_genes',
+	       "--in", $prots,
+	       "--db-dir", $dir,
+	       @dbargs,
+	       $self->{special_protein_cache_db} ? ("--cache-db", $self->{special_protein_cache_db}) : (),
+	       $self->{special_protein_cache_dbhost} ? ("--cache-host", $self->{special_protein_cache_dbhost}) : (),
+	       $self->{special_protein_cache_dbuser} ? ("--cache-user", $self->{special_protein_cache_dbuser}) : (),
+	       $self->{special_protein_cache_dbpass} ? ("--cache-pass", $self->{special_protein_cache_dbpass}) : ());
+
+    $ctx->stderr->log_cmd(@cmd);
+    my $ok = run(\@cmd, '>', $out, $ctx->stderr->redirect);
+    close($out);
+    $results = [];
+    if ($ok)
+    {
+	if (open(my $fh, "<", $out))
+	{
+	    my $l = <$fh>;
+	    while (defined($l = <$fh>))
+	    {
+		chomp $l;
+		push(@$results, [ split(/\t/, $l) ])
+	    }
+	    close($fh);
+	}
+    }
+    else
+    {
+	die "Error running rast_compute_specialty_genes ($?): @cmd\n" . $ctx->stderr->text_value;
+    }
+
     #END compute_special_proteins
     my @_bad_returns;
     (ref($results) eq 'ARRAY') or push(@_bad_returns, "Invalid type for return variable \"results\" (value was \"$results\")");
@@ -16116,11 +16231,6 @@ placeholder has a value which is an int
 
 =over 4
 
-
-
-=item Description
-
-Need a call to enumerate the available databases
 
 
 =item Definition

@@ -9142,7 +9142,7 @@ kmer_v2_parameters is a reference to a hash where the following keys are defined
 
 =item Description
 
-RAST-style kmers
+
 
 =back
 
@@ -9190,6 +9190,74 @@ sub call_features_ProtoCDS_kmer_v2
         Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method call_features_ProtoCDS_kmer_v2",
 					    status_line => $self->{client}->status_line,
 					    method_name => 'call_features_ProtoCDS_kmer_v2',
+				       );
+    }
+}
+
+
+
+=head2 enumerate_special_protein_databases
+
+  $database_names = $obj->enumerate_special_protein_databases()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$database_names is a reference to a list where each element is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$database_names is a reference to a list where each element is a string
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub enumerate_special_protein_databases
+{
+    my($self, @args) = @_;
+
+# Authentication: none
+
+    if ((my $n = @args) != 0)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function enumerate_special_protein_databases (received $n, expecting 0)");
+    }
+
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
+	method => "GenomeAnnotation.enumerate_special_protein_databases",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'enumerate_special_protein_databases',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method enumerate_special_protein_databases",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'enumerate_special_protein_databases',
 				       );
     }
 }
@@ -14876,11 +14944,6 @@ placeholder has a value which is an int
 
 =over 4
 
-
-
-=item Description
-
-Need a call to enumerate the available databases
 
 
 =item Definition

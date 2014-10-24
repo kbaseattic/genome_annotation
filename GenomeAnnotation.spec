@@ -376,10 +376,11 @@ module GenomeAnnotation
 
     funcdef resolve_overlapping_features(genomeTO genome_in, resolve_overlapping_features_parameters params) returns (genomeTO genome_out);
 
-    funcdef call_features_ProtoCDS_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);		/* RAST-style kmers */
-    funcdef call_features_ProtoCDS_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);		/* Ross's new kmers */
+    funcdef call_features_ProtoCDS_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);
+    funcdef call_features_ProtoCDS_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);
 
-    /* Need a call to enumerate the available databases */
+    funcdef enumerate_special_protein_databases() returns (list<string> database_names);
+
     typedef tuple <
 	string protein_id,
 	string database_name,

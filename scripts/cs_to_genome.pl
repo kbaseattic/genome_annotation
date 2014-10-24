@@ -41,9 +41,11 @@ use strict;
 $| = 1;
 
 my $help;
+my $skip_contigs;
 
 my $rc = GetOptions('output=s'    => \$output_file,
                     'help' => \$help,
+		    'skip-contigs' => \$skip_contigs,
 		    );
 
 if (!$rc || $help || @ARGV != 1) {
@@ -122,7 +124,11 @@ for my $l (@$locs)
 
 my $c = $cs->genomes_to_contigs([$src_genome_id]);
 my $src_contigs = $c->{$src_genome_id};
-my $cseqs = $cs->contigs_to_sequences($src_contigs);
+my $cseqs;
+if (!$skip_contigs)
+{
+    $cseqs = $cs->contigs_to_sequences($src_contigs);
+}
 my $cprefix = "$genome_id.c";
 my $cstart = $id_server->allocate_id_range($cprefix, scalar @$src_contigs) + 0;
 
@@ -131,7 +137,10 @@ for my $ctg (@$src_contigs)
 {
     my $nctg = "$cprefix.$cstart";
     $cstart++;
-    push(@$contigs, { id => $nctg, dna => $cseqs->{$ctg} });
+    if (!$skip_contigs)
+    {
+	push(@$contigs, { id => $nctg, dna => $cseqs->{$ctg} });
+    }
     $cmap{$ctg} = $nctg;
 }
 
