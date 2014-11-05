@@ -540,4 +540,6 @@ module GenomeAnnotation
 	returns (string batch_id) authentication required;
     funcdef pipeline_batch_status(string batch_id)
 	returns (pipeline_batch_status status) authentication required;
+    funcdef pipeline_batch_enumerate_batches()
+	returns (list<tuple<string batch_id, string submit_time>> batches) authentication required;
 };

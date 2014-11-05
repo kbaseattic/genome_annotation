@@ -84,6 +84,35 @@ sub job_state
     }
 }
 
+sub enumerate_jobs
+{
+    my($self, $query) = @_;
+
+    ref($query) eq 'HASH' or return(undef, "Awe::enumerate_jobs: query must be a hash reference");
+
+    my $query_string = join("&", map { "$_=$query->{$_}" } keys %$query);
+    my $url = $self->server . "/job?query&$query_string";
+    print STDERR "url=$url\n";
+    my $res = $self->ua->get($url, $self->auth_header());
+
+    if ($res->is_success)
+    {
+	my $awe_res = $self->json->decode($res->content);
+	if ($awe_res->{status} eq 200)
+	{
+	    return $awe_res->{data};
+	}
+	else
+	{
+	    return undef, $awe_res->{error};
+	}
+    }
+    else
+    {
+	return undef, $res->content;
+    }
+}
+
 sub job
 {
     my($self, $job_id) = @_;

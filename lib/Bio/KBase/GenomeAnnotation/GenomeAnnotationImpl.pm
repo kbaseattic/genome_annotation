@@ -14744,6 +14744,83 @@ sub pipeline_batch_status
 
 
 
+=head2 pipeline_batch_enumerate_batches
+
+  $batches = $obj->pipeline_batch_enumerate_batches()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$batches is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (batch_id) a string
+	1: (submit_time) a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$batches is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (batch_id) a string
+	1: (submit_time) a string
+
+
+=end text
+
+
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub pipeline_batch_enumerate_batches
+{
+    my $self = shift;
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($batches);
+    #BEGIN pipeline_batch_enumerate_batches
+
+    #
+    # Call AWE to find all tasks with project=rasttk and user=logged-in user
+    #
+    
+    my $awe = Bio::KBase::GenomeAnnotation::Awe->new($self->{awe_server}, $ctx->token);
+    my($list, $error) = $awe->enumerate_jobs({ "info.project" => 'rasttk', "info.user" => $ctx->user_id });
+
+    $batches = [];
+    if (ref($list))
+    {
+	$batches = [ map { [ $_->{id}, $_->{info}->{submittime} ] } @$list ];
+    }
+    else
+    {
+	die "pipeline_batch_enumerate_batches task query error: $error";
+    }
+
+    #END pipeline_batch_enumerate_batches
+    my @_bad_returns;
+    (ref($batches) eq 'ARRAY') or push(@_bad_returns, "Invalid type for return variable \"batches\" (value was \"$batches\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to pipeline_batch_enumerate_batches:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'pipeline_batch_enumerate_batches');
+    }
+    return($batches);
+}
+
+
+
+
 =head2 version 
 
   $return = $obj->version()

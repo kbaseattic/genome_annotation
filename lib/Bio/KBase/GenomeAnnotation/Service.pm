@@ -85,6 +85,7 @@ our %return_counts = (
         'run_pipeline' => 1,
         'pipeline_batch_start' => 1,
         'pipeline_batch_status' => 1,
+        'pipeline_batch_enumerate_batches' => 1,
         'version' => 1,
 );
 
@@ -147,6 +148,7 @@ our %method_authentication = (
         'run_pipeline' => 'none',
         'pipeline_batch_start' => 'required',
         'pipeline_batch_status' => 'required',
+        'pipeline_batch_enumerate_batches' => 'required',
 );
 
 
@@ -212,6 +214,7 @@ sub _build_valid_methods
         'run_pipeline' => 1,
         'pipeline_batch_start' => 1,
         'pipeline_batch_status' => 1,
+        'pipeline_batch_enumerate_batches' => 1,
         'version' => 1,
     };
     return $methods;

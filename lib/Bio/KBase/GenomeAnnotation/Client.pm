@@ -13438,6 +13438,78 @@ sub pipeline_batch_status
 
 
 
+=head2 pipeline_batch_enumerate_batches
+
+  $batches = $obj->pipeline_batch_enumerate_batches()
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$batches is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (batch_id) a string
+	1: (submit_time) a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$batches is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (batch_id) a string
+	1: (submit_time) a string
+
+
+=end text
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub pipeline_batch_enumerate_batches
+{
+    my($self, @args) = @_;
+
+# Authentication: required
+
+    if ((my $n = @args) != 0)
+    {
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error =>
+							       "Invalid argument count for function pipeline_batch_enumerate_batches (received $n, expecting 0)");
+    }
+
+    my $result = $self->{client}->call($self->{url}, $self->{headers}, {
+	method => "GenomeAnnotation.pipeline_batch_enumerate_batches",
+	params => \@args,
+    });
+    if ($result) {
+	if ($result->is_error) {
+	    Bio::KBase::Exceptions::JSONRPC->throw(error => $result->error_message,
+					       code => $result->content->{error}->{code},
+					       method_name => 'pipeline_batch_enumerate_batches',
+					       data => $result->content->{error}->{error} # JSON::RPC::ReturnObject only supports JSONRPC 1.1 or 1.O
+					      );
+	} else {
+	    return wantarray ? @{$result->result} : $result->result->[0];
+	}
+    } else {
+        Bio::KBase::Exceptions::HTTP->throw(error => "Error invoking method pipeline_batch_enumerate_batches",
+					    status_line => $self->{client}->status_line,
+					    method_name => 'pipeline_batch_enumerate_batches',
+				       );
+    }
+}
+
+
+
 sub version {
     my ($self) = @_;
     my $result = $self->{client}->call($self->{url}, $self->{headers}, {
@@ -13449,16 +13521,16 @@ sub version {
             Bio::KBase::Exceptions::JSONRPC->throw(
                 error => $result->error_message,
                 code => $result->content->{code},
-                method_name => 'pipeline_batch_status',
+                method_name => 'pipeline_batch_enumerate_batches',
             );
         } else {
             return wantarray ? @{$result->result} : $result->result->[0];
         }
     } else {
         Bio::KBase::Exceptions::HTTP->throw(
-            error => "Error invoking method pipeline_batch_status",
+            error => "Error invoking method pipeline_batch_enumerate_batches",
             status_line => $self->{client}->status_line,
-            method_name => 'pipeline_batch_status',
+            method_name => 'pipeline_batch_enumerate_batches',
         );
     }
 }
