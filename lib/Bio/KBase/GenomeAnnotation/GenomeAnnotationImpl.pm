@@ -5466,7 +5466,6 @@ sub call_features_rRNA_SEED
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($genome_out);
     #BEGIN call_features_rRNA_SEED
-    #my $coder = JSON::XS->new;
     my $coder = _get_coder();
     my $tmp_in = File::Temp->new();
     write_file($tmp_in, $coder->encode($genome_in));
@@ -5743,7 +5742,7 @@ sub call_features_tRNA_trnascan
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($genome_out);
     #BEGIN call_features_tRNA_trnascan
-    my $coder = JSON::XS->new;
+    my $coder = _get_coder();
     my $tmp_in = File::Temp->new();
     write_file($tmp_in, $coder->encode($genome_in));
 
@@ -6655,7 +6654,7 @@ sub call_features_CDS_prodigal
     my($return);
     #BEGIN call_features_CDS_prodigal
 
-    my $coder = JSON::XS->new;
+    my $coder = _get_coder();
     my $tmp_in = File::Temp->new();
     write_file($tmp_in, $coder->encode($genomeTO));
 
@@ -8162,7 +8161,7 @@ sub call_features_prophage_phispy
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($genome_out);
     #BEGIN call_features_prophage_phispy
-    my $coder = JSON::XS->new;
+    my $coder = _get_coder();
     my $tmp_in = File::Temp->new();
     write_file($tmp_in, $coder->encode($genome_in));
 
@@ -12455,7 +12454,6 @@ sub call_features_crispr
     #BEGIN call_features_crispr
 
     my $coder = _get_coder();
-#    my $coder = JSON::XS->new;
     my $tmp_in = File::Temp->new();
     write_file($tmp_in, $coder->encode($genome_in));
 
@@ -13252,7 +13250,6 @@ sub export_genome
     #BEGIN export_genome
 
     my $coder = _get_coder();
-#    my $coder = JSON::XS->new;
     my $tmp_in = File::Temp->new();
     write_file($tmp_in, $coder->encode($genome_in));
 
