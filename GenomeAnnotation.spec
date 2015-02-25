@@ -149,6 +149,7 @@ module GenomeAnnotation
 	string source;
 	string source_id;
 	string taxonomy;
+	int ncbi_taxonomy_id;
 
 	genome_quality_measure quality;
 	
@@ -179,6 +180,8 @@ module GenomeAnnotation
 	int genetic_code;
 	string source;
 	string source_id;
+	int ncbi_taxonomy_id;
+	string taxonomy;
     } genome_metadata;
 
     typedef string subsystem;
