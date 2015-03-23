@@ -143,10 +143,13 @@ sub options_genome_metadata
 #   
 our @export_formats = ([genbank => "Genbank format"],
 		       [genbank_merged => "Genbank format as single merged locus, suitable for Artemis"],
+		       [spreadsheet_txt => "RAST-style spreadsheet (tab-separated text format)"],
+		       [spreadsheet_xls => "RAST-style sreadsheet (Excel XLS format)"],
 		       [feature_data => "Tabular form of feature data"],
 		       [protein_fasta => "Protein translations in fasta format"],
 		       [contig_fasta => "Contig DNA in fasta format"],
 		       [feature_dna => "Feature DNA sequences in fasta format"],
+		       [seed_dir => "SEED directory"],
 		       [gff => "GFF format"],
 		       [embl => "EMBL format"]);
 

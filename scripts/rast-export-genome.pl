@@ -45,6 +45,9 @@ rast-export-genome [-hio] [long options...] format < input > output
 	Supported formats: 
 	  genbank         Genbank format
 	  genbank_merged  Genbank format as single merged locus, suitable for Artemis
+          spreadsheet_txt RAST-style spreadsheet (tab-separated text format)
+	  spreadsheet_xls RAST-style spreadsheet (Excel XLS format)
+          seed_dir        SEED directory (in tar.gz format)
 	  feature_data    Tabular form of feature data
 	  protein_fasta   Protein translations in fasta format
 	  contig_fasta    Contig DNA in fasta format
