@@ -264,6 +264,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -359,6 +360,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -503,6 +505,8 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	taxonomy has a value which is a string
 genome_id is a string
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -512,6 +516,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -605,6 +610,8 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	taxonomy has a value which is a string
 genome_id is a string
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -614,6 +621,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -776,6 +784,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -871,6 +880,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1014,6 +1024,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1109,6 +1120,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1256,6 +1268,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1341,6 +1354,8 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	taxonomy has a value which is a string
 
 </pre>
 
@@ -1359,6 +1374,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1444,6 +1460,8 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	genetic_code has a value which is an int
 	source has a value which is a string
 	source_id has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	taxonomy has a value which is a string
 
 
 =end text
@@ -1740,6 +1758,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1836,6 +1855,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1986,6 +2006,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2082,6 +2103,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2228,6 +2250,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2330,6 +2353,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2485,6 +2509,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2601,6 +2626,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2819,6 +2845,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2923,6 +2950,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3317,6 +3345,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3412,6 +3441,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3587,6 +3617,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3682,6 +3713,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3986,6 +4018,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4081,6 +4114,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4257,6 +4291,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4352,6 +4387,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4527,6 +4563,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4622,6 +4659,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4768,6 +4806,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4863,6 +4902,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5009,6 +5049,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5104,6 +5145,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5314,6 +5356,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5411,6 +5454,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5600,6 +5644,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5695,6 +5740,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5860,6 +5906,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5955,6 +6002,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6181,6 +6229,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6279,6 +6328,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6510,6 +6560,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6605,6 +6656,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6772,6 +6824,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6867,6 +6920,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7210,6 +7264,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7305,6 +7360,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7449,6 +7505,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7544,6 +7601,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7689,6 +7747,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7788,6 +7847,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8018,6 +8078,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8113,6 +8174,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8280,6 +8342,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8377,6 +8440,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8524,6 +8588,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8622,6 +8687,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8808,6 +8874,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8916,6 +8983,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9146,6 +9214,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9246,6 +9315,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9476,6 +9546,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9574,6 +9645,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9737,6 +9809,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9845,6 +9918,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10084,6 +10158,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10184,6 +10259,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10508,6 +10584,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10612,6 +10689,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10808,6 +10886,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10920,6 +10999,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11080,6 +11160,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11175,6 +11256,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11319,6 +11401,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11414,6 +11497,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11558,6 +11642,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11653,6 +11738,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11825,6 +11911,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11920,6 +12007,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12066,6 +12154,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12161,6 +12250,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12307,6 +12397,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12402,6 +12493,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12568,6 +12660,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12667,6 +12760,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12838,6 +12932,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12933,6 +13028,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13096,6 +13192,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13193,6 +13290,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14056,6 +14154,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14186,6 +14285,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source has a value which is a string
 	source_id has a value which is a string
 	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -15591,6 +15691,7 @@ genetic_code has a value which is an int
 source has a value which is a string
 source_id has a value which is a string
 taxonomy has a value which is a string
+ncbi_taxonomy_id has a value which is an int
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
 contigs_handle has a value which is a Handle
@@ -15612,6 +15713,7 @@ genetic_code has a value which is an int
 source has a value which is a string
 source_id has a value which is a string
 taxonomy has a value which is a string
+ncbi_taxonomy_id has a value which is an int
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
 contigs_handle has a value which is a Handle
@@ -15653,6 +15755,8 @@ domain has a value which is a string
 genetic_code has a value which is an int
 source has a value which is a string
 source_id has a value which is a string
+ncbi_taxonomy_id has a value which is an int
+taxonomy has a value which is a string
 
 </pre>
 
@@ -15667,6 +15771,8 @@ domain has a value which is a string
 genetic_code has a value which is an int
 source has a value which is a string
 source_id has a value which is a string
+ncbi_taxonomy_id has a value which is an int
+taxonomy has a value which is a string
 
 
 =end text

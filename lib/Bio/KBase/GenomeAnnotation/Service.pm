@@ -6,6 +6,7 @@ use Moose;
 use POSIX;
 use JSON;
 use Bio::KBase::Log;
+use Class::Load qw();
 use Config::Simple;
 my $get_time = sub { time, 0 };
 eval {
@@ -293,6 +294,23 @@ sub _build_loggers
     return $loggers;
 }
 
+#
+# Override method from RPC::Any::Server::JSONRPC 
+# to eliminate the deprecation warning for Class::MOP::load_class.
+#
+sub _default_error {
+    my ($self, %params) = @_;
+    my $version = $self->default_version;
+    $version =~ s/\./_/g;
+    my $error_class = "JSON::RPC::Common::Procedure::Return::Version_${version}::Error";
+    Class::Load::load_class($error_class);
+    my $error = $error_class->new(%params);
+    my $return_class = "JSON::RPC::Common::Procedure::Return::Version_$version";
+    Class::Load::load_class($return_class);
+    return $return_class->new(error => $error);
+}
+
+
 #override of RPC::Any::Server
 sub handle_error {
     my ($self, $error) = @_;
@@ -370,6 +388,44 @@ sub getIPAddress {
         }
     }
     return $self->_plack_req->address;
+}
+
+#
+# Ping method reflected from /ping on the service.
+#
+sub ping
+{
+    my($self, $env) = @_;
+    return [ 200, ["Content-type" => "text/plain"], [ "OK\n" ] ];
+}
+
+
+#
+# Authenticated ping method reflected from /auth_ping on the service.
+#
+sub auth_ping
+{
+    my($self, $env) = @_;
+
+    my $req = Plack::Request->new($env);
+    my $token = $req->header("Authorization");
+
+    if (!$token)
+    {
+	return [401, [], ["Authentication required"]];
+    }
+
+    my $auth_token = Bio::KBase::AuthToken->new(token => $token, ignore_authrc => 1);
+    my $valid = $auth_token->validate();
+
+    if ($valid)
+    {
+	return [200, ["Content-type" => "text/plain"], ["OK " . $auth_token->user_id . "\n"]];
+    }
+    else
+    {
+	return [403, [], "Authentication failed"];
+    }
 }
 
 sub call_method {
@@ -540,7 +596,7 @@ sub get_method
 			     "There is no method package named '$package'.");
 	}
 	
-	Class::MOP::load_class($module);
+	Class::Load::load_class($module);
     }
     
     if (!$module->can($method)) {
