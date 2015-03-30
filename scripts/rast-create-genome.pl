@@ -55,6 +55,7 @@ rast-create-genome [-ho] [long options...] > output
 	                       the genome
 	--genetic-code         Genetic code for the genome (probably 11 or 4
 	                       for bacterial genomes)
+
 	--source               Source (external database) name for this genome
 	--source-id            Identifier for this genome in the source
 	                       (external database)

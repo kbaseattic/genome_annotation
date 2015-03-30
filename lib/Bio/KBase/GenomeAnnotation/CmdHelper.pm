@@ -129,6 +129,7 @@ sub options_genome_metadata
 	    ['scientific-name=s' => "Scientific name (Genus species strain) for the genome"],
 	    ['domain=s' => "Domain (Bacteria/Archaea/Virus/Eukaryota) for the genome"],
 	    ['genetic-code=i' => "Genetic code for the genome (probably 11 or 4 for bacterial genomes)"],
+	    ['ncbi-taxonomy-id=i' => "NCBI taxonomy identifier for the genome"],
 	    ['source=s' => "Source (external database) name for this genome"],
 	    ['source-id=s' => "Identifier for this genome in the source (external database)"],
 	   );
@@ -305,7 +306,7 @@ sub get_params_for_genome_metadata
 {
     my($opt) = @_;
     my $params = {};
-    for my $p (qw(genome_id scientific_name domain genetic_code source source_id))
+    for my $p (qw(genome_id scientific_name domain genetic_code source source_id ncbi_taxonomy_id))
     {
 	my $to = ($p eq 'genome_id') ? 'id' : $p;
 	$params->{$to} = $opt->{$p} if defined($opt->{$p});

@@ -27,6 +27,7 @@ use Data::Dumper;
 use Digest::MD5 'md5_hex';
 use Time::HiRes 'gettimeofday';
 use POSIX;
+use SOAP::Lite;
 
 use Bio::KBase::IDServer::Client;
 use Bio::KBase::KmerAnnotationByFigfam::Client;
@@ -50,8 +51,6 @@ use Capture::Tiny 'capture_stderr';
 
 use Bio::KBase::DeploymentConfig;
 
-our $idserver_url = 'https://kbase.us/services/idserver';
-
 sub _get_coder
 {
     return JSON::XS->new->ascii->pretty->allow_nonref;
@@ -72,7 +71,6 @@ sub _call_using_strep_repeats
 	hostname => $self->{hostname},
     };
 
-    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     my $idc = IDclient->new($genome_in);
     my $event_id = $genome_in->add_analysis_event($event);
 
@@ -95,6 +93,39 @@ sub _call_using_strep_repeats
     $genome_in = $genome_in->prepare_for_return();
 
     return $genome_in;
+}
+
+sub _allocate_seed_genome_id
+{
+    my($self, $taxon_id, $url) = @_;
+
+    my $proxy = SOAP::Lite->uri('http://www.soaplite.com/Scripts')-> proxy($url);
+    my $r = $proxy->register_genome($taxon_id);
+    if ($r->fault) {
+	die "Error registering genome via SEED clearinghouse: " . $r->faultcode . " " . $r->faultstring;
+    }
+    
+    my $id = $r->result;
+    return "fig|$taxon_id.$id";
+}
+
+sub _allocate_kb_genome_id
+{
+    my($self, $taxon_id, $url) = @_;
+
+    my $id_prefix = "kb";
+	
+    my $idc = Bio::KBase::IDServer::Client->new($url);
+    my $id = "$id_prefix|g." . $idc->allocate_id_range("$id_prefix|g", 1);
+    return $id;
+}
+
+sub _allocate_genome_id_fallback
+{
+    my($self, $taxon_id) = @_;
+
+    my $id = "random|$taxon_id." . int(rand(10000));
+    return $id;
 }
 
 #END_HEADER
@@ -153,16 +184,46 @@ sub new
     $self->{special_protein_cache_dbuser} = $cfg->setting("special_protein_cache_dbuser");
     $self->{special_protein_cache_dbpass} = $cfg->setting("special_protein_cache_dbpass");
 
-    my $i = $cfg->setting("idserver_url");
-    $idserver_url = $i if $i;
+    #
+    # Determine if we are using KB or SEED genome ID generation.
+    #
 
+    my $surl = $cfg->setting("seed-id-clearinghouse");
+    my $iurl = $cfg->setting("idserver_url");
+
+    #
+    # For backward compatibility set this
+    #
+    $iurl = 'https://kbase.us/services/idserver' if !defined($iurl);
+
+    if ($surl)
+    {
+	print STDERR "Using SEED id allocation from $surl\n";
+	$self->{allocate_genome_id} = sub { my($taxon_id) = @_;
+					    $self->_allocate_seed_genome_id($taxon_id, $surl);
+					};
+    }
+    elsif ($iurl)
+    {
+	print STDERR "Using KBase id allocation from $iurl\n";
+	$self->{allocate_genome_id} = sub { my($taxon_id) = @_;
+					    $self->_allocate_kb_genome_id($taxon_id, $iurl);
+					};
+    }
+    else
+    {
+	print STDERR "No id allocation mechanism defined\n";
+	$self->{allocate_genome_id} = sub { my($taxon_id) = @_;
+					    $self->_allocate_genome_id_fallback($taxon_id);
+					};
+    }
+    
     $self->{kmer_service_url} = $cfg->setting("kmer_service_url");
     $self->{awe_server} = $cfg->setting("awe-server");
     $self->{shock_server} = $cfg->setting("shock-server");
     $self->{genemark_home} = $cfg->setting("genemark-home");
 
     print STDERR "kmer_v2_data_directory = $self->{kmer_v2_data_directory}\n";
-    print STDERR "idserver = $idserver_url\n";
 
     my $h = `hostname`;
     chomp $h;
@@ -669,10 +730,14 @@ sub create_genome
     #
     if (!$genome->{id})
     {
-	my $id_prefix = "kb";
+	my $tax = $genome->{ncbi_taxonomy_id};
 	
-	my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
-	$genome->{id} = "$id_prefix|g." . $idc->allocate_id_range("$id_prefix|g", 1);
+	if ($tax !~ /^\d+$/)
+	{
+	    $tax = "6666666";
+	}
+
+	$genome->{id} = $self->{allocate_genome_id}->($tax);
     }
     $genome = $genome->prepare_for_return();
 
@@ -3818,7 +3883,6 @@ sub annotate_genome
 	$feature_loc{$loc_id} = [$contig, $start, $strand, $len];
     }
 
-    # my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
     my $id_server = IDclient->new($genome);
 
     #
@@ -4126,7 +4190,6 @@ sub call_selenoproteins
     my($return);
     #BEGIN call_selenoproteins
 
-    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     my $idc = IDclient->new($genomeTO);
 
     my $coder = _get_coder();
@@ -4397,7 +4460,6 @@ sub call_pyrrolysoproteins
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_pyrrolysoproteins
-    #my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     
     my $coder = _get_coder();
     
@@ -6053,7 +6115,6 @@ sub call_RNAs
 	$genome_in->{features} = $features;
     }
 
-    # my $id_server = Bio::KBase::IDServer::Client->new($idserver_url);
     my $id_server = IDclient->new($genome_in);
     
     #
@@ -6356,7 +6417,6 @@ sub call_features_CDS_glimmer3
 	hostname => $self->{hostname},
     };
 
-    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     my $idc = IDclient->new($genome_in);
     
     my $event_id = $genome_in->add_analysis_event($event);
@@ -9929,7 +9989,6 @@ sub call_features_ProtoCDS_kmer_v1
 	hostname => $self->{hostname},
     };
 
-    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     my $idc = IDclient->new($genome_in);
     
     my $event_id = $genome_in->add_analysis_event($event);
@@ -10282,7 +10341,6 @@ sub call_features_ProtoCDS_kmer_v2
 	hostname => $self->{hostname},
     };
 
-    # my $idc = Bio::KBase::IDServer::Client->new($idserver_url);
     my $idc = IDclient->new($genome_in);
     my $event_id = $genome_in->add_analysis_event($event);
 
