@@ -96,6 +96,24 @@ module GenomeAnnotation
 	float genemark_score;
     } feature_quality_measure;
 
+    /*
+     * A protein family assignment notes the assignment of the given feature
+     * to a protein family. db is the name of the protein family database
+     * (e.g. FIGfam, GPF for GlobalPatricFam, LPF for LocalPatricFam, etc.)
+     */
+
+    typedef tuple <string db, string id> protein_family_assignment;
+
+    /*
+     * A similarity association notes the BLAST-computed association
+     * between this feature and a given protein database.
+     */
+
+    typedef tuple <string source, string source_id,
+	float query_coverage, float subject_coverage, float identity, float e_value>
+	similarity_association;
+		   
+
     /* A feature object represents a feature on the genome. It contains 
        the location on the contig with a type, the translation if it
        represents a protein, associated aliases, etc. It also contains
@@ -113,6 +131,8 @@ module GenomeAnnotation
 	list<annotation> annotations;
 	feature_quality_measure quality;
 	analysis_event_id feature_creation_event;
+	list<protein_family_assignment> family_assignments;
+	list<similarity_association> similarity_associations;
     } feature;
 
     /* Data for DNA contig */
@@ -393,6 +413,8 @@ module GenomeAnnotation
 	float identity,
 	float p_value > special_protein_hit;
     funcdef compute_special_proteins(genomeTO genome_in, list<string> database_names) returns (list<special_protein_hit> results);
+
+    funcdef annotate_special_proteins(genomeTO genome_in) returns (genomeTO genome_out);
 
     typedef tuple <
 	string protein_id,

@@ -1,7 +1,9 @@
+use File::Slurp;
 use strict;
 use Getopt::Long::Descriptive;
 use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::CmdHelper qw(:all);
+use JSON::XS;
 
 =head1 NAME
 
@@ -123,7 +125,9 @@ my $workflow;
 
 if ($opt->workflow)
 {
-    die "User specification of workflow is not supported yet.\n";
+    my $workflow_txt = read_file($opt->workflow);
+    $workflow_txt or die "Could not read workflow file " . $opt->workflow . ": $!\n";
+    $workflow = decode_json($workflow_txt);
 }
 else
 {

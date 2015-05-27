@@ -119,6 +119,9 @@ COMMAND LINE ARGUMENTS:
 
     -w          write the memory map (means Data must contain final.kmers and the indexes
 
+    -l port	Run in server mode, listening on the given port. If port = 0, pick a port
+
+    -L pfile	When running in server mode, write the port number into the given file
 */
 
 
@@ -142,6 +145,7 @@ COMMAND LINE ARGUMENTS:
 /* parameters to main -- accessed globally */
 int debug = 0;
 int aa    = 0;
+int hits_only = 0;
 long long size_hash =  1400303159; /* 1400303159  tot_lookups=13474100 retry=2981020 for 5.contigs 4.684 sec */
                                    /* 2147483648  tot_lookups=13474100 retry=1736650  */
 			           /* 1073741824  tot_lookups=13474100 retry=4728020  */
@@ -232,7 +236,7 @@ static int   min_hits = 5;
 static int   min_weighted_hits = 0;
 static int   max_gap  = 200;
 
-void run_accept_loop(kmer_handle_t *kmersH, short port);
+void run_accept_loop(kmer_handle_t *kmersH, in_port_t port, char *port_file, pid_t parent);
 void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out);
 
 /* =========================== end of reduction global variables ================= */
@@ -809,12 +813,13 @@ void process_set_of_hits(kmer_handle_t *kmersH, FILE *fh) {
     }
     i++;
   }  if ((fI_count >= min_hits) && (weighted_hits >= min_weighted_hits)) {
-      fprintf(fh, "CALL\t%d\t%d\t%d\t%d\t%s\t%f\n",hits[0].from0_in_prot,
-	                                hits[last_hit].from0_in_prot+(K-1),
-	                                fI_count,
-                                        current_fI,
-	                                kmersH->function_array[current_fI],
-	                                weighted_hits);
+      if (!hits_only)
+	  fprintf(fh, "CALL\t%d\t%d\t%d\t%d\t%s\t%f\n",hits[0].from0_in_prot,
+		  hits[last_hit].from0_in_prot+(K-1),
+		  fI_count,
+		  current_fI,
+		  kmersH->function_array[current_fI],
+		  weighted_hits);
 
       if (debug > 1) {
 	  fprintf(fh, "after-call: ");
@@ -898,7 +903,10 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
       int oI          = kmers_hash_entry->otu_index;
       float f_wt      = kmers_hash_entry->function_wt;
       if (debug >= 1) {
-	  fprintf(fh, "HIT\t%ld\t%lld\t%d\t%d\t%0.3f\t%d\n",p-pIseq,encodedK,avg_off_end,fI,f_wt,oI);
+	  if (hits_only)
+	      fprintf(fh, "%ld\t%s\n",encodedK, current_id);
+	  else
+	      fprintf(fh, "HIT\t%ld\t%lld\t%d\t%d\t%0.3f\t%d\n",p-pIseq,encodedK,avg_off_end,fI,f_wt,oI);
       }
 
       if ((num_hits > 0) && (hits[num_hits-1].from0_in_prot + max_gap) < (p-pIseq)) {
@@ -959,15 +967,18 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
 
 void tabulate_otu_data_for_contig(FILE *fh) {
   int i;
-  fprintf(fh, "OTU-COUNTS\t%s[%d]",current_id,current_length_contig);
-  for (i=0; (i < num_oI); i++) {
-      fprintf(fh, "\t%d-%d",oI_counts[i].count,oI_counts[i].oI);
+  if (!hits_only)
+  {
+      fprintf(fh, "OTU-COUNTS\t%s[%d]",current_id,current_length_contig);
+      for (i=0; (i < num_oI); i++) {
+	  fprintf(fh, "\t%d-%d",oI_counts[i].count,oI_counts[i].oI);
+      }
+      fprintf(fh, "\n");
   }
-  fprintf(fh, "\n");
   num_oI = 0;
 }
 
-void process_aa_seq(char *id,char *pseq,kmer_handle_t *kmersH, FILE *fh) {
+void process_aa_seq(char *id,char *pseq,size_t ln,kmer_handle_t *kmersH, FILE *fh) {
   static unsigned char *pIseq = 0;
   if (pIseq == 0)
   {
@@ -976,8 +987,9 @@ void process_aa_seq(char *id,char *pseq,kmer_handle_t *kmersH, FILE *fh) {
   //static unsigned char pIseq[MAX_SEQ_LEN / 3];
 
   strcpy(current_id,id);
-  fprintf(fh, "PROTEIN-ID\t%s\n",id);
-  int ln = strlen(pseq);
+  if (!hits_only)
+      fprintf(fh, "PROTEIN-ID\t%s\t%d\n",id,ln);
+
   current_length_contig = ln;
   current_strand        = '+';
   current_prot_off      = 0;
@@ -1015,10 +1027,11 @@ void process_seq(char *id,char *data,kmer_handle_t *kmersH, FILE *fh) {
     translate(data,i,pseq,pIseq);
     current_strand   = '+';
     current_prot_off = i;
-    fprintf(fh, "TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
-	                                   current_length_contig,
-	                                   current_strand,
-	                                   current_prot_off);
+    if (!hits_only)
+	fprintf(fh, "TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
+		current_length_contig,
+		current_strand,
+		current_prot_off);
     gather_hits(ln,'+',i,pseq,pIseq,kmersH, fh);
   }
   rev_comp(data,cdata);
@@ -1027,10 +1040,11 @@ void process_seq(char *id,char *data,kmer_handle_t *kmersH, FILE *fh) {
 
     current_strand   = '-';
     current_prot_off = i;
-    fprintf(fh, "TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
-	                                   current_length_contig,
-	                                   current_strand,
-	                                   current_prot_off);
+    if (!hits_only)
+	fprintf(fh, "TRANSLATION\t%s\t%d\t%c\t%d\n",current_id,
+		current_length_contig,
+		current_strand,
+		current_prot_off);
     gather_hits(ln,'-',i,pseq,pIseq,kmersH, fh);
   }
   tabulate_otu_data_for_contig(fh);
@@ -1041,12 +1055,20 @@ int main(int argc,char *argv[]) {
   char *past;
   char file[300];
   int is_server = 0;
-  unsigned short port;
+  in_port_t port;
+  char port_file[1024];
+  pid_t parent = -1;
 
-  while ((c = getopt (argc, argv, "ad:s:wD:m:g:OM:l:")) != -1) {
+  port_file[0] = 0;
+  file[0] = 0;
+
+  while ((c = getopt (argc, argv, "ad:s:wD:m:g:OM:l:L:P:H")) != -1) {
     switch (c) {
     case 'a':
       aa = 1;
+      break;
+    case 'H':
+      hits_only = 1;
       break;
     case 'd':
       debug = strtol(optarg,&past,0);
@@ -1055,6 +1077,16 @@ int main(int argc,char *argv[]) {
 	port = atoi(optarg);
 	is_server = 1;
 	break;
+
+    case 'L':
+	strncpy(port_file, optarg, sizeof(port_file) -1 );
+	port_file[sizeof(port_file) - 1] = 0;
+	break;
+
+    case 'P':
+	parent = atoi(optarg);
+	break;
+	
     case 'm':
       min_hits = strtol(optarg,&past,0);
       break;
@@ -1086,7 +1118,7 @@ int main(int argc,char *argv[]) {
 
   if (is_server)
   {
-      run_accept_loop(kmersH, port);
+      run_accept_loop(kmersH, port, port_file, parent);
   }
   else
   {
@@ -1140,7 +1172,8 @@ void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out)
 	got_gt = 0;
 
       *p=0;
-      if ((p-data) > MAX_SEQ_LEN) {
+      size_t len = p - data;
+      if ((len) > MAX_SEQ_LEN) {
 	fprintf(stderr,"The contig size exceeds %d; bump MAX_SEQ_LEN\n",MAX_SEQ_LEN);
 	exit(1);
       }
@@ -1150,7 +1183,7 @@ void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out)
       if (! aa)
 	  process_seq(id,data,kmersH, fh_out);
       else
-	  process_aa_seq(id,data,kmersH, fh_out);
+	  process_aa_seq(id,data, len, kmersH, fh_out);
       fflush(fh_out);
     }
   }
@@ -1159,7 +1192,7 @@ void run_from_filehandle(kmer_handle_t *kmersH, FILE *fh_in, FILE *fh_out)
       fprintf(fh_out, "tot_lookups=%d retry=%d\n",tot_lookups,retry);
 }
 
-void run_accept_loop(kmer_handle_t *kmersH, short port)
+void run_accept_loop(kmer_handle_t *kmersH, in_port_t port, char *port_file, pid_t parent)
 {
     int listenfd = 0, connfd = 0;
     struct sockaddr_in serv_addr;
@@ -1173,11 +1206,37 @@ void run_accept_loop(kmer_handle_t *kmersH, short port)
     serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     serv_addr.sin_port = htons(port);
 
-    bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+    if (bind(listenfd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0)
+    {
+	perror("bind failed");
+	exit(1);
+    }
+ 
+    struct sockaddr_in my_addr;
+    socklen_t my_len = sizeof(my_addr);
+    if (getsockname(listenfd, (struct sockaddr *) &my_addr, &my_len) < 0)
+    {
+	perror("getsockname failed");
+	exit(1);
+    }
+    in_port_t my_port = ntohs(my_addr.sin_port);
+    printf("Listening on %d\n", my_port);
+    if (port_file[0])
+    {
+	FILE *fp = fopen(port_file, "w");
+	if (!fp)
+	{
+	    fprintf(stderr, "error opening %s for writing: %s\n", port_file, strerror(errno));
+	    exit(1);
+	}
+	fprintf(fp, "%d\n", my_port);
+	fclose(fp);
+    }
 
     listen(listenfd, 10);
 
     int save_aa = aa;
+    int save_hits_only = hits_only;
     int save_debug = debug;
     int save_min_hits = min_hits;
     int save_min_weighted_hits = min_weighted_hits;
@@ -1186,7 +1245,21 @@ void run_accept_loop(kmer_handle_t *kmersH, short port)
     
     while(1)
     {
+	/*
+	 * If we have a parent set, and parent doesn't exist, exit.
+	 */
+	if (parent > 0)
+	{
+	    int rc = kill(parent, 0);
+	    if (rc < 0)
+	    {
+		fprintf(stderr, "Parent process %d does not exist any more, exiting\n", parent);
+		exit(0);
+	    }
+	}
+	
       aa = save_aa;
+      hits_only = save_hits_only;
       debug = save_debug;
       min_hits = save_min_hits;
       min_weighted_hits = save_min_weighted_hits;
@@ -1201,7 +1274,7 @@ void run_accept_loop(kmer_handle_t *kmersH, short port)
       getpeername(connfd, (struct sockaddr *) &peer, &peer_len);
 
       char *who = inet_ntoa(peer.sin_addr);
-      fprintf(stderr, "connection from %s\n", who);
+      // fprintf(stderr, "connection from %s\n", who);
 	
       FILE *fh_in = fdopen(connfd, "r");
       FILE *fh_out = fdopen(connfd, "w");
@@ -1233,12 +1306,13 @@ void run_accept_loop(kmer_handle_t *kmersH, short port)
 	const int max_args = 20;
 	char *argv[max_args + 2];
 	int n = 0;
-	fprintf(stderr, "Parsing option line '%s'\n", linebuf);
+	// fprintf(stderr, "Parsing option line '%s'\n", linebuf);
 	argv[n++] = "nothing";
 
 	s = strtok(linebuf, " \t");
 	while (s)
 	{
+	    // fprintf(stderr, "argv[%d] = '%s'\n", n, s);
 	  argv[n++] = s;
 	  if (n >= max_args)
 	  {
@@ -1294,8 +1368,9 @@ void run_accept_loop(kmer_handle_t *kmersH, short port)
 	}
 	if (arg_error)
 	  continue;
-	fprintf(fh_out, "OK aa=%d debug=%d min_hits=%d min_weighted_hits=%d order_constraint=%d max_gap=%d\n",
-		aa, debug, min_hits, min_weighted_hits, order_constraint, max_gap);
+	if (!hits_only)
+	    fprintf(fh_out, "OK aa=%d debug=%d min_hits=%d min_weighted_hits=%d order_constraint=%d max_gap=%d\n",
+		    aa, debug, min_hits, min_weighted_hits, order_constraint, max_gap);
       }
       else
       {
