@@ -106,7 +106,7 @@ sub _allocate_seed_genome_id
     }
     
     my $id = $r->result;
-    return "fig|$taxon_id.$id";
+    return "$taxon_id.$id";
 }
 
 sub _allocate_kb_genome_id
@@ -6977,6 +6977,10 @@ sub call_features_CDS_glimmer3
     my $type = 'CDS';
 
     my $id_prefix = $genome_in->{id};
+    if ($id_prefix =~ /^\d+\.\d+$/)
+    {
+	$id_prefix = "fig|$id_prefix";
+    }
     my $typed_prefix = join(".", $id_prefix, $type);
 
     my $count = @$calls;
@@ -7304,8 +7308,17 @@ sub call_features_CDS_prodigal
 
     my $stderr = $ctx->stderr;
 
+    my $id_prefix = $genomeTO->{id};
+    print "1 '$id_prefix'\n";
+    if ($id_prefix =~ /^\d+\.\d+$/)
+    {
+	$id_prefix = "fig|$id_prefix";
+       print "2 '$id_prefix'\n";
+    }
+    print "3 '$id_prefix'\n";
+
     my @cmd = ("rast_call_CDSs_using_prodigal", "--input", $tmp_in, "--output", $tmp_out,
-	       "--id-prefix", $genomeTO->{id});
+	       "--id-prefix", $id_prefix);
     $stderr->log(join(" ", @cmd));
 
     my $ok = run(\@cmd, $stderr->redirect);
@@ -7721,6 +7734,10 @@ sub call_features_CDS_genemark
     #
     
     my $id_prefix = $genome_in->{id};
+    if ($id_prefix =~ /^\d+\.\d+$/)
+    {
+	$id_prefix = "fig|$id_prefix";
+    }
     my $typed_prefix = join(".", $id_prefix, $type);
 
     my $count = int(%by_gene);
@@ -10861,6 +10878,10 @@ sub call_features_ProtoCDS_kmer_v1
 
     my $type = 'protoCDS';
     my $id_prefix = $genome_in->{id};
+    if ($id_prefix =~ /^\d+\.\d+$/)
+    {
+	$id_prefix = "fig|$id_prefix";
+    }
     my $typed_prefix = join(".", $id_prefix, $type);
 
     my $kmer_service = Bio::KBase::KmerAnnotationByFigfam::Client->new($self->{kmer_service_url});
@@ -11249,6 +11270,10 @@ sub call_features_ProtoCDS_kmer_v2
 
     my $type = 'protoCDS';
     my $id_prefix = $genome_in->{id};
+    if ($id_prefix =~ /^\d+\.\d+$/)
+    {
+	$id_prefix = "fig|$id_prefix";
+    }
     my $typed_prefix = join(".", $id_prefix, $type);
 
     my @hits;
