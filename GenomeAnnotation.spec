@@ -102,7 +102,7 @@ module GenomeAnnotation
      * (e.g. FIGfam, GPF for GlobalPatricFam, LPF for LocalPatricFam, etc.)
      */
 
-    typedef tuple <string db, string id> protein_family_assignment;
+    typedef tuple <string db, string id, string function> protein_family_assignment;
 
     /*
      * A similarity association notes the BLAST-computed association
@@ -170,6 +170,7 @@ module GenomeAnnotation
 	string source_id;
 	string taxonomy;
 	int ncbi_taxonomy_id;
+	string owner;
 
 	genome_quality_measure quality;
 	
@@ -202,6 +203,7 @@ module GenomeAnnotation
 	string source_id;
 	int ncbi_taxonomy_id;
 	string taxonomy;
+	string owner;
     } genome_metadata;
 
     typedef string subsystem;

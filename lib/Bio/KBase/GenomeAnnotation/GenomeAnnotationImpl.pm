@@ -265,6 +265,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -333,9 +334,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -373,6 +375,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -441,9 +444,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -531,6 +535,7 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
 	taxonomy has a value which is a string
+	owner has a value which is a string
 genome_id is a string
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -541,6 +546,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -609,9 +615,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -648,6 +655,7 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
 	taxonomy has a value which is a string
+	owner has a value which is a string
 genome_id is a string
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -658,6 +666,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -726,9 +735,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -833,6 +843,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -902,9 +913,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -941,6 +953,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1010,9 +1023,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -1097,6 +1111,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1166,9 +1181,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -1205,6 +1221,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1274,9 +1291,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -1365,6 +1383,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1434,9 +1453,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -1464,6 +1484,7 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
 	taxonomy has a value which is a string
+	owner has a value which is a string
 
 </pre>
 
@@ -1483,6 +1504,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1552,9 +1574,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -1582,6 +1605,7 @@ genome_metadata is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
 	taxonomy has a value which is a string
+	owner has a value which is a string
 
 
 =end text
@@ -1879,6 +1903,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -1948,9 +1973,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -1988,6 +2014,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2057,9 +2084,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -2151,6 +2179,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2220,9 +2249,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -2260,6 +2290,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2329,9 +2360,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -2419,6 +2451,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2488,9 +2521,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -2534,6 +2568,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2603,9 +2638,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -2702,6 +2738,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2771,9 +2808,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -2831,6 +2869,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -2900,9 +2939,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -3062,6 +3102,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3131,9 +3172,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -3179,6 +3221,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3248,9 +3291,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -3586,6 +3630,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3655,9 +3700,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -3694,6 +3740,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3763,9 +3810,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -3882,6 +3930,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -3951,9 +4000,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -3990,6 +4040,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4059,9 +4110,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -4307,6 +4359,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4376,9 +4429,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -4415,6 +4469,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4484,9 +4539,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -4604,6 +4660,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4673,9 +4730,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -4712,6 +4770,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4781,9 +4840,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -4900,6 +4960,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -4969,9 +5030,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -5008,6 +5070,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5077,9 +5140,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -5167,6 +5231,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5236,9 +5301,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -5275,6 +5341,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5344,9 +5411,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -5434,6 +5502,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5503,9 +5572,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -5542,6 +5612,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5611,9 +5682,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -5765,6 +5837,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5834,9 +5907,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -5875,6 +5949,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -5944,9 +6019,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -6077,6 +6153,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6146,9 +6223,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -6185,6 +6263,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6254,9 +6333,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -6363,6 +6443,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6432,9 +6513,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -6471,6 +6553,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6540,9 +6623,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -6710,6 +6794,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6779,9 +6864,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -6821,6 +6907,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -6890,9 +6977,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -7069,6 +7157,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7138,9 +7227,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -7177,6 +7267,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7246,9 +7337,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -7366,6 +7458,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7435,9 +7528,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -7474,6 +7568,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7543,9 +7638,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -7834,6 +7930,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -7903,9 +8000,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -7942,6 +8040,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8011,9 +8110,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -8099,6 +8199,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8168,9 +8269,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -8207,6 +8309,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8276,9 +8379,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -8365,6 +8469,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8434,9 +8539,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -8477,6 +8583,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8546,9 +8653,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -8720,6 +8828,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8789,9 +8898,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -8828,6 +8938,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -8897,9 +9008,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -9008,6 +9120,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9077,9 +9190,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -9118,6 +9232,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9187,9 +9302,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -9278,6 +9394,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9347,9 +9464,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -9389,6 +9507,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9458,9 +9577,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -9588,6 +9708,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9657,9 +9778,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -9709,6 +9831,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -9778,9 +9901,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -9952,6 +10076,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10021,9 +10146,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -10065,6 +10191,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10134,9 +10261,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -10308,6 +10436,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10377,9 +10506,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -10419,6 +10549,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10488,9 +10619,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -10595,6 +10727,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10664,9 +10797,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -10716,6 +10850,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -10785,9 +10920,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -10972,6 +11108,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11041,9 +11178,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -11085,6 +11223,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11154,9 +11293,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -11426,6 +11566,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11495,9 +11636,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -11543,6 +11685,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11612,9 +11755,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -11752,6 +11896,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11821,9 +11966,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -11860,6 +12006,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -11929,9 +12076,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -12065,6 +12213,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12134,9 +12283,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -12190,6 +12340,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12259,9 +12410,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -12363,6 +12515,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12432,9 +12585,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -12471,6 +12625,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12540,9 +12695,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -12628,6 +12784,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12697,9 +12854,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -12736,6 +12894,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12805,9 +12964,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -12893,6 +13053,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -12962,9 +13123,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -13001,6 +13163,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13070,9 +13233,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -13186,6 +13350,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13255,9 +13420,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -13294,6 +13460,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13363,9 +13530,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -13453,6 +13621,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13522,9 +13691,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -13561,6 +13731,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13630,9 +13801,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -13720,6 +13892,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13789,9 +13962,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -13828,6 +14002,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -13897,9 +14072,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -14007,6 +14183,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14076,9 +14253,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -14119,6 +14297,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14188,9 +14367,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -14303,6 +14483,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14372,9 +14553,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -14411,6 +14593,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14480,9 +14663,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -14587,6 +14771,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14656,9 +14841,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -14697,6 +14883,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -14766,9 +14953,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -15573,6 +15761,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -15642,9 +15831,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -15716,6 +15906,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	source_id has a value which is a string
 	taxonomy has a value which is a string
 	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
 	quality has a value which is a genome_quality_measure
 	contigs has a value which is a reference to a list where each element is a contig
 	contigs_handle has a value which is a Handle
@@ -15785,9 +15976,10 @@ feature_quality_measure is a reference to a hash where the following keys are de
 	hit_count has a value which is a float
 	weighted_hit_count has a value which is a float
 	genemark_score has a value which is a float
-protein_family_assignment is a reference to a list containing 2 items:
+protein_family_assignment is a reference to a list containing 3 items:
 	0: (db) a string
 	1: (id) a string
+	2: (function) a string
 similarity_association is a reference to a list containing 6 items:
 	0: (source) a string
 	1: (source_id) a string
@@ -16949,9 +17141,10 @@ genemark_score has a value which is a float
 =begin html
 
 <pre>
-a reference to a list containing 2 items:
+a reference to a list containing 3 items:
 0: (db) a string
 1: (id) a string
+2: (function) a string
 
 </pre>
 
@@ -16959,9 +17152,10 @@ a reference to a list containing 2 items:
 
 =begin text
 
-a reference to a list containing 2 items:
+a reference to a list containing 3 items:
 0: (db) a string
 1: (id) a string
+2: (function) a string
 
 
 =end text
@@ -17223,6 +17417,7 @@ source has a value which is a string
 source_id has a value which is a string
 taxonomy has a value which is a string
 ncbi_taxonomy_id has a value which is an int
+owner has a value which is a string
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
 contigs_handle has a value which is a Handle
@@ -17245,6 +17440,7 @@ source has a value which is a string
 source_id has a value which is a string
 taxonomy has a value which is a string
 ncbi_taxonomy_id has a value which is an int
+owner has a value which is a string
 quality has a value which is a genome_quality_measure
 contigs has a value which is a reference to a list where each element is a contig
 contigs_handle has a value which is a Handle
@@ -17288,6 +17484,7 @@ source has a value which is a string
 source_id has a value which is a string
 ncbi_taxonomy_id has a value which is an int
 taxonomy has a value which is a string
+owner has a value which is a string
 
 </pre>
 
@@ -17304,6 +17501,7 @@ source has a value which is a string
 source_id has a value which is a string
 ncbi_taxonomy_id has a value which is an int
 taxonomy has a value which is a string
+owner has a value which is a string
 
 
 =end text
