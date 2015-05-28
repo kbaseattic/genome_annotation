@@ -417,6 +417,7 @@ module GenomeAnnotation
     funcdef compute_special_proteins(genomeTO genome_in, list<string> database_names) returns (list<special_protein_hit> results);
 
     funcdef annotate_special_proteins(genomeTO genome_in) returns (genomeTO genome_out);
+    funcdef annotate_families_figfam_v1(genomeTO genome_in) returns (genomeTO genome_out);
 
     typedef tuple <
 	string protein_id,

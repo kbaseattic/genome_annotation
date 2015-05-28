@@ -184,6 +184,10 @@ sub new
     $self->{special_protein_cache_dbuser} = $cfg->setting("special_protein_cache_dbuser");
     $self->{special_protein_cache_dbpass} = $cfg->setting("special_protein_cache_dbpass");
 
+    $self->{patric_call_proteins_path} = $cfg->setting("patric_call_proteins_path");
+    $self->{patric_call_proteins_ff_path} = $cfg->setting("patric_call_proteins_ff_path");
+    $self->{patric_call_proteins_md5_to_fam_path} = $cfg->setting("patric_call_proteins_md5_to_fam_path");
+
     #
     # Determine if we are using KB or SEED genome ID generation.
     #
@@ -12184,6 +12188,328 @@ sub annotate_special_proteins
 	my $msg = "Invalid returns passed to annotate_special_proteins:\n" . join("", map { "\t$_\n" } @_bad_returns);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
 							       method_name => 'annotate_special_proteins');
+    }
+    return($genome_out);
+}
+
+
+
+
+=head2 annotate_families_figfam_v1
+
+  $genome_out = $obj->annotate_families_figfam_v1($genome_in)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+contig_id is a string
+bool is an int
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) an int
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub annotate_families_figfam_v1
+{
+    my $self = shift;
+    my($genome_in) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to annotate_families_figfam_v1:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_families_figfam_v1');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN annotate_families_figfam_v1
+
+    #
+    # Use the patric_call_proteins code from SEED to call figfamv1 families.
+    # The path to this tool needs to be configured in the deployment configuration using
+    # key patric_call_proteins_path.
+    #
+
+    my $exe = $self->{patric_call_proteins_path};
+    if ($exe eq '' || ! -x $exe)
+    {
+	die "PATRIC protein caller path not defined or invalid";
+    }
+
+    my $ff = $self->{patric_call_proteins_ff_path};
+    my $md5_to_fam = $self->{patric_call_proteins_md5_to_fam_path};
+
+    -d $ff or die "PATRIC protein caller figfam path not found";
+    -f $md5_to_fam or die "PATRIC protein caller md5_to_fam path not found";
+
+    $genome_in = GenomeTypeObject->initialize($genome_in);
+
+    my $prots = File::Temp->new();
+    close($prots);
+    $genome_in->write_protein_translations_to_file($prots);
+
+    my $out = File::Temp->new();
+    
+    my @cmd = ($exe, "-ff", $ff, "--md5-to-fam", $md5_to_fam, $prots);
+    my $ok = run(\@cmd, ">", $out, $ctx->stderr->redirect);
+    close($out);
+    if (!$ok)
+    {
+	die "Error $? running @cmd\n" . $ctx->stderr->text_value;
+    }
+
+    open(my $fh, "<", $out) or die "Cannot open output temp $out: $!";
+
+    while (<$fh>)
+    {
+	chomp;
+	my($peg, $kfam, $kfun, @kscore) = split(/\t/);
+	next unless $kfam;
+	my $f = $genome_in->find_feature($peg);
+	if (ref($f))
+	{
+	    push(@{$f->{family_assignments}}, [ 'FIGFAM', $kfam, $kfun ]);
+	}
+    }
+
+    close($fh);
+
+    $genome_out = $genome_in;
+    $genome_out = $genome_out->prepare_for_return();
+
+    #END annotate_families_figfam_v1
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to annotate_families_figfam_v1:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_families_figfam_v1');
     }
     return($genome_out);
 }
