@@ -418,6 +418,7 @@ module GenomeAnnotation
 
     funcdef annotate_special_proteins(genomeTO genome_in) returns (genomeTO genome_out);
     funcdef annotate_families_figfam_v1(genomeTO genome_in) returns (genomeTO genome_out);
+    funcdef annotate_null_to_hypothetical(genomeTO genome_in) returns (genomeTO genome_out);
 
     typedef tuple <
 	string protein_id,
