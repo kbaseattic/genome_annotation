@@ -17664,6 +17664,12 @@ sub call {
     my $result;
 
 
+    my @retries = (1, 2, 5, 10, 20, 60, 60, 60, 60, 60, 60);
+    my %codes_to_retry =  map { $_ => 1 } qw(110 408 502 503 504 200) ;
+    my $n_retries;
+
+    while (1)
+
     {
 	if ($uri =~ /\?/) {
 	    $result = $self->_get($uri);
@@ -17672,6 +17678,59 @@ sub call {
 	    Carp::croak "not hashref." unless (ref $obj eq 'HASH');
 	    $result = $self->_post($uri, $headers, $obj);
 	}
+
+	#
+	# Bail early on success.
+	#
+	if ($result->is_success)
+	{
+	    if ($n_retries)
+	    {
+		print STDERR strftime("%F %T", localtime), ": Request succeeded after $n_retries retries\n";
+	    }
+	    last;
+	}
+	$n_retries++;
+
+	#
+	# Failure. See if we need to retry and loop, or bail with
+	# a permanent failure.
+	#
+	
+        my $code = $result->code;
+	my $msg = $result->message;
+	my $want_retry = 0;
+	if ($codes_to_retry{$code})
+	{
+	    $want_retry = 1;
+	}
+	elsif ($code eq 500 && defined( $result->header('client-warning') )
+	       && $result->header('client-warning') eq 'Internal response')
+	{
+	    #
+	    # Handle errors that were not thrown by the web
+	    # server but rather picked up by the client library.
+	    #
+	    # If we got a client timeout or connection refused, let us retry.
+	    #
+	    
+	    if ($msg =~ /timeout|connection refused/i)
+	    {
+		$want_retry = 1;
+	    }
+	    
+	}
+	
+        if (!$want_retry || @retries == 0) {
+	    last;
+        }
+	
+        #
+        # otherwise, sleep & loop.
+        #
+        my $retry_time = shift(@retries);
+        print STDERR strftime("%F %T", localtime), ": Request failed with code=$code msg=$msg, sleeping $retry_time and retrying\n";
+        sleep($retry_time);
 
     }
 
