@@ -414,27 +414,7 @@ sub ping
 #
 sub auth_ping
 {
-    my($self, $env) = @_;
-
-    my $req = Plack::Request->new($env);
-    my $token = $req->header("Authorization");
-
-    if (!$token)
-    {
-	return [401, [], ["Authentication required"]];
-    }
-
-    my $auth_token = Bio::KBase::AuthToken->new(token => $token, ignore_authrc => 1);
-    my $valid = $auth_token->validate();
-
-    if ($valid)
-    {
-	return [200, ["Content-type" => "text/plain"], ["OK " . $auth_token->user_id . "\n"]];
-    }
-    else
-    {
-	return [403, [], "Authentication failed"];
-    }
+    return [200, ["Content-type" => "text/plain"], ["OK noauth\n"]];
 }
 
 sub call_method {

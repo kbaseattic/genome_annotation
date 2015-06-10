@@ -12466,7 +12466,9 @@ sub annotate_families_figfam_v1
     my $exe = $self->{patric_call_proteins_path};
     if ($exe eq '' || ! -x $exe)
     {
-	die "PATRIC protein caller path not defined or invalid";
+	warn "PATRIC protein caller path not defined or invalid";
+	$genome_out = $genome_in;
+	goto do_return;
     }
 
     my $ff = $self->{patric_call_proteins_ff_path};
@@ -12510,6 +12512,7 @@ sub annotate_families_figfam_v1
     $genome_out = $genome_in;
     $genome_out = $genome_out->prepare_for_return();
 
+do_return:
     #END annotate_families_figfam_v1
     my @_bad_returns;
     (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
