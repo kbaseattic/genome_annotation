@@ -493,6 +493,11 @@ sub call_method {
 	my $tag = $self->_plack_req->header("Kbrpc-Tag");
 	if (!$tag)
 	{
+	    if (!$self->{hostname}) {
+		chomp($self->{hostname} = `hostname`);
+                $self->{hostname} ||= 'unknown-host';
+	    }
+
 	    my ($t, $us) = &$get_time();
 	    $us = sprintf("%06d", $us);
 	    my $ts = strftime("%Y-%m-%dT%H:%M:%S.${us}Z", gmtime $t);
