@@ -185,6 +185,7 @@ sub new
     $self->{special_protein_cache_dbpass} = $cfg->setting("special_protein_cache_dbpass");
 
     $self->{patric_call_proteins_remote_host} = $cfg->setting("patric_call_proteins_remote_host");
+    $self->{patric_call_proteins_remote_user} = $cfg->setting("patric_call_proteins_remote_user");
     $self->{patric_call_proteins_remote_key} = $cfg->setting("patric_call_proteins_remote_key");
     $self->{patric_call_proteins_path} = $cfg->setting("patric_call_proteins_path");
     $self->{patric_call_proteins_ff_path} = $cfg->setting("patric_call_proteins_ff_path");
@@ -12466,9 +12467,10 @@ sub annotate_families_figfam_v1
     #
 
     my $remote = $self->{patric_call_proteins_remote_host};
+    my $remote_user = $self->{patric_call_proteins_remote_user};
     my $exe = $self->{patric_call_proteins_path};
 
-    if (!$remote && $exe eq '' || ! -x $exe)
+    if (!$remote && ($exe eq '' || ! -x $exe))
     {
 	warn "PATRIC protein caller path not defined or invalid";
 	$genome_out = $genome_in;
@@ -12497,8 +12499,9 @@ sub annotate_families_figfam_v1
     {
 	my $key = $self->{patric_call_proteins_remote_key};
 	my @kopt = defined($key) ? ("-i", $key) : ();
+	my @uopt = defined($remote_user) ? ("-l", $remote_user) : ();
 	
-	@cmd = ("ssh", @kopt, $remote, "$exe -ff $ff --md5-to-fam $md5_to_fam -");
+	@cmd = ("ssh", @uopt, @kopt, $remote, "$exe -ff $ff --md5-to-fam $md5_to_fam -");
 	print Dumper(\@cmd, $prots, $out);
 	$ok = run(\@cmd, "<", "$prots", ">", $out, $ctx->stderr->redirect);
 	close($out);
