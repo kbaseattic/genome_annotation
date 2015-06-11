@@ -184,6 +184,8 @@ sub new
     $self->{special_protein_cache_dbuser} = $cfg->setting("special_protein_cache_dbuser");
     $self->{special_protein_cache_dbpass} = $cfg->setting("special_protein_cache_dbpass");
 
+    $self->{patric_call_proteins_remote_host} = $cfg->setting("patric_call_proteins_remote_host");
+    $self->{patric_call_proteins_remote_key} = $cfg->setting("patric_call_proteins_remote_key");
     $self->{patric_call_proteins_path} = $cfg->setting("patric_call_proteins_path");
     $self->{patric_call_proteins_ff_path} = $cfg->setting("patric_call_proteins_ff_path");
     $self->{patric_call_proteins_md5_to_fam_path} = $cfg->setting("patric_call_proteins_md5_to_fam_path");
@@ -12463,8 +12465,10 @@ sub annotate_families_figfam_v1
     # key patric_call_proteins_path.
     #
 
+    my $remote = $self->{patric_call_proteins_remote_host};
     my $exe = $self->{patric_call_proteins_path};
-    if ($exe eq '' || ! -x $exe)
+
+    if (!$remote && $exe eq '' || ! -x $exe)
     {
 	die "PATRIC protein caller path not defined or invalid";
     }
@@ -12472,8 +12476,11 @@ sub annotate_families_figfam_v1
     my $ff = $self->{patric_call_proteins_ff_path};
     my $md5_to_fam = $self->{patric_call_proteins_md5_to_fam_path};
 
-    -d $ff or die "PATRIC protein caller figfam path not found";
-    -f $md5_to_fam or die "PATRIC protein caller md5_to_fam path not found";
+    if (!$remote)
+    {
+	-d $ff or die "PATRIC protein caller figfam path not found";
+	-f $md5_to_fam or die "PATRIC protein caller md5_to_fam path not found";
+    }
 
     $genome_in = GenomeTypeObject->initialize($genome_in);
 
@@ -12482,10 +12489,24 @@ sub annotate_families_figfam_v1
     $genome_in->write_protein_translations_to_file($prots);
 
     my $out = File::Temp->new();
-    
-    my @cmd = ($exe, "-ff", $ff, "--md5-to-fam", $md5_to_fam, $prots);
-    my $ok = run(\@cmd, ">", $out, $ctx->stderr->redirect);
-    close($out);
+
+    my(@cmd, $ok);
+    if ($remote)
+    {
+	my $key = $self->{patric_call_proteins_remote_key};
+	my @kopt = defined($key) ? ("-i", $key) : ();
+	
+	@cmd = ("ssh", @kopt, $remote, "$exe -ff $ff --md5-to-fam $md5_to_fam -");
+	print Dumper(\@cmd, $prots, $out);
+	$ok = run(\@cmd, "<", "$prots", ">", $out, $ctx->stderr->redirect);
+	close($out);
+    }
+    else
+    {
+	@cmd = ($exe, "-ff", $ff, "--md5-to-fam", $md5_to_fam, $prots);
+	$ok = run(\@cmd, ">", $out, $ctx->stderr->redirect);
+	close($out);
+    }
     if (!$ok)
     {
 	die "Error $? running @cmd\n" . $ctx->stderr->text_value;
