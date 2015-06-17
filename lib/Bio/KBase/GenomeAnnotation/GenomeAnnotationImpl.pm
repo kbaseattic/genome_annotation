@@ -11040,6 +11040,11 @@ sub call_features_ProtoCDS_kmer_v1
 	$params->{dataset_name} = $kmer_service->get_default_dataset_name();
     }
 
+    if (!defined($params->{kmer_size}))
+    {
+	$params->{kmer_size} = 8;
+    }
+    
     for my $ctg ($genome_in->contigs)
     {
 	my $hits = $kmer_service->call_genes_in_dna([[$ctg->{id}, $ctg->{dna}]], $params);
