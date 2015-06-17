@@ -16719,6 +16719,9 @@ sub run_pipeline
 		      call_features_repeat_region_SEED => 'repeat_regions_SEED_parameters',
 		      call_features_CDS_glimmer3 => 'glimmer3_parameters',
 		      call_features_repeat_region_SEED => 'repeat_region_SEED_parameters',
+		      call_features_ProtoCDS_kmer_v1 => 'kmer_v1_parameters',
+		      call_features_ProtoCDS_kmer_v2 => 'kmer_v2_parameters',
+		      annotate_proteins_kmer_v2 => 'kmer_v2_parameters',
 		      resolve_overlapping_features => 'resolve_overlapping_features_parameters',
 		      );
 
