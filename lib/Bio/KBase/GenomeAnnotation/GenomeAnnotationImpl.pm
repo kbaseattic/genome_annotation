@@ -295,8 +295,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -309,6 +324,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -320,6 +336,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -357,6 +376,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -405,8 +432,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -419,6 +461,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -430,6 +473,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -467,6 +513,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -576,8 +630,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -590,6 +659,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -601,6 +671,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -638,6 +711,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -696,8 +777,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -710,6 +806,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -721,6 +818,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -758,6 +858,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -874,8 +982,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -888,6 +1011,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -899,6 +1023,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -936,6 +1063,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -984,8 +1119,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -998,6 +1148,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -1009,6 +1160,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -1046,6 +1200,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1142,8 +1304,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -1156,6 +1333,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -1167,6 +1345,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -1204,6 +1385,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1252,8 +1441,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -1266,6 +1470,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -1277,6 +1482,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -1314,6 +1522,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1414,8 +1630,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -1428,6 +1659,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -1439,6 +1671,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -1476,6 +1711,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1535,8 +1778,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -1549,6 +1807,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -1560,6 +1819,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -1597,6 +1859,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1934,8 +2204,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -1948,6 +2233,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -1959,6 +2245,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -1996,6 +2285,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2045,8 +2342,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -2059,6 +2371,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -2070,6 +2383,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -2107,6 +2423,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2210,8 +2534,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -2224,6 +2563,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -2235,6 +2575,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -2272,6 +2615,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2321,8 +2672,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -2335,6 +2701,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -2346,6 +2713,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -2383,6 +2753,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2482,8 +2860,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -2496,6 +2889,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -2507,6 +2901,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -2544,6 +2941,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2599,8 +3004,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -2613,6 +3033,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -2624,6 +3045,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -2661,6 +3085,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2769,8 +3201,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -2783,6 +3230,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -2794,6 +3242,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -2831,6 +3282,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2900,8 +3359,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -2914,6 +3388,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -2925,6 +3400,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -2962,6 +3440,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3133,8 +3619,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -3147,6 +3648,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -3158,6 +3660,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -3195,6 +3700,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3252,8 +3765,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -3266,6 +3794,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -3277,6 +3806,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -3314,6 +3846,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3661,8 +4201,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -3675,6 +4230,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -3686,6 +4242,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -3723,6 +4282,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3771,8 +4338,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -3785,6 +4367,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -3796,6 +4379,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -3833,6 +4419,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3961,8 +4555,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -3975,6 +4584,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -3986,6 +4596,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -4023,6 +4636,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4071,8 +4692,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -4085,6 +4721,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -4096,6 +4733,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -4133,6 +4773,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4390,8 +5038,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -4404,6 +5067,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -4415,6 +5079,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -4452,6 +5119,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4500,8 +5175,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -4514,6 +5204,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -4525,6 +5216,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -4562,6 +5256,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4691,8 +5393,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -4705,6 +5422,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -4716,6 +5434,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -4753,6 +5474,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4801,8 +5530,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -4815,6 +5559,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -4826,6 +5571,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -4863,6 +5611,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4991,8 +5747,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5005,6 +5776,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -5016,6 +5788,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -5053,6 +5828,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5101,8 +5884,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5115,6 +5913,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -5126,6 +5925,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -5163,6 +5965,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5262,8 +6072,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5276,6 +6101,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -5287,6 +6113,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -5324,6 +6153,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5372,8 +6209,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5386,6 +6238,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -5397,6 +6250,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -5434,6 +6290,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5533,8 +6397,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5547,6 +6426,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -5558,6 +6438,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -5595,6 +6478,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5643,8 +6534,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5657,6 +6563,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -5668,6 +6575,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -5705,6 +6615,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5868,8 +6786,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5882,6 +6815,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -5893,6 +6827,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -5930,6 +6867,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5980,8 +6925,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -5994,6 +6954,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -6005,6 +6966,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -6042,6 +7006,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6184,8 +7156,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -6198,6 +7185,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -6209,6 +7197,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -6246,6 +7237,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6294,8 +7293,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -6308,6 +7322,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -6319,6 +7334,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -6356,6 +7374,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6474,8 +7500,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -6488,6 +7529,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -6499,6 +7541,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -6536,6 +7581,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6584,8 +7637,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -6598,6 +7666,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -6609,6 +7678,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -6646,6 +7718,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6825,8 +7905,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -6839,6 +7934,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -6850,6 +7946,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -6887,6 +7986,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6938,8 +8045,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -6952,6 +8074,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -6963,6 +8086,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -7000,6 +8126,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7189,8 +8323,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -7203,6 +8352,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -7214,6 +8364,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -7251,6 +8404,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7299,8 +8460,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -7313,6 +8489,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -7324,6 +8501,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -7361,6 +8541,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7490,8 +8678,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -7504,6 +8707,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -7515,6 +8719,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -7552,6 +8759,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7600,8 +8815,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -7614,6 +8844,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -7625,6 +8856,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -7662,6 +8896,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7963,8 +9205,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -7977,6 +9234,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -7988,6 +9246,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -8025,6 +9286,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8073,8 +9342,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -8087,6 +9371,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -8098,6 +9383,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -8135,6 +9423,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8232,8 +9528,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -8246,6 +9557,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -8257,6 +9569,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -8294,6 +9609,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8342,8 +9665,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -8356,6 +9694,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -8367,6 +9706,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -8404,6 +9746,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8502,8 +9852,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -8516,6 +9881,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -8527,6 +9893,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -8564,6 +9933,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8616,8 +9993,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -8630,6 +10022,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -8641,6 +10034,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -8678,6 +10074,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8861,8 +10265,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -8875,6 +10294,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -8886,6 +10306,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -8923,6 +10346,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8971,8 +10402,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -8985,6 +10431,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -8996,6 +10443,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -9033,6 +10483,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9153,8 +10611,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -9167,6 +10640,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -9178,6 +10652,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -9215,6 +10692,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9265,8 +10750,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -9279,6 +10779,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -9290,6 +10791,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -9327,6 +10831,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9427,8 +10939,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -9441,6 +10968,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -9452,6 +10980,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -9489,6 +11020,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9540,8 +11079,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -9554,6 +11108,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -9565,6 +11120,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -9602,6 +11160,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9741,8 +11307,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -9755,6 +11336,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -9766,6 +11348,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -9803,6 +11388,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9864,8 +11457,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -9878,6 +11486,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -9889,6 +11498,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -9926,6 +11538,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10109,8 +11729,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10123,6 +11758,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -10134,6 +11770,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -10171,6 +11810,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10224,8 +11871,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10238,6 +11900,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -10249,6 +11912,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -10286,6 +11952,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10469,8 +12143,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10483,6 +12172,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -10494,6 +12184,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -10531,6 +12224,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10582,8 +12283,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10596,6 +12312,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -10607,6 +12324,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -10644,6 +12364,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10760,8 +12488,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10774,6 +12517,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -10785,6 +12529,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -10822,6 +12569,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10883,8 +12638,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -10897,6 +12667,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -10908,6 +12679,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -10945,6 +12719,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11146,8 +12928,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11160,6 +12957,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -11171,6 +12969,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -11208,6 +13009,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11261,8 +13070,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11275,6 +13099,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -11286,6 +13111,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -11323,6 +13151,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11604,8 +13440,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11618,6 +13469,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -11629,6 +13481,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -11666,6 +13521,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11723,8 +13586,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11737,6 +13615,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -11748,6 +13627,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -11785,6 +13667,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11934,8 +13824,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -11948,6 +13853,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -11959,6 +13865,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -11996,6 +13905,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12044,8 +13961,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -12058,6 +13990,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -12069,6 +14002,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -12106,6 +14042,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12251,8 +14195,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -12265,6 +14224,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -12276,6 +14236,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -12313,6 +14276,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12361,8 +14332,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -12375,6 +14361,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -12386,6 +14373,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -12423,6 +14413,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12597,8 +14595,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -12611,6 +14624,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -12622,6 +14636,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -12659,6 +14676,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12707,8 +14732,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -12721,6 +14761,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -12732,6 +14773,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -12769,6 +14813,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12886,8 +14938,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -12900,6 +14967,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -12911,6 +14979,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -12948,6 +15019,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13013,8 +15092,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -13027,6 +15121,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -13038,6 +15133,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -13075,6 +15173,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13188,8 +15294,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -13202,6 +15323,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -13213,6 +15335,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -13250,6 +15375,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13298,8 +15431,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -13312,6 +15460,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -13323,6 +15472,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -13360,6 +15512,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13457,8 +15617,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -13471,6 +15646,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -13482,6 +15658,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -13519,6 +15698,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13567,8 +15754,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -13581,6 +15783,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -13592,6 +15795,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -13629,6 +15835,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13726,8 +15940,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -13740,6 +15969,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -13751,6 +15981,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -13788,6 +16021,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13836,8 +16077,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -13850,6 +16106,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -13861,6 +16118,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -13898,6 +16158,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14023,8 +16291,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14037,6 +16320,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14048,6 +16332,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -14085,6 +16372,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14133,8 +16428,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14147,6 +16457,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14158,6 +16469,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -14195,6 +16509,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14294,8 +16616,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14308,6 +16645,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14319,6 +16657,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -14356,6 +16697,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14404,8 +16753,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14418,6 +16782,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14429,6 +16794,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -14466,6 +16834,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14565,8 +16941,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14579,6 +16970,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14590,6 +16982,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -14627,6 +17022,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14675,8 +17078,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14689,6 +17107,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14700,6 +17119,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -14737,6 +17159,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14856,8 +17286,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14870,6 +17315,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14881,6 +17327,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -14918,6 +17367,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14970,8 +17427,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -14984,6 +17456,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -14995,6 +17468,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -15032,6 +17508,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15156,8 +17640,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -15170,6 +17669,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -15181,6 +17681,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -15218,6 +17721,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15266,8 +17777,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -15280,6 +17806,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -15291,6 +17818,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -15328,6 +17858,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15444,8 +17982,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -15458,6 +18011,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -15469,6 +18023,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -15506,6 +18063,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15556,8 +18121,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -15570,6 +18150,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -15581,6 +18162,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -15618,6 +18202,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16435,8 +19027,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -16449,6 +19056,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -16460,6 +19068,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -16497,6 +19108,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16580,8 +19199,23 @@ contig is a reference to a hash where the following keys are defined:
 	replicon_type has a value which is a string
 	replicon_geometry has a value which is a string
 	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
 contig_id is a string
 bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
 Handle is a reference to a hash where the following keys are defined:
 	file_name has a value which is a string
 	id has a value which is a string
@@ -16594,6 +19228,7 @@ feature is a reference to a hash where the following keys are defined:
 	location has a value which is a location
 	type has a value which is a feature_type
 	function has a value which is a string
+	function_id has a value which is a string
 	protein_translation has a value which is a string
 	aliases has a value which is a reference to a list where each element is a string
 	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -16605,6 +19240,9 @@ feature is a reference to a hash where the following keys are defined:
 	feature_creation_event has a value which is an analysis_event_id
 	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
 feature_id is a string
 location is a reference to a list where each element is a region_of_dna
 region_of_dna is a reference to a list containing 4 items:
@@ -16642,6 +19280,14 @@ similarity_association is a reference to a list containing 6 items:
 	3: (subject_coverage) a float
 	4: (identity) a float
 	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -17867,6 +20513,134 @@ a reference to a list containing 6 items:
 
 
 
+=head2 proposed_function
+
+=over 4
+
+
+
+=item Description
+
+A proposed function records an assertion of the function of a feature.
+* A feature may have multiple proposed functions. A tool downstream of the
+* tools that propose functions may determine based on the asserted proposals
+* which function should be the assigned function for the feature.
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+id has a value which is a string
+function has a value which is a string
+user has a value which is a string
+score has a value which is a float
+event_id has a value which is an analysis_event_id
+timestamp has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+id has a value which is a string
+function has a value which is a string
+user has a value which is a string
+score has a value which is a float
+event_id has a value which is an analysis_event_id
+timestamp has a value which is an int
+
+
+=end text
+
+=back
+
+
+
+=head2 genbank_feature
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+
+=end text
+
+=back
+
+
+
+=head2 genbank_locus
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+accession has a value which is a reference to a list where each element is a string
+comment has a value which is a reference to a list where each element is a string
+dblink has a value which is a reference to a list where each element is a string
+dbsource has a value which is a reference to a list where each element is a string
+definition has a value which is a string
+keywords has a value which is a reference to a list where each element is a string
+locus has a value which is a string
+organism has a value which is a string
+origin has a value which is a string
+references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+source has a value which is a string
+taxonomy has a value which is a reference to a list where each element is a string
+version has a value which is a reference to a list where each element is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+accession has a value which is a reference to a list where each element is a string
+comment has a value which is a reference to a list where each element is a string
+dblink has a value which is a reference to a list where each element is a string
+dbsource has a value which is a reference to a list where each element is a string
+definition has a value which is a string
+keywords has a value which is a reference to a list where each element is a string
+locus has a value which is a string
+organism has a value which is a string
+origin has a value which is a string
+references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+source has a value which is a string
+taxonomy has a value which is a reference to a list where each element is a string
+version has a value which is a reference to a list where each element is a string
+
+
+=end text
+
+=back
+
+
+
 =head2 feature
 
 =over 4
@@ -17875,11 +20649,8 @@ a reference to a list containing 6 items:
 
 =item Description
 
-A feature object represents a feature on the genome. It contains 
-the location on the contig with a type, the translation if it
-represents a protein, associated aliases, etc. It also contains
-information gathered during the annotation process that is involved
-in stages that perform overlap removal, quality testing, etc.
+* The function_id refers to the particular proposed function that was chosen
+* for this feature.
 
 
 =item Definition
@@ -17892,6 +20663,7 @@ id has a value which is a feature_id
 location has a value which is a location
 type has a value which is a feature_type
 function has a value which is a string
+function_id has a value which is a string
 protein_translation has a value which is a string
 aliases has a value which is a reference to a list where each element is a string
 alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -17903,6 +20675,9 @@ quality has a value which is a feature_quality_measure
 feature_creation_event has a value which is an analysis_event_id
 family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 similarity_associations has a value which is a reference to a list where each element is a similarity_association
+proposed_functions has a value which is a reference to a list where each element is a proposed_function
+genbank_type has a value which is a string
+genbank_feature has a value which is a genbank_feature
 
 </pre>
 
@@ -17915,6 +20690,7 @@ id has a value which is a feature_id
 location has a value which is a location
 type has a value which is a feature_type
 function has a value which is a string
+function_id has a value which is a string
 protein_translation has a value which is a string
 aliases has a value which is a reference to a list where each element is a string
 alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
@@ -17926,6 +20702,9 @@ quality has a value which is a feature_quality_measure
 feature_creation_event has a value which is an analysis_event_id
 family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
 similarity_associations has a value which is a reference to a list where each element is a similarity_association
+proposed_functions has a value which is a reference to a list where each element is a proposed_function
+genbank_type has a value which is a string
+genbank_feature has a value which is a genbank_feature
 
 
 =end text
@@ -17958,6 +20737,7 @@ cell_compartment has a value which is a string
 replicon_type has a value which is a string
 replicon_geometry has a value which is a string
 complete has a value which is a bool
+genbank_locus has a value which is a genbank_locus
 
 </pre>
 
@@ -17973,6 +20753,7 @@ cell_compartment has a value which is a string
 replicon_type has a value which is a string
 replicon_geometry has a value which is a string
 complete has a value which is a bool
+genbank_locus has a value which is a genbank_locus
 
 
 =end text

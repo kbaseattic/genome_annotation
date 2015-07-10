@@ -112,7 +112,38 @@ module GenomeAnnotation
     typedef tuple <string source, string source_id,
 	float query_coverage, float subject_coverage, float identity, float e_value>
 	similarity_association;
+
+    /* A proposed function records an assertion of the function of a feature.
+     * A feature may have multiple proposed functions. A tool downstream of the
+     * tools that propose functions may determine based on the asserted proposals
+     * which function should be the assigned function for the feature.
+     */
+    typedef structure {
+	string id;
+	string function;
+	string user;
+	float score;
+	analysis_event_id event_id;
+	int timestamp;
+    } proposed_function;
 		   
+    typedef mapping<string qualifier, list<string> values> genbank_feature;
+
+    typedef structure {
+	list<string> accession;
+	list<string> comment;
+	list<string> dblink;
+	list<string> dbsource;
+	string definition;
+	list<string> keywords;
+	string locus;
+	string organism;
+	string origin;
+	list<mapping<string, string>> references;
+	string source;
+	list<string> taxonomy;
+	list<string> version;
+    } genbank_locus;
 
     /* A feature object represents a feature on the genome. It contains 
        the location on the contig with a type, the translation if it
@@ -125,6 +156,11 @@ module GenomeAnnotation
 	location location;
 	feature_type type;
 	string function;
+	/*
+	 * The function_id refers to the particular proposed function that was chosen
+	 * for this feature.
+	 */
+	string function_id;
 	string protein_translation;
 	list<string> aliases;
 	list<tuple<string source, string alias>> alias_pairs;
@@ -133,6 +169,10 @@ module GenomeAnnotation
 	analysis_event_id feature_creation_event;
 	list<protein_family_assignment> family_assignments;
 	list<similarity_association> similarity_associations;
+	list<proposed_function> proposed_functions;
+
+	string genbank_type;
+	genbank_feature genbank_feature;
     } feature;
 
     /* Data for DNA contig */
@@ -145,6 +185,7 @@ module GenomeAnnotation
 	/* circular / linear */
 	string replicon_geometry;
 	bool complete;
+	genbank_locus genbank_locus;
     } contig;
 
     typedef structure {
