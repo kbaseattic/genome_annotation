@@ -41,12 +41,16 @@ use Bio::KBase::GenomeAnnotation::Shock;
 
 use Bio::KBase::GenomeAnnotation::Glimmer;
 use GenomeTypeObject;
+use gjogenbank;
+use GenBankToGTO;
 use IDclient;
 use ANNOserver;
 use SeedUtils;
+use SeedURLs;
 use gjoseqlib;
 use StrepRepeats;
 use overlap_resolution;
+use PropagateGBMetadata;
 use Capture::Tiny 'capture_stderr';
 
 use Bio::KBase::DeploymentConfig;
@@ -191,6 +195,9 @@ sub new
     $self->{patric_call_proteins_ff_path} = $cfg->setting("patric_call_proteins_ff_path");
     $self->{patric_call_proteins_md5_to_fam_path} = $cfg->setting("patric_call_proteins_md5_to_fam_path");
 
+    $self->{patric_annotate_families_url} = $cfg->setting("patric_annotate_families_url");
+    $self->{patric_annotate_families_kmers} = $cfg->setting("patric_annotate_families_kmers");
+
     #
     # String to use in CDS identifiers.
     #
@@ -301,9 +308,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -350,7 +361,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -383,7 +394,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -438,9 +452,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -487,7 +505,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -520,7 +538,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -636,9 +657,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -685,7 +710,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -718,7 +743,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -783,9 +811,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -832,7 +864,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -865,7 +897,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -941,6 +976,388 @@ sub create_genome
 
 
 
+=head2 create_genome_from_genbank
+
+  $genome = $obj->create_genome_from_genbank($gb_data)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$gb_data is a string
+$genome is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$gb_data is a string
+$genome is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+Create a new genome object from one or more genbank files.
+
+=back
+
+=cut
+
+sub create_genome_from_genbank
+{
+    my $self = shift;
+    my($gb_data) = @_;
+
+    my @_bad_arguments;
+    (!ref($gb_data)) or push(@_bad_arguments, "Invalid type for argument \"gb_data\" (value was \"$gb_data\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to create_genome_from_genbank:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'create_genome_from_genbank');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome);
+    #BEGIN create_genome_from_genbank
+
+    #
+    # We need to parse the file into a list of entries first so that
+    # we may extract the taxon ID and allocate a genome ID. This way
+    # our initial feature set can be created with the appropriate identifiers.
+    #
+
+    my @entries = parse_genbank(\$gb_data);
+    
+    my $tax_id;
+    for my $entry (@entries)
+    {
+	my @sources = gjogenbank::features_of_type( $entry, 'source' );
+	my ( $src_taxid ) = map { /^taxon:(\S+)$/ ? $1 : () }
+		map { $_->[1]->{db_xref} ? @{$_->[1]->{db_xref}} : () }
+		@sources;
+	if ($src_taxid)
+	{
+	    $tax_id = $src_taxid;
+	    last;
+	}
+    }
+
+    if ($tax_id !~ /^\d+$/)
+    {
+	$tax_id = "6666666";
+    }
+    
+    my $genome_id = $self->{allocate_genome_id}->($tax_id);
+
+    $genome = GenBankToGTO::new({ entry => \@entries, id => $genome_id });
+
+    #
+    # The current genbank code is creating features with type peg; remap them to CDS.
+    #
+
+    for my $feature ($genome->features)
+    {
+	if ($feature->{type} eq 'peg')
+	{
+	    $feature->{type} = 'CDS';
+	}
+    }
+
+    $genome->prepare_for_return();
+
+    #END create_genome_from_genbank
+    my @_bad_returns;
+    (ref($genome) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome\" (value was \"$genome\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to create_genome_from_genbank:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'create_genome_from_genbank');
+    }
+    return($genome);
+}
+
+
+
+
 =head2 create_genome_from_SEED
 
   $genome = $obj->create_genome_from_SEED($genome_id)
@@ -988,9 +1405,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -1037,7 +1458,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -1070,7 +1491,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1125,9 +1549,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -1174,7 +1602,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -1207,7 +1635,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1310,9 +1741,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -1359,7 +1794,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -1392,7 +1827,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1447,9 +1885,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -1496,7 +1938,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -1529,7 +1971,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1636,9 +2081,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -1685,7 +2134,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -1718,7 +2167,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -1784,9 +2236,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -1833,7 +2289,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -1866,7 +2322,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2210,9 +2669,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -2259,7 +2722,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -2292,7 +2755,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2348,9 +2814,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -2397,7 +2867,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -2430,7 +2900,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2540,9 +3013,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -2589,7 +3066,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -2622,7 +3099,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2678,9 +3158,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -2727,7 +3211,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -2760,7 +3244,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -2866,9 +3353,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -2915,7 +3406,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -2948,7 +3439,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3010,9 +3504,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -3059,7 +3557,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -3092,7 +3590,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3207,9 +3708,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -3256,7 +3761,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -3289,7 +3794,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3365,9 +3873,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -3414,7 +3926,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -3447,7 +3959,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3625,9 +4140,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -3674,7 +4193,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -3707,7 +4226,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -3771,9 +4293,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -3820,7 +4346,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -3853,7 +4379,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4207,9 +4736,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -4256,7 +4789,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -4289,7 +4822,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4344,9 +4880,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -4393,7 +4933,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -4426,7 +4966,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4561,9 +5104,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -4610,7 +5157,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -4643,7 +5190,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -4698,9 +5248,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -4747,7 +5301,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -4780,7 +5334,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5044,9 +5601,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -5093,7 +5654,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -5126,7 +5687,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5181,9 +5745,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -5230,7 +5798,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -5263,7 +5831,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5399,9 +5970,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -5448,7 +6023,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -5481,7 +6056,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5536,9 +6114,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -5585,7 +6167,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -5618,7 +6200,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5753,9 +6338,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -5802,7 +6391,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -5835,7 +6424,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -5890,9 +6482,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -5939,7 +6535,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -5972,7 +6568,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6078,9 +6677,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -6127,7 +6730,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -6160,7 +6763,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6215,9 +6821,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -6264,7 +6874,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -6297,7 +6907,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6403,9 +7016,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -6452,7 +7069,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -6485,7 +7102,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6540,9 +7160,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -6589,7 +7213,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -6622,7 +7246,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6683,7 +7310,7 @@ sub call_features_insertion_sequences
 
     if (!$ok)
     {
-	die "Error running kmer_search: @cmd\n";
+	die "Error running find_IS: @cmd\n";
     }
 
     close($output_file);
@@ -6792,9 +7419,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -6841,7 +7472,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -6874,7 +7505,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -6931,9 +7565,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -6980,7 +7618,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -7013,7 +7651,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7162,9 +7803,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -7211,7 +7856,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -7244,7 +7889,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7299,9 +7947,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -7348,7 +8000,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -7381,7 +8033,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7506,9 +8161,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -7555,7 +8214,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -7588,7 +8247,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7643,9 +8305,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -7692,7 +8358,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -7725,7 +8391,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -7911,9 +8580,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -7960,7 +8633,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -7993,7 +8666,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8051,9 +8727,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -8100,7 +8780,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -8133,7 +8813,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8329,9 +9012,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -8378,7 +9065,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -8411,7 +9098,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8466,9 +9156,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -8515,7 +9209,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -8548,7 +9242,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8684,9 +9381,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -8733,7 +9434,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -8766,7 +9467,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -8821,9 +9525,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -8870,7 +9578,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -8903,7 +9611,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9166,7 +9877,7 @@ sub call_features_CDS_genemark
 
 =head2 call_features_CDS_SEED_projection
 
-  $return = $obj->call_features_CDS_SEED_projection($genomeTO)
+  $return = $obj->call_features_CDS_SEED_projection($genomeTO, $params)
 
 =over 4
 
@@ -9176,6 +9887,7 @@ sub call_features_CDS_genemark
 
 <pre>
 $genomeTO is a genomeTO
+$params is a SEED_projection_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -9211,9 +9923,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -9260,7 +9976,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -9293,7 +10009,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9305,6 +10024,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+SEED_projection_parameters is a reference to a hash where the following keys are defined:
+	reference_database has a value which is a string
+	reference_id has a value which is a string
+	kmer_size has a value which is an int
 
 </pre>
 
@@ -9313,6 +10036,7 @@ analysis_event is a reference to a hash where the following keys are defined:
 =begin text
 
 $genomeTO is a genomeTO
+$params is a SEED_projection_parameters
 $return is a genomeTO
 genomeTO is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -9348,9 +10072,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -9397,7 +10125,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -9430,7 +10158,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9442,6 +10173,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	execution_time has a value which is a float
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
+SEED_projection_parameters is a reference to a hash where the following keys are defined:
+	reference_database has a value which is a string
+	reference_id has a value which is a string
+	kmer_size has a value which is an int
 
 
 =end text
@@ -9459,10 +10194,11 @@ analysis_event is a reference to a hash where the following keys are defined:
 sub call_features_CDS_SEED_projection
 {
     my $self = shift;
-    my($genomeTO) = @_;
+    my($genomeTO, $params) = @_;
 
     my @_bad_arguments;
     (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"params\" (value was \"$params\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to call_features_CDS_SEED_projection:\n" . join("", map { "\t$_\n" } @_bad_arguments);
 	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
@@ -9472,7 +10208,61 @@ sub call_features_CDS_SEED_projection
     my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
     my($return);
     #BEGIN call_features_CDS_SEED_projection
-    die "Not implemented";
+
+    #
+    # Do some validity checking.
+    #
+
+    #
+    # Default to coreseed.
+    #
+    $params->{reference_database} //= 'core';
+    my $ref_db = $params->{reference_database};
+
+    if ($ref_db eq 'PATRIC')
+    {
+	die "PATRIC reference database not yet supported\n";
+    }
+
+    if ($params->{reference_id} eq '')
+    {
+	die "No reference ID provided\n";
+    }
+
+    if ($ref_db !~ /^http/)
+    {
+	my $where = SeedURLs::url($ref_db);
+	if (!$where)
+	{
+	    die "Could not find reference database '$ref_db'\n";
+	}
+    }
+
+    my $coder = _get_coder();
+    my $tmp_in = File::Temp->new();
+    write_file($tmp_in, $coder->encode($genomeTO));
+
+    my @cmd = ("fast_project",
+	       "--input", $tmp_in,
+	       "-s", $ref_db,
+	       "-r", $params->{reference_id},
+	       (defined($params->{kmer_size}) ? ("--kmersize", $params->{kmer_size}) : ()),
+	       "--format", "gto");
+
+    $ctx->stderr->log_cmd(@cmd);
+    my $genomeOut_json;
+    my $ok = run(\@cmd,
+		 '>', \$genomeOut_json,
+		 $ctx->stderr->redirect);
+
+    if (!$ok)
+    {
+	die "error calling fast_project: $?\non command @cmd";
+    }
+
+    $return = $coder->decode($genomeOut_json);
+
+
     #END call_features_CDS_SEED_projection
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -9534,9 +10324,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -9583,7 +10377,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -9616,7 +10410,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9671,9 +10468,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -9720,7 +10521,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -9753,7 +10554,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9858,9 +10662,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -9907,7 +10715,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -9940,7 +10748,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -9999,9 +10810,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -10048,7 +10863,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -10081,7 +10896,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10271,9 +11089,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -10320,7 +11142,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -10353,7 +11175,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10408,9 +11233,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -10457,7 +11286,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -10490,7 +11319,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10617,9 +11449,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -10666,7 +11502,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -10699,7 +11535,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10756,9 +11595,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -10805,7 +11648,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -10838,7 +11681,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -10945,9 +11791,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -10994,7 +11844,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -11027,7 +11877,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11085,9 +11938,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -11134,7 +11991,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -11167,7 +12024,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11313,9 +12173,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -11362,7 +12226,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -11395,7 +12259,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11463,9 +12330,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -11512,7 +12383,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -11545,7 +12416,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11735,9 +12609,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -11784,7 +12662,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -11817,7 +12695,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -11877,9 +12758,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -11926,7 +12811,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -11959,7 +12844,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12042,6 +12930,16 @@ sub annotate_proteins_kmer_v2
     }
 
     my @params = ("-a", "-g", $max_gap, "-m", $min_hits, "-d", $self->{kmer_v2_data_directory});
+
+    #
+    # If we're configured with a families server and it is configured
+    # with our v2 kmers, use it for function assignment.
+    #
+    if (($self->{patric_annotate_families_kmers} eq $self->{kmer_v2_data_directory}) &&
+	$self->{patric_annotate_families_url})
+    {
+	push(@params, "-u", $self->{patric_annotate_families_url});
+    }
 
     my @cmd = ("kmer_search", @params);
     $ctx->stderr->log_cmd(@cmd);
@@ -12149,9 +13047,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -12198,7 +13100,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -12231,7 +13133,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12289,9 +13194,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -12338,7 +13247,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -12371,7 +13280,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12446,6 +13358,366 @@ sub resolve_overlapping_features
 
 
 
+=head2 propagate_genbank_feature_metadata
+
+  $genome_out = $obj->propagate_genbank_feature_metadata($genome_in, $params)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$params is a propagate_genbank_feature_metadata_parameters
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
+	min_rna_pct_coverage has a value which is a float
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$params is a propagate_genbank_feature_metadata_parameters
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
+	min_rna_pct_coverage has a value which is a float
+
+
+=end text
+
+
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub propagate_genbank_feature_metadata
+{
+    my $self = shift;
+    my($genome_in, $params) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"params\" (value was \"$params\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to propagate_genbank_feature_metadata:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'propagate_genbank_feature_metadata');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN propagate_genbank_feature_metadata
+
+    $genome_in = GenomeTypeObject->initialize($genome_in);
+
+    my $stderr;
+
+    $ctx->stderr->log_cmd("propagate_genbank_feature_metadata", Dumper($params));
+    $stderr = capture_stderr {
+	$genome_out = PropagateGBMetadata::propagate_gb_metadata($genome_in, $params, $ctx->user_id);
+
+    };
+    if (!$ctx->stderr->log($stderr))
+    {
+	print STDERR $stderr;
+    }
+
+    $genome_out = $genome_out->prepare_for_return();
+
+    #END propagate_genbank_feature_metadata
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to propagate_genbank_feature_metadata:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'propagate_genbank_feature_metadata');
+    }
+    return($genome_out);
+}
+
+
+
+
 =head2 call_features_ProtoCDS_kmer_v1
 
   $return = $obj->call_features_ProtoCDS_kmer_v1($genomeTO, $params)
@@ -12494,9 +13766,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -12543,7 +13819,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -12576,7 +13852,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12644,9 +13923,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -12693,7 +13976,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -12726,7 +14009,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -12934,9 +14220,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -12983,7 +14273,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -13016,7 +14306,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13076,9 +14369,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -13125,7 +14422,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -13158,7 +14455,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13446,9 +14746,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -13495,7 +14799,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -13528,7 +14832,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13592,9 +14899,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -13641,7 +14952,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -13674,7 +14985,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13830,9 +15144,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -13879,7 +15197,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -13912,7 +15230,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -13967,9 +15288,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -14016,7 +15341,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -14049,7 +15374,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14201,9 +15529,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -14250,7 +15582,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -14283,7 +15615,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14338,9 +15673,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -14387,7 +15726,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -14420,7 +15759,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14554,9 +15896,9 @@ do_return:
 
 
 
-=head2 annotate_null_to_hypothetical
+=head2 annotate_families_patric
 
-  $genome_out = $obj->annotate_null_to_hypothetical($genome_in)
+  $genome_out = $obj->annotate_families_patric($genome_in)
 
 =over 4
 
@@ -14601,9 +15943,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -14650,7 +15996,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -14683,7 +16029,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14738,9 +16087,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -14787,7 +16140,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -14820,7 +16173,368 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+
+=end text
+
+
+
+=item Description
+
+
+
+=back
+
+=cut
+
+sub annotate_families_patric
+{
+    my $self = shift;
+    my($genome_in) = @_;
+
+    my @_bad_arguments;
+    (ref($genome_in) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genome_in\" (value was \"$genome_in\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to annotate_families_patric:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_families_patric');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($genome_out);
+    #BEGIN annotate_families_patric
+
+    my $coder = _get_coder();
+    my $tmp_in = File::Temp->new();
+    write_file($tmp_in, $coder->encode($genome_in));
+
+    close($tmp_in);
+    my $tmp_out = File::Temp->new();
+    close($tmp_out);
+
+    my @cmd = ("place_proteins_into_pattyfams", "--output", $tmp_out,
+	       $self->{patric_annotate_families_kmers},
+	       $self->{patric_annotate_families_url},
+	       $tmp_in);
+    
+    my $rc = system(@cmd);
+    if ($rc != 0)
+    {
+	die "error calling patric families: $rc\non command @cmd";
+    }
+
+    $genome_out = $coder->decode(scalar read_file("" . $tmp_out));
+
+    #END annotate_families_patric
+    my @_bad_returns;
+    (ref($genome_out) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"genome_out\" (value was \"$genome_out\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to annotate_families_patric:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_families_patric');
+    }
+    return($genome_out);
+}
+
+
+
+
+=head2 annotate_null_to_hypothetical
+
+  $genome_out = $obj->annotate_null_to_hypothetical($genome_in)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genome_in is a genomeTO
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+
+</pre>
+
+=end html
+
+=begin text
+
+$genome_in is a genomeTO
+$genome_out is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 3 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -14944,9 +16658,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -14993,7 +16711,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -15026,7 +16744,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15098,9 +16819,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -15147,7 +16872,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -15180,7 +16905,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15300,9 +17028,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -15349,7 +17081,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -15382,7 +17114,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15437,9 +17172,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -15486,7 +17225,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -15519,7 +17258,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15623,9 +17365,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -15672,7 +17418,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -15705,7 +17451,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15760,9 +17509,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -15809,7 +17562,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -15842,7 +17595,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -15946,9 +17702,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -15995,7 +17755,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -16028,7 +17788,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16083,9 +17846,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -16132,7 +17899,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -16165,7 +17932,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16297,9 +18067,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -16346,7 +18120,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -16379,7 +18153,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16434,9 +18211,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -16483,7 +18264,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -16516,7 +18297,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16622,9 +18406,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -16671,7 +18459,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -16704,7 +18492,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16759,9 +18550,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -16808,7 +18603,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -16841,7 +18636,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -16947,9 +18745,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -16996,7 +18798,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -17029,7 +18831,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -17084,9 +18889,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -17133,7 +18942,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -17166,7 +18975,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -17292,9 +19104,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -17341,7 +19157,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -17374,7 +19190,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -17433,9 +19252,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -17482,7 +19305,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -17515,7 +19338,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -17646,9 +19472,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -17695,7 +19525,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -17728,7 +19558,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -17783,9 +19616,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -17832,7 +19669,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -17865,7 +19702,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -17988,9 +19828,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -18037,7 +19881,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -18070,7 +19914,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -18127,9 +19974,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -18176,7 +20027,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -18209,7 +20060,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -18815,6 +20669,7 @@ sub default_workflow
 	      { name => 'annotate_proteins_kmer_v1', kmer_v1_parameters => { annotate_hypothetical_only => 1 } },
 	      { name => 'annotate_proteins_similarity', similarity_parameters => { annotate_hypothetical_only => 1 } },
 	      { name => 'annotate_null_to_hypothetical' },
+	      { name => 'propagate_genbank_feature_metadata', propagate_genbank_feature_metadata_parameters => {} },
 	      { name => 'resolve_overlapping_features', resolve_overlapping_features_parameters => {} },
 	      { name => 'renumber_features' },
 	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
@@ -18966,8 +20821,12 @@ sub complete_workflow_template
 	      { name => 'annotate_proteins_kmer_v2', kmer_v2_parameters => { annotate_hypothetical_only => 0 } },
 	      { name => 'annotate_proteins_kmer_v1', kmer_v1_parameters => { annotate_hypothetical_only => 1 } },
 	      { name => 'annotate_proteins_similarity', similarity_parameters => { annotate_hypothetical_only => 1 } },
+	      { name => 'annotate_null_to_hypothetical' },
+	      { name => 'propagate_genbank_feature_metadata', propagate_genbank_feature_metadata_parameters => {} },
+	      { name => 'resolve_overlapping_features', resolve_overlapping_features_parameters => {} },
+	      { name => 'renumber_features' },
 	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
-	      # { name => 'call_features_prophage_phispy' },
+	      { name => 'call_features_prophage_phispy' },
 		 );
     $return = { stages => \@stages };
 
@@ -19033,9 +20892,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -19082,7 +20945,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -19115,7 +20978,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -19205,9 +21071,13 @@ bool is an int
 genbank_locus is a reference to a hash where the following keys are defined:
 	accession has a value which is a reference to a list where each element is a string
 	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
 	dblink has a value which is a reference to a list where each element is a string
 	dbsource has a value which is a reference to a list where each element is a string
 	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
 	keywords has a value which is a reference to a list where each element is a string
 	locus has a value which is a string
 	organism has a value which is a string
@@ -19254,7 +21124,7 @@ feature_type is a string
 annotation is a reference to a list containing 4 items:
 	0: (comment) a string
 	1: (annotator) a string
-	2: (annotation_time) an int
+	2: (annotation_time) a float
 	3: an analysis_event_id
 analysis_event_id is a string
 feature_quality_measure is a reference to a hash where the following keys are defined:
@@ -19287,7 +21157,10 @@ proposed_function is a reference to a hash where the following keys are defined:
 	score has a value which is a float
 	event_id has a value which is an analysis_event_id
 	timestamp has a value which is an int
-genbank_feature is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
 close_genome is a reference to a hash where the following keys are defined:
 	genome has a value which is a genome_id
 	genome_name has a value which is a string
@@ -19371,9 +21244,12 @@ sub run_pipeline
 		      call_features_repeat_region_SEED => 'repeat_regions_SEED_parameters',
 		      call_features_CDS_glimmer3 => 'glimmer3_parameters',
 		      call_features_repeat_region_SEED => 'repeat_region_SEED_parameters',
+		      call_features_CDS_SEED_projection => 'SEED_projection_parameters',
 		      call_features_ProtoCDS_kmer_v1 => 'kmer_v1_parameters',
+		      propagate_genbank_feature_metadata => 'propagate_genbank_feature_metadata_parameters',
 		      call_features_ProtoCDS_kmer_v2 => 'kmer_v2_parameters',
 		      resolve_overlapping_features => 'resolve_overlapping_features_parameters',
+		      propagate_genbank_feature_metadata => 'propagate_genbank_feature_metadata_parameters',
 		      );
 
     my $cur = $genome_in;
@@ -20342,7 +22218,7 @@ hostname has a value which is a string
 a reference to a list containing 4 items:
 0: (comment) a string
 1: (annotator) a string
-2: (annotation_time) an int
+2: (annotation_time) a float
 3: an analysis_event_id
 
 </pre>
@@ -20354,7 +22230,7 @@ a reference to a list containing 4 items:
 a reference to a list containing 4 items:
 0: (comment) a string
 1: (annotator) a string
-2: (annotation_time) an int
+2: (annotation_time) a float
 3: an analysis_event_id
 
 
@@ -20572,14 +22448,22 @@ timestamp has a value which is an int
 =begin html
 
 <pre>
-a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+a reference to a hash where the following keys are defined:
+genbank_type has a value which is a string
+genbank_location has a value which is a string
+values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+
 </pre>
 
 =end html
 
 =begin text
 
-a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+a reference to a hash where the following keys are defined:
+genbank_type has a value which is a string
+genbank_location has a value which is a string
+values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+
 
 =end text
 
@@ -20601,9 +22485,13 @@ a reference to a hash where the key is a string and the value is a reference to 
 a reference to a hash where the following keys are defined:
 accession has a value which is a reference to a list where each element is a string
 comment has a value which is a reference to a list where each element is a string
+date has a value which is a string
 dblink has a value which is a reference to a list where each element is a string
 dbsource has a value which is a reference to a list where each element is a string
 definition has a value which is a string
+division has a value which is a string
+geometry has a value which is a string
+gi has a value which is an int
 keywords has a value which is a reference to a list where each element is a string
 locus has a value which is a string
 organism has a value which is a string
@@ -20622,9 +22510,13 @@ version has a value which is a reference to a list where each element is a strin
 a reference to a hash where the following keys are defined:
 accession has a value which is a reference to a list where each element is a string
 comment has a value which is a reference to a list where each element is a string
+date has a value which is a string
 dblink has a value which is a reference to a list where each element is a string
 dbsource has a value which is a reference to a list where each element is a string
 definition has a value which is a string
+division has a value which is a string
+geometry has a value which is a string
+gi has a value which is an int
 keywords has a value which is a reference to a list where each element is a string
 locus has a value which is a string
 organism has a value which is a string
@@ -21459,6 +23351,40 @@ min_training_len has a value which is an int
 
 
 
+=head2 SEED_projection_parameters
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+reference_database has a value which is a string
+reference_id has a value which is a string
+kmer_size has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+reference_database has a value which is a string
+reference_id has a value which is a string
+kmer_size has a value which is an int
+
+
+=end text
+
+=back
+
+
+
 =head2 repeat_region_SEED_parameters
 
 =over 4
@@ -21627,6 +23553,36 @@ placeholder has a value which is an int
 
 a reference to a hash where the following keys are defined:
 placeholder has a value which is an int
+
+
+=end text
+
+=back
+
+
+
+=head2 propagate_genbank_feature_metadata_parameters
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+min_rna_pct_coverage has a value which is a float
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+min_rna_pct_coverage has a value which is a float
 
 
 =end text

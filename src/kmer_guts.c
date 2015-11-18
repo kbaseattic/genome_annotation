@@ -559,6 +559,7 @@ long long find_empty_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encode
 
 long long lookup_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encodedK) {
     long long  hash_entry = encodedK % size_hash;
+    printf("%lld\n", size_hash);
     if (debug >= 2)
       tot_lookups++;
     while ((sig_kmers[hash_entry].which_kmer <= MAX_ENCODED) && (sig_kmers[hash_entry].which_kmer != encodedK)) {
@@ -812,7 +813,8 @@ void process_set_of_hits(kmer_handle_t *kmersH, FILE *fh) {
       weighted_hits += hits[i].function_wt;
     }
     i++;
-  }  if ((fI_count >= min_hits) && (weighted_hits >= min_weighted_hits)) {
+  }
+  if ((fI_count >= min_hits) && (weighted_hits >= min_weighted_hits)) {
       if (!hits_only)
 	  fprintf(fh, "CALL\t%d\t%d\t%d\t%d\t%s\t%f\n",hits[0].from0_in_prot,
 		  hits[last_hit].from0_in_prot+(K-1),
@@ -858,6 +860,12 @@ void process_set_of_hits(kmer_handle_t *kmersH, FILE *fh) {
   }
 
   if ((hits[num_hits-2].fI != current_fI) && (hits[num_hits-2].fI == hits[num_hits-1].fI)) {
+      /*
+    fprintf(stderr, "Copying two entries cur=%d %d: %d, %d: %d\n",
+	    current_fI,
+	    num_hits - 2, hits[num_hits-2].fI, 
+	    num_hits - 1, hits[num_hits-1].fI);
+      */
     current_fI = hits[num_hits-1].fI;
     /* now copy the last two entries to the start of the hits array.  Sorry this is so clumsy */
     hits[0].oI               = hits[num_hits-2].oI;
@@ -896,6 +904,7 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
   }
   while (p < bound) {
     long long  where = lookup_hash_entry(kmersH->kmer_table,encodedK);
+    printf("%lu %lld\n", p - pIseq, where);
     if (where >= 0) {
       sig_kmer_t *kmers_hash_entry = &(kmersH->kmer_table[where]);
       int avg_off_end = kmers_hash_entry->avg_from_end;
@@ -911,6 +920,7 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
 
       if ((num_hits > 0) && (hits[num_hits-1].from0_in_prot + max_gap) < (p-pIseq)) {
 	if (num_hits >= min_hits) {
+	    // fprintf(stderr, "pset from %d cur=%d\n",  __LINE__, current_fI);
 	    process_set_of_hits(kmersH, fh);
 	}
 	else {
@@ -941,6 +951,7 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
 	}
 	if ((num_hits > 1) && (current_fI != fI) &&           /* if we have a pair of new fIs, it is time to */
 	    (hits[num_hits-2].fI == hits[num_hits-1].fI)) {   /* process one set and initialize the next */
+	    // fprintf(stderr, "pset from %d cur=%d\n",  __LINE__, current_fI);
 	    process_set_of_hits(kmersH, fh);
 	}
       }
@@ -960,6 +971,7 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
     }    
   }
   if (num_hits >= min_hits) {
+      // fprintf(stderr, "pset from %d cur=%d\n",  __LINE__, current_fI);
       process_set_of_hits(kmersH, fh);
   }
   num_hits = 0;

@@ -15,6 +15,9 @@ rast-create-genome [--output genome-file] [< genome-file] [> genome-file]
 
 Create a new empty genome object.
 
+If a GenBank file is specified using the --from-genbank parameter, initialize the
+genome object data and metadata from the specified GenBank file.
+
 The RAST2 pipeline requires a minimal amount of metadata in order to complete its analysis:
 
 =over 4
@@ -47,6 +50,7 @@ and 4 for Mycoplasmaea, Spiroplasmaea, Ureoplasmaea, and Fungal Mitochondria.
 rast-create-genome [-ho] [long options...] > output
 	-o --output            file to which the output is to be written
 	-h --help              print usage message and exit
+        --from-genbank gb-file
 	--url                  URL for the genome annotation service
 	--genome-id            Genome identifier
 	--scientific-name      Scientific name (Genus species strain) for the
@@ -64,19 +68,40 @@ rast-create-genome [-ho] [long options...] > output
 
 =cut
 
-my @options = (options_genome_out(), options_help(), options_genome_metadata(), options_contigs());
+my @options = (options_genome_out(), options_genome_metadata(), options_contigs(), options_help());
 my($opt, $usage) = describe_options("rast-create-genome %o > output",
+				    ["from-genbank=s", "Create from this genbank file"],
 				    @options);
 
 print($usage->text), exit if $opt->help;
 
 my $client = get_annotation_client($opt);
 
-my $genome_out = $client->create_genome(get_params_for_genome_metadata($opt));
+my $genome_out;
 
-if ($opt->{contigs})
+if ($opt->from_genbank)
 {
-    $genome_out = $client->add_contigs($genome_out, get_params_for_contigs($opt));
+    my $txt;
+    if (open(F, "<", $opt->from_genbank))
+    {
+	undef $/;
+	$txt = <F>;
+	close(F);
+    }
+    else
+    {
+	die "Cannot open genbank file " . $opt->from_genbank . ": $!\n";
+    }
+    $genome_out = $client->create_genome_from_genbank($txt);
+}
+else
+{
+    $genome_out = $client->create_genome(get_params_for_genome_metadata($opt));
+    
+    if ($opt->{contigs})
+    {
+	$genome_out = $client->add_contigs($genome_out, get_params_for_contigs($opt));
+    }
 }
 
 write_output($genome_out, $opt);

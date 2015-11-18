@@ -58,7 +58,7 @@ module GenomeAnnotation
 	string hostname;
     } analysis_event;
 
-    typedef tuple<string comment, string annotator, int annotation_time, analysis_event_id> annotation;
+    typedef tuple<string comment, string annotator, float annotation_time, analysis_event_id> annotation;
 
     typedef structure {
 	bool truncated_begin;
@@ -102,7 +102,7 @@ module GenomeAnnotation
      * (e.g. FIGfam, GPF for GlobalPatricFam, LPF for LocalPatricFam, etc.)
      */
 
-    typedef tuple <string db, string id, string function> protein_family_assignment;
+    typedef tuple <string db, string id, string function, string db_version> protein_family_assignment;
 
     /*
      * A similarity association notes the BLAST-computed association
@@ -126,15 +126,23 @@ module GenomeAnnotation
 	analysis_event_id event_id;
 	int timestamp;
     } proposed_function;
-		   
-    typedef mapping<string qualifier, list<string> values> genbank_feature;
+
+    typedef structure {
+        string genbank_type;
+        string genbank_location;
+        mapping<string qualifier, list<string>> values;
+    } genbank_feature;
 
     typedef structure {
 	list<string> accession;
 	list<string> comment;
+	string date;
 	list<string> dblink;
 	list<string> dbsource;
 	string definition;
+	string division;
+	string geometry;
+	int gi;
 	list<string> keywords;
 	string locus;
 	string organism;
@@ -282,6 +290,11 @@ module GenomeAnnotation
     funcdef create_genome(genome_metadata metadata) returns (genomeTO genome);
 
     /*
+     * Create a new genome object from one or more genbank files.
+     */
+    funcdef create_genome_from_genbank(string gb_data) returns (genomeTO genome);
+
+    /*
      * Create a new genome object based on data from the SEED project.
      */
     funcdef create_genome_from_SEED(string genome_id) returns (genomeTO genome);
@@ -387,7 +400,15 @@ module GenomeAnnotation
     
     funcdef call_features_CDS_prodigal(genomeTO) returns (genomeTO);
     funcdef call_features_CDS_genemark(genomeTO) returns (genomeTO);
-    funcdef call_features_CDS_SEED_projection(genomeTO) returns (genomeTO);
+
+    typedef structure
+    {
+	string reference_database;
+	string reference_id;
+	int kmer_size;
+    } SEED_projection_parameters;
+
+    funcdef call_features_CDS_SEED_projection(genomeTO, SEED_projection_parameters params) returns (genomeTO);
     funcdef call_features_CDS_FragGeneScan(genomeTO) returns (genomeTO);
 
     typedef structure
@@ -442,6 +463,12 @@ module GenomeAnnotation
 
     funcdef resolve_overlapping_features(genomeTO genome_in, resolve_overlapping_features_parameters params) returns (genomeTO genome_out);
 
+    typedef structure {
+	float min_rna_pct_coverage;
+    } propagate_genbank_feature_metadata_parameters;
+
+    funcdef propagate_genbank_feature_metadata(genomeTO genome_in, propagate_genbank_feature_metadata_parameters params) returns (genomeTO genome_out);
+
     funcdef call_features_ProtoCDS_kmer_v1(genomeTO, kmer_v1_parameters params) returns (genomeTO);
     funcdef call_features_ProtoCDS_kmer_v2(genomeTO genome_in, kmer_v2_parameters params) returns (genomeTO genome_out);
 
@@ -459,6 +486,7 @@ module GenomeAnnotation
 
     funcdef annotate_special_proteins(genomeTO genome_in) returns (genomeTO genome_out);
     funcdef annotate_families_figfam_v1(genomeTO genome_in) returns (genomeTO genome_out);
+    funcdef annotate_families_patric(genomeTO genome_in) returns (genomeTO genome_out);
     funcdef annotate_null_to_hypothetical(genomeTO genome_in) returns (genomeTO genome_out);
 
     typedef tuple <
