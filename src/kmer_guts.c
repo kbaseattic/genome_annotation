@@ -559,7 +559,7 @@ long long find_empty_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encode
 
 long long lookup_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encodedK) {
     long long  hash_entry = encodedK % size_hash;
-    printf("%lld\n", size_hash);
+    // printf("%lld\n", size_hash);
     if (debug >= 2)
       tot_lookups++;
     while ((sig_kmers[hash_entry].which_kmer <= MAX_ENCODED) && (sig_kmers[hash_entry].which_kmer != encodedK)) {
@@ -904,7 +904,7 @@ void gather_hits(int ln_DNA, char strand,int prot_off,char *pseq,
   }
   while (p < bound) {
     long long  where = lookup_hash_entry(kmersH->kmer_table,encodedK);
-    printf("%lu %lld\n", p - pIseq, where);
+    // printf("%lu %lld\n", p - pIseq, where);
     if (where >= 0) {
       sig_kmer_t *kmers_hash_entry = &(kmersH->kmer_table[where]);
       int avg_off_end = kmers_hash_entry->avg_from_end;
