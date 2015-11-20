@@ -209,6 +209,14 @@ module GenomeAnnotation
 	float sequence_error_rate;
     } genome_quality_measure;
 
+    typedef structure
+    {
+	string typing_method;
+	string database;
+	string tag;
+	analysis_event_id event_id;
+    } strain_type;
+
     /* All of the information about particular genome */
     typedef structure {
 	genome_id id;
@@ -231,6 +239,9 @@ module GenomeAnnotation
 	list<close_genome> close_genomes;
 
 	list <analysis_event> analysis_events;
+
+	list<strain_type> strain_types;
+	
     } genomeTO;
 
 
@@ -488,6 +499,8 @@ module GenomeAnnotation
     funcdef annotate_families_figfam_v1(genomeTO genome_in) returns (genomeTO genome_out);
     funcdef annotate_families_patric(genomeTO genome_in) returns (genomeTO genome_out);
     funcdef annotate_null_to_hypothetical(genomeTO genome_in) returns (genomeTO genome_out);
+
+    funcdef annotate_strain_type_MLST(genomeTO genome_in) returns (genomeTO genome_out);
 
     typedef tuple <
 	string protein_id,
