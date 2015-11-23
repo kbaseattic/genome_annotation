@@ -215,7 +215,7 @@ module GenomeAnnotation
 	string database;
 	string tag;
 	analysis_event_id event_id;
-    } strain_type;
+    } typing;
 
     /* All of the information about particular genome */
     typedef structure {

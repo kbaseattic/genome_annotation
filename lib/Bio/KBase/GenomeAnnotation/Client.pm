@@ -259,9 +259,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -409,9 +410,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -632,9 +634,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -792,9 +795,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -1005,9 +1009,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -1155,9 +1160,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -1368,9 +1374,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -1518,9 +1525,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -1731,9 +1739,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -1881,9 +1890,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -2095,9 +2105,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 genome_metadata is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -2256,9 +2267,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 genome_metadata is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -2481,9 +2493,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -2632,9 +2645,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -2847,9 +2861,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -2998,9 +3013,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -3214,9 +3230,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 compact_feature is a reference to a list containing 5 items:
 	0: (id) a string
 	1: (location) a string
@@ -3371,9 +3388,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 compact_feature is a reference to a list containing 5 items:
 	0: (id) a string
 	1: (location) a string
@@ -3591,9 +3609,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 reconstructionTO is a reference to a hash where the following keys are defined:
 	subsystems has a value which is a variant_subsystem_pairs
 	bindings has a value which is a fid_role_pairs
@@ -3762,9 +3781,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 reconstructionTO is a reference to a hash where the following keys are defined:
 	subsystems has a value which is a variant_subsystem_pairs
 	bindings has a value which is a fid_role_pairs
@@ -3996,9 +4016,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 fid_data_tuples is a reference to a list where each element is a fid_data_tuple
 fid_data_tuple is a reference to a list containing 4 items:
 	0: a fid
@@ -4155,9 +4176,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 fid_data_tuples is a reference to a list where each element is a fid_data_tuple
 fid_data_tuple is a reference to a list containing 4 items:
 	0: a fid
@@ -4623,9 +4645,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -4773,9 +4796,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -4987,9 +5011,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -5137,9 +5162,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -5350,9 +5376,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -5500,9 +5527,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -5713,9 +5741,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -5863,9 +5892,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -6076,9 +6106,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -6226,9 +6257,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -6439,9 +6471,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -6589,9 +6622,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -6802,9 +6836,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -6952,9 +6987,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -7166,9 +7202,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 rna_type is a string
 
 </pre>
@@ -7318,9 +7355,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 rna_type is a string
 
 
@@ -7540,9 +7578,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -7690,9 +7729,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -7904,9 +7944,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -8054,9 +8095,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -8269,9 +8311,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 glimmer3_parameters is a reference to a hash where the following keys are defined:
 	min_training_len has a value which is an int
 
@@ -8422,9 +8465,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 glimmer3_parameters is a reference to a hash where the following keys are defined:
 	min_training_len has a value which is an int
 
@@ -8638,9 +8682,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -8788,9 +8833,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -9001,9 +9047,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -9151,9 +9198,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -9365,9 +9413,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 SEED_projection_parameters is a reference to a hash where the following keys are defined:
 	reference_database has a value which is a string
 	reference_id has a value which is a string
@@ -9520,9 +9569,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 SEED_projection_parameters is a reference to a hash where the following keys are defined:
 	reference_database has a value which is a string
 	reference_id has a value which is a string
@@ -9738,9 +9788,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -9888,9 +9939,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -10102,9 +10154,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -10256,9 +10309,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -10473,9 +10527,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -10623,9 +10678,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -10838,9 +10894,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -10990,9 +11047,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -11206,9 +11264,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
@@ -11359,9 +11418,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
@@ -11576,9 +11636,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -11739,9 +11800,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -11966,9 +12028,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -12121,9 +12184,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -12340,9 +12404,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 resolve_overlapping_features_parameters is a reference to a hash where the following keys are defined:
 	placeholder has a value which is an int
 
@@ -12493,9 +12558,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 resolve_overlapping_features_parameters is a reference to a hash where the following keys are defined:
 	placeholder has a value which is an int
 
@@ -12710,9 +12776,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
 	min_rna_pct_coverage has a value which is a float
 
@@ -12863,9 +12930,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
 	min_rna_pct_coverage has a value which is a float
 
@@ -13080,9 +13148,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -13243,9 +13312,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -13470,9 +13540,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -13625,9 +13696,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -13912,9 +13984,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 special_protein_hit is a reference to a list containing 7 items:
 	0: (protein_id) a string
 	1: (database_name) a string
@@ -14071,9 +14144,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 special_protein_hit is a reference to a list containing 7 items:
 	0: (protein_id) a string
 	1: (database_name) a string
@@ -14293,9 +14367,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -14443,9 +14518,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -14656,9 +14732,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -14806,9 +14883,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -15019,9 +15097,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -15169,9 +15248,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -15382,9 +15462,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -15532,9 +15613,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -15745,9 +15827,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -15895,9 +15978,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -16108,9 +16192,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 cdd_hit is a reference to a list containing 16 items:
 	0: (protein_id) a string
 	1: (domain_id) a string
@@ -16275,9 +16360,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 cdd_hit is a reference to a list containing 16 items:
 	0: (protein_id) a string
 	1: (domain_id) a string
@@ -16505,9 +16591,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -16655,9 +16742,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -16868,9 +16956,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -17018,9 +17107,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -17231,9 +17321,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -17381,9 +17472,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -17594,9 +17686,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -17744,9 +17837,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -17957,9 +18051,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -18107,9 +18202,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -18320,9 +18416,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -18470,9 +18567,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -18687,9 +18785,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -18841,9 +18940,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -19056,9 +19156,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -19206,9 +19307,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -19422,9 +19524,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -19574,9 +19677,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 
 
 =end text
@@ -20486,9 +20590,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 workflow is a reference to a hash where the following keys are defined:
 	stages has a value which is a reference to a list where each element is a pipeline_stage
 pipeline_stage is a reference to a hash where the following keys are defined:
@@ -20671,9 +20776,10 @@ analysis_event is a reference to a hash where the following keys are defined:
 	parameters has a value which is a reference to a list where each element is a string
 	hostname has a value which is a string
 strain_type is a reference to a hash where the following keys are defined:
-	typing_mechanism has a value which is a string
+	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
 workflow is a reference to a hash where the following keys are defined:
 	stages has a value which is a reference to a list where each element is a pipeline_stage
 pipeline_stage is a reference to a hash where the following keys are defined:
@@ -22104,9 +22210,10 @@ sequence_error_rate has a value which is a float
 
 <pre>
 a reference to a hash where the following keys are defined:
-typing_mechanism has a value which is a string
+typing_method has a value which is a string
 database has a value which is a string
 tag has a value which is a string
+event_id has a value which is an analysis_event_id
 
 </pre>
 
@@ -22115,9 +22222,10 @@ tag has a value which is a string
 =begin text
 
 a reference to a hash where the following keys are defined:
-typing_mechanism has a value which is a string
+typing_method has a value which is a string
 database has a value which is a string
 tag has a value which is a string
+event_id has a value which is an analysis_event_id
 
 
 =end text
