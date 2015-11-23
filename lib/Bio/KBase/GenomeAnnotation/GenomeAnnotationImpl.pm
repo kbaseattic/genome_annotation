@@ -13388,7 +13388,7 @@ sub annotate_proteins_kmer_v2
     if (($self->{patric_annotate_families_kmers} eq $self->{kmer_v2_data_directory}) &&
 	$self->{patric_annotate_families_url})
     {
-	push(@params, "-u", $self->{patric_annotate_families_url});
+	push(@params, "-u", $self->{patric_annotate_families_url} . "/query");
     }
 
     my @cmd = ("kmer_search", @params);
