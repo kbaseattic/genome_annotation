@@ -293,7 +293,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -444,7 +444,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -656,7 +656,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -817,7 +817,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -1035,7 +1035,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1186,7 +1186,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1431,7 +1431,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1582,7 +1582,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1781,7 +1781,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1932,7 +1932,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2135,7 +2135,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2297,7 +2297,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2737,7 +2737,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2889,7 +2889,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3095,7 +3095,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3247,7 +3247,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3449,7 +3449,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3607,7 +3607,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3818,7 +3818,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3990,7 +3990,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -4264,7 +4264,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -4424,7 +4424,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -4874,7 +4874,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5025,7 +5025,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5256,7 +5256,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5407,7 +5407,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5767,7 +5767,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5918,7 +5918,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6150,7 +6150,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6301,7 +6301,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6532,7 +6532,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6683,7 +6683,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6885,7 +6885,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7036,7 +7036,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7238,7 +7238,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7389,7 +7389,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7655,7 +7655,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7808,7 +7808,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8053,7 +8053,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8204,7 +8204,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8425,7 +8425,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8576,7 +8576,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8858,7 +8858,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9012,7 +9012,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9304,7 +9304,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9455,7 +9455,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9687,7 +9687,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9838,7 +9838,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10243,7 +10243,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10399,7 +10399,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10658,7 +10658,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10809,7 +10809,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11010,7 +11010,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11165,7 +11165,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11451,7 +11451,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11602,7 +11602,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11825,7 +11825,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11978,7 +11978,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12181,7 +12181,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12335,7 +12335,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12577,7 +12577,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12741,7 +12741,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13027,7 +13027,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13183,7 +13183,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13479,7 +13479,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13633,7 +13633,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13852,7 +13852,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14006,7 +14006,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14226,7 +14226,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14390,7 +14390,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14694,7 +14694,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14850,7 +14850,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15234,7 +15234,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15394,7 +15394,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15646,7 +15646,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15797,7 +15797,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16045,7 +16045,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16196,7 +16196,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16473,7 +16473,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16624,7 +16624,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16845,7 +16845,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16996,7 +16996,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17216,7 +17216,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17367,7 +17367,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17603,7 +17603,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17771,7 +17771,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17987,7 +17987,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18138,7 +18138,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18338,7 +18338,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18489,7 +18489,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18689,7 +18689,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18840,7 +18840,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19068,7 +19068,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19219,7 +19219,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19421,7 +19421,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19572,7 +19572,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19774,7 +19774,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19925,7 +19925,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20147,7 +20147,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20302,7 +20302,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20529,7 +20529,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20680,7 +20680,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20899,7 +20899,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -21052,7 +21052,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -21977,7 +21977,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -22163,7 +22163,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	features has a value which is a reference to a list where each element is a feature
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
-	strain_types has a value which is a reference to a list where each element is a strain_type
+	typing has a value which is a reference to a list where each element is a strain_type
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -23909,7 +23909,7 @@ contigs_handle has a value which is a Handle
 features has a value which is a reference to a list where each element is a feature
 close_genomes has a value which is a reference to a list where each element is a close_genome
 analysis_events has a value which is a reference to a list where each element is an analysis_event
-strain_types has a value which is a reference to a list where each element is a strain_type
+typing has a value which is a reference to a list where each element is a strain_type
 
 </pre>
 
@@ -23933,7 +23933,7 @@ contigs_handle has a value which is a Handle
 features has a value which is a reference to a list where each element is a feature
 close_genomes has a value which is a reference to a list where each element is a close_genome
 analysis_events has a value which is a reference to a list where each element is an analysis_event
-strain_types has a value which is a reference to a list where each element is a strain_type
+typing has a value which is a reference to a list where each element is a strain_type
 
 
 =end text
