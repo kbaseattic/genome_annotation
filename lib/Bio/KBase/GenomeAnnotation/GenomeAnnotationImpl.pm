@@ -17554,7 +17554,13 @@ sub annotate_strain_type_MLST
 	{
 	    chomp;
 	    my($org, $db, $sids, $type, $coords, $loci, $profile, $tag) = split(/\t/);
-	    push(@{$genome_in->{typing}}, ['MLST', $db, $tag, $event_id]);
+	    push(@{$genome_in->{typing}},
+	     {
+		 typing_method => 'MLST',
+		 database => $db,
+		 tag => $tag,
+		 event_id => $event_id,
+	     });
 	}
     }
     
