@@ -104,13 +104,34 @@ sub _allocate_seed_genome_id
     my($self, $taxon_id, $url) = @_;
 
     my $proxy = SOAP::Lite->uri('http://www.soaplite.com/Scripts')-> proxy($url);
-    my $r = $proxy->register_genome($taxon_id);
-    if ($r->fault) {
-	die "Error registering genome via SEED clearinghouse: " . $r->faultcode . " " . $r->faultstring;
+
+    #
+    # If we have heavy registration traffic we may fail with messages like
+    #
+    #   Error registering genome via SEED clearinghouse: soap:Server error executing queries: DBD::mysql::db do failed: Deadlock found when trying to get lock; try restarting transaction at /vol/core-seed/Clearinghouse/FIG/CGI/clearinghouse_services.cgi line 162.
+    #
+    # So we will do a backoff and retry here.
+    #
+
+    my $max_retries = 10;
+    my $try = 0;
+    while ($try++ < $max_retries)
+    {
+	my $r = $proxy->register_genome($taxon_id);
+	if ($r->fault) {
+	    warn "Error on try $try registering genome via SEED clearinghouse: " . $r->faultcode . " " . $r->faultstring;
+	    sleep(2 + rand(10));
+	}
+	else
+	{
+	    my $id = $r->result;
+	    return "$taxon_id.$id";
+	}
     }
-    
-    my $id = $r->result;
-    return "$taxon_id.$id";
+    #
+    # Retries failed
+    #
+    die "Unable to register genome via SEED clearinghouse after $max_retries tries\n";
 }
 
 sub _allocate_kb_genome_id
