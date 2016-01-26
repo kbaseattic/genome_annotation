@@ -217,6 +217,22 @@ module GenomeAnnotation
 	analysis_event_id event_id;
     } strain_type;
 
+    typedef structure
+    {
+	string name;
+	string version;
+	string description;
+	string comment;
+	list<string> antibiotics;
+	float accuracy;
+	float area_under_roc_curve;
+	float f1_score;
+	string sources;
+	string sensitivity;
+	analysis_event_id event_id;
+    } classifier;
+    
+
     /* All of the information about particular genome */
     typedef structure {
 	genome_id id;
@@ -241,7 +257,7 @@ module GenomeAnnotation
 	list <analysis_event> analysis_events;
 
 	list<strain_type> typing;
-	
+	list<classifier> classifications;
     } genomeTO;
 
 
@@ -545,6 +561,11 @@ module GenomeAnnotation
     funcdef renumber_features(genomeTO genome_in) returns (genomeTO genome_out);
 
     /*
+     * Perform AMR classification.
+     */
+    funcdef classify_amr(genomeTO) returns (genomeTO);
+
+    /*
      * Export genome typed object to one of the supported output formats:
      * genbank, embl, or gff.
      * If feature_types is a non-empty list, limit the output to the given
@@ -567,7 +588,6 @@ module GenomeAnnotation
      * source IDs on the Genome entity.
      */
     funcdef query_classifier_groups(string classifier) returns(mapping<string group_id, list<genome_id>>);
-
 
     /*
      * Query the taxonomy strings that this classifier maps.

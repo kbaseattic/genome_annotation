@@ -52,6 +52,7 @@ use StrepRepeats;
 use overlap_resolution;
 use PropagateGBMetadata;
 use Capture::Tiny 'capture_stderr';
+use AdaboostClassify;
 
 use Bio::KBase::DeploymentConfig;
 
@@ -315,6 +316,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -438,6 +440,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -466,6 +480,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -589,6 +604,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -678,6 +705,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -801,6 +829,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -839,6 +879,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
 	sequence_error_rate has a value which is a float
@@ -962,6 +1003,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -1057,6 +1110,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1181,6 +1235,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -1208,6 +1274,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1332,6 +1399,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -1453,6 +1532,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1577,6 +1657,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -1604,6 +1696,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1728,6 +1821,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -1803,6 +1908,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -1927,6 +2033,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -1954,6 +2072,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2078,6 +2197,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -2157,6 +2288,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2281,6 +2413,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 genome_metadata is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -2319,6 +2463,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2443,6 +2588,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 genome_metadata is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
@@ -2759,6 +2916,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -2883,6 +3041,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -2911,6 +3081,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3035,6 +3206,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -3117,6 +3300,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3241,6 +3425,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -3269,6 +3465,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3393,6 +3590,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -3471,6 +3680,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3595,6 +3805,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 compact_feature is a reference to a list containing 5 items:
 	0: (id) a string
@@ -3629,6 +3851,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3753,6 +3976,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 compact_feature is a reference to a list containing 5 items:
 	0: (id) a string
@@ -3840,6 +4075,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -3964,6 +4200,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 reconstructionTO is a reference to a hash where the following keys are defined:
 	subsystems has a value which is a variant_subsystem_pairs
@@ -4012,6 +4260,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -4136,6 +4385,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 reconstructionTO is a reference to a hash where the following keys are defined:
 	subsystems has a value which is a variant_subsystem_pairs
@@ -4286,6 +4547,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -4410,6 +4672,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 fid_data_tuples is a reference to a list where each element is a fid_data_tuple
 fid_data_tuple is a reference to a list containing 4 items:
@@ -4446,6 +4720,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -4570,6 +4845,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 fid_data_tuples is a reference to a list where each element is a fid_data_tuple
 fid_data_tuple is a reference to a list containing 4 items:
@@ -4896,6 +5183,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5020,6 +5308,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -5047,6 +5347,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5171,6 +5472,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -5278,6 +5591,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5402,6 +5716,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -5429,6 +5755,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5553,6 +5880,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -5789,6 +6128,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -5913,6 +6253,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -5940,6 +6292,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6064,6 +6417,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -6172,6 +6537,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6296,6 +6662,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -6323,6 +6701,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6447,6 +6826,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -6554,6 +6945,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6678,6 +7070,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -6705,6 +7109,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -6829,6 +7234,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -6907,6 +7324,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7031,6 +7449,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -7058,6 +7488,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7182,6 +7613,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -7260,6 +7703,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7384,6 +7828,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -7411,6 +7867,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7535,6 +7992,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -7677,6 +8146,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7801,6 +8271,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 rna_type is a string
 
@@ -7830,6 +8312,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -7954,6 +8437,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 rna_type is a string
 
@@ -8075,6 +8570,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8199,6 +8695,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -8226,6 +8734,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8350,6 +8859,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -8447,6 +8968,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8571,6 +9093,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -8598,6 +9132,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -8722,6 +9257,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -8880,6 +9427,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9004,6 +9552,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 glimmer3_parameters is a reference to a hash where the following keys are defined:
 	min_training_len has a value which is an int
@@ -9034,6 +9594,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9158,6 +9719,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 glimmer3_parameters is a reference to a hash where the following keys are defined:
 	min_training_len has a value which is an int
@@ -9326,6 +9899,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9450,6 +10024,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -9477,6 +10063,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9601,6 +10188,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -9709,6 +10308,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9833,6 +10433,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -9860,6 +10472,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -9984,6 +10597,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -10265,6 +10890,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10389,6 +11015,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 SEED_projection_parameters is a reference to a hash where the following keys are defined:
 	reference_database has a value which is a string
@@ -10421,6 +11059,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10545,6 +11184,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 SEED_projection_parameters is a reference to a hash where the following keys are defined:
 	reference_database has a value which is a string
@@ -10680,6 +11331,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10804,6 +11456,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -10831,6 +11495,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -10955,6 +11620,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -11032,6 +11709,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11156,6 +11834,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
@@ -11187,6 +11877,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11311,6 +12002,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
@@ -11473,6 +12176,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11597,6 +12301,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -11624,6 +12340,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11748,6 +12465,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -11847,6 +12576,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -11971,6 +12701,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -12000,6 +12742,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12124,6 +12867,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -12203,6 +12958,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12327,6 +13083,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
@@ -12357,6 +13125,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12481,6 +13250,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
@@ -12599,6 +13380,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12723,6 +13505,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
@@ -12763,6 +13557,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -12887,6 +13682,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
@@ -13049,6 +13856,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13173,6 +13981,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
@@ -13205,6 +14025,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13329,6 +14150,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
@@ -13501,6 +14334,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13625,6 +14459,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 resolve_overlapping_features_parameters is a reference to a hash where the following keys are defined:
 	placeholder has a value which is an int
@@ -13655,6 +14501,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13779,6 +14626,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 resolve_overlapping_features_parameters is a reference to a hash where the following keys are defined:
 	placeholder has a value which is an int
@@ -13874,6 +14733,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -13998,6 +14858,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
 	min_rna_pct_coverage has a value which is a float
@@ -14028,6 +14900,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14152,6 +15025,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
 	min_rna_pct_coverage has a value which is a float
@@ -14248,6 +15133,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14372,6 +15258,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
@@ -14412,6 +15310,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14536,6 +15435,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
@@ -14716,6 +15627,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14840,6 +15752,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
@@ -14872,6 +15796,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -14996,6 +15921,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
@@ -15256,6 +16193,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15380,6 +16318,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 special_protein_hit is a reference to a list containing 7 items:
 	0: (protein_id) a string
@@ -15416,6 +16366,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15540,6 +16491,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 special_protein_hit is a reference to a list containing 7 items:
 	0: (protein_id) a string
@@ -15668,6 +16631,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15792,6 +16756,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -15819,6 +16795,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -15943,6 +16920,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -16067,6 +17056,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16191,6 +17181,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -16218,6 +17220,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16342,6 +17345,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -16495,6 +17510,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16619,6 +17635,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -16646,6 +17674,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16770,6 +17799,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -16867,6 +17908,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -16991,6 +18033,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -17018,6 +18072,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17142,6 +18197,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -17238,6 +18305,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17362,6 +18430,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -17389,6 +18469,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17513,6 +18594,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -17631,6 +18724,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17755,6 +18849,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 cdd_hit is a reference to a list containing 16 items:
 	0: (protein_id) a string
@@ -17799,6 +18905,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -17923,6 +19030,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 cdd_hit is a reference to a list containing 16 items:
 	0: (protein_id) a string
@@ -18015,6 +19134,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18139,6 +19259,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -18166,6 +19298,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18290,6 +19423,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -18366,6 +19511,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18490,6 +19636,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -18517,6 +19675,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18641,6 +19800,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -18717,6 +19888,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18841,6 +20013,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -18868,6 +20052,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -18992,6 +20177,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -19096,6 +20293,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19220,6 +20418,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -19247,6 +20457,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19371,6 +20582,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -19449,6 +20672,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19573,6 +20797,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -19600,6 +20836,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19724,6 +20961,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -19802,6 +21051,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -19926,6 +21176,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -19953,6 +21215,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20077,6 +21340,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -20175,6 +21450,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20299,6 +21575,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -20330,6 +21618,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20454,6 +21743,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -20557,6 +21858,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20681,6 +21983,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -20708,6 +22022,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -20832,6 +22147,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -20895,6 +22222,445 @@ sub renumber_features
 
 
 
+=head2 classify_amr
+
+  $return = $obj->classify_amr($genomeTO)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genomeTO is a genomeTO
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 4 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+	3: (db_version) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+strain_type is a reference to a hash where the following keys are defined:
+	typing_method has a value which is a string
+	database has a value which is a string
+	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
+	event_id has a value which is an analysis_event_id
+
+</pre>
+
+=end html
+
+=begin text
+
+$genomeTO is a genomeTO
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 4 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+	3: (db_version) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+strain_type is a reference to a hash where the following keys are defined:
+	typing_method has a value which is a string
+	database has a value which is a string
+	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
+	event_id has a value which is an analysis_event_id
+
+
+=end text
+
+
+
+=item Description
+
+Perform AMR classification.
+
+=back
+
+=cut
+
+sub classify_amr
+{
+    my $self = shift;
+    my($genomeTO) = @_;
+
+    my @_bad_arguments;
+    (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to classify_amr:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'classify_amr');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($return);
+    #BEGIN classify_amr
+
+    my $genome_in = GenomeTypeObject->initialize($genomeTO);
+
+    my $classifier = AdaboostClassify->new();
+
+    my($genus, $species) = $genome_in->{scientific_name} =~ /^(\S+)\s+(\S+)/;
+    my $name = "$genus $species";
+    my $tmp = File::Temp->new();
+    $tmp->close();
+    $genome_in->write_contigs_to_file($tmp);
+    my $res = $classifier->classify($name, "$tmp");
+
+    my $idc = IDclient->new($genome_in);
+    my $event = {
+	tool_name => "AdaboostClassify",
+	execution_time => scalar gettimeofday,
+	parameters => [],
+	hostname => $self->{hostname},
+    };
+
+    my $event_id = $genome_in->add_analysis_event($event);
+
+    my $type = 'classifier_predicted_region';
+
+    for my $classification (@$res)
+    {
+	for my $f (@{$classification->{features}})
+	{
+	    my($contig, $start, $stop, $alpha, $round, $classifier, $function) = @$f;
+
+	    my $len = $stop - $start + 1;
+	    my $loc = [[$contig, $start, "+", $len]];
+	    $genome_in->add_feature({
+		-id_client 	     => $idc,
+		-id_prefix 	     => $genome_in->{id},
+		-type 	     => $type,
+		-location 	     => $loc,
+		-function 	     => $function,
+		-annotation      => "Classification by $classifier with alpha=$alpha round=$round",
+		-analysis_event_id 	     => $event_id,
+	    });
+	}
+	my $cobj = {
+	    name => $classification->{classifier},
+	    comment => $classification->{comment},
+	    antibiotics =>  [ split(/,\s+/, $classification->{antibiotic}) ],
+	    accuracy => $classification->{accuracy},
+	    area_under_roc_curve => $classification->{area_under_roc_curve},
+	    f1_score => $classification->{f1_score},
+	    sources => $classification->{sources},
+	    sensitivity => $classification->{sensitivity},
+	    event_id => $event_id,
+	};
+	push(@{$genome_in->{classifications}}, $cobj);
+    }
+
+    for my $f (<$tmp*>)
+    {
+	unlink($f);
+    }
+
+    $return = $genome_in->prepare_for_return();
+    
+    #END classify_amr
+    my @_bad_returns;
+    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to classify_amr:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'classify_amr');
+    }
+    return($return);
+}
+
+
+
+
 =head2 export_genome
 
   $exported_data = $obj->export_genome($genome_in, $format, $feature_types)
@@ -20927,6 +22693,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -21051,6 +22818,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 </pre>
@@ -21080,6 +22859,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -21204,6 +22984,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 
 
@@ -22009,6 +23801,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -22133,6 +23926,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 workflow is a reference to a hash where the following keys are defined:
 	stages has a value which is a reference to a list where each element is a pipeline_stage
@@ -22195,6 +24000,7 @@ genomeTO is a reference to a hash where the following keys are defined:
 	close_genomes has a value which is a reference to a list where each element is a close_genome
 	analysis_events has a value which is a reference to a list where each element is an analysis_event
 	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
 genome_id is a string
 genome_quality_measure is a reference to a hash where the following keys are defined:
 	frameshift_error_rate has a value which is a float
@@ -22319,6 +24125,18 @@ strain_type is a reference to a hash where the following keys are defined:
 	typing_method has a value which is a string
 	database has a value which is a string
 	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
 workflow is a reference to a hash where the following keys are defined:
 	stages has a value which is a reference to a list where each element is a pipeline_stage
@@ -23908,6 +25726,56 @@ event_id has a value which is an analysis_event_id
 
 
 
+=head2 classifier
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+name has a value which is a string
+version has a value which is a string
+description has a value which is a string
+comment has a value which is a string
+antibiotics has a value which is a reference to a list where each element is a string
+accuracy has a value which is a float
+area_under_roc_curve has a value which is a float
+f1_score has a value which is a float
+sources has a value which is a string
+sensitivity has a value which is a string
+event_id has a value which is an analysis_event_id
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+name has a value which is a string
+version has a value which is a string
+description has a value which is a string
+comment has a value which is a string
+antibiotics has a value which is a reference to a list where each element is a string
+accuracy has a value which is a float
+area_under_roc_curve has a value which is a float
+f1_score has a value which is a float
+sources has a value which is a string
+sensitivity has a value which is a string
+event_id has a value which is an analysis_event_id
+
+
+=end text
+
+=back
+
+
+
 =head2 genomeTO
 
 =over 4
@@ -23941,6 +25809,7 @@ features has a value which is a reference to a list where each element is a feat
 close_genomes has a value which is a reference to a list where each element is a close_genome
 analysis_events has a value which is a reference to a list where each element is an analysis_event
 typing has a value which is a reference to a list where each element is a strain_type
+classifications has a value which is a reference to a list where each element is a classifier
 
 </pre>
 
@@ -23965,6 +25834,7 @@ features has a value which is a reference to a list where each element is a feat
 close_genomes has a value which is a reference to a list where each element is a close_genome
 analysis_events has a value which is a reference to a list where each element is an analysis_event
 typing has a value which is a reference to a list where each element is a strain_type
+classifications has a value which is a reference to a list where each element is a classifier
 
 
 =end text
