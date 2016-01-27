@@ -228,8 +228,10 @@ module GenomeAnnotation
 	float area_under_roc_curve;
 	float f1_score;
 	string sources;
+	float cumulative_adaboost_value;
 	string sensitivity;
 	analysis_event_id event_id;
+	list<feature_id> features;
     } classifier;
     
 

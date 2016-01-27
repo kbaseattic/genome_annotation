@@ -22610,21 +22610,24 @@ sub classify_amr
 
     for my $classification (@$res)
     {
+	my @flist;
 	for my $f (@{$classification->{features}})
 	{
 	    my($contig, $start, $stop, $alpha, $round, $classifier, $function) = @$f;
 
 	    my $len = $stop - $start + 1;
 	    my $loc = [[$contig, $start, "+", $len]];
-	    $genome_in->add_feature({
+	    my $feat = $genome_in->add_feature({
 		-id_client 	     => $idc,
 		-id_prefix 	     => $genome_in->{id},
 		-type 	     => $type,
 		-location 	     => $loc,
 		-function 	     => $function,
-		-annotation      => "Classification by $classifier with alpha=$alpha round=$round",
+		-annotator => "$classifier classifier",
+		-annotation      => "Classification by $classifier classifier with alpha=$alpha round=$round",
 		-analysis_event_id 	     => $event_id,
 	    });
+	    push(@flist, $feat->{id});
 	}
 	my $cobj = {
 	    name => $classification->{classifier},
@@ -22633,9 +22636,11 @@ sub classify_amr
 	    accuracy => $classification->{accuracy},
 	    area_under_roc_curve => $classification->{area_under_roc_curve},
 	    f1_score => $classification->{f1_score},
+	    cumulative_adaboost_score => $classification->{cumulative_adaboost_score},
 	    sources => $classification->{sources},
 	    sensitivity => $classification->{sensitivity},
 	    event_id => $event_id,
+	    features => [@flist],
 	};
 	push(@{$genome_in->{classifications}}, $cobj);
     }
