@@ -231,7 +231,7 @@ module GenomeAnnotation
 	float cumulative_adaboost_value;
 	string sensitivity;
 	analysis_event_id event_id;
-	list<feature_id> features;
+	list<tuple<feature_id id, float alpha, int round, string function>> features;
     } classifier;
     
 

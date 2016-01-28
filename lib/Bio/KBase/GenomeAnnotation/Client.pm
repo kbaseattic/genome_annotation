@@ -274,8 +274,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -438,8 +445,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -675,8 +689,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -849,8 +870,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -1076,8 +1104,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -1240,8 +1275,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -1467,8 +1509,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -1631,8 +1680,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -1858,8 +1914,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -2022,8 +2085,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -2250,8 +2320,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 genome_metadata is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -2425,8 +2502,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 genome_metadata is a reference to a hash where the following keys are defined:
 	id has a value which is a genome_id
 	scientific_name has a value which is a string
@@ -2664,8 +2748,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -2829,8 +2920,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -3058,8 +3156,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -3223,8 +3328,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -3453,8 +3565,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 compact_feature is a reference to a list containing 5 items:
 	0: (id) a string
 	1: (location) a string
@@ -3624,8 +3743,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 compact_feature is a reference to a list containing 5 items:
 	0: (id) a string
 	1: (location) a string
@@ -3858,8 +3984,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 reconstructionTO is a reference to a hash where the following keys are defined:
 	subsystems has a value which is a variant_subsystem_pairs
 	bindings has a value which is a fid_role_pairs
@@ -4043,8 +4176,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 reconstructionTO is a reference to a hash where the following keys are defined:
 	subsystems has a value which is a variant_subsystem_pairs
 	bindings has a value which is a fid_role_pairs
@@ -4291,8 +4431,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 fid_data_tuples is a reference to a list where each element is a fid_data_tuple
 fid_data_tuple is a reference to a list containing 4 items:
 	0: a fid
@@ -4464,8 +4611,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 fid_data_tuples is a reference to a list where each element is a fid_data_tuple
 fid_data_tuple is a reference to a list containing 4 items:
 	0: a fid
@@ -4946,8 +5100,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -5110,8 +5271,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -5338,8 +5506,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -5502,8 +5677,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -5729,8 +5911,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -5893,8 +6082,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -6120,8 +6316,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -6284,8 +6487,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -6511,8 +6721,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -6675,8 +6892,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -6902,8 +7126,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -7066,8 +7297,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -7293,8 +7531,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -7457,8 +7702,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -7685,8 +7937,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 rna_type is a string
 
 </pre>
@@ -7851,8 +8110,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 rna_type is a string
 
 
@@ -8087,8 +8353,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -8251,8 +8524,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -8479,8 +8759,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -8643,8 +8930,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -8872,8 +9166,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 glimmer3_parameters is a reference to a hash where the following keys are defined:
 	min_training_len has a value which is an int
 
@@ -9039,8 +9340,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 glimmer3_parameters is a reference to a hash where the following keys are defined:
 	min_training_len has a value which is an int
 
@@ -9269,8 +9577,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -9433,8 +9748,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -9660,8 +9982,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -9824,8 +10153,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -10052,8 +10388,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 SEED_projection_parameters is a reference to a hash where the following keys are defined:
 	reference_database has a value which is a string
 	reference_id has a value which is a string
@@ -10221,8 +10564,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 SEED_projection_parameters is a reference to a hash where the following keys are defined:
 	reference_database has a value which is a string
 	reference_id has a value which is a string
@@ -10453,8 +10803,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -10617,8 +10974,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -10845,8 +11209,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11013,8 +11384,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 repeat_region_SEED_parameters is a reference to a hash where the following keys are defined:
 	min_identity has a value which is a float
 	min_length has a value which is an int
@@ -11244,8 +11622,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -11408,8 +11793,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -11637,8 +12029,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -11803,8 +12202,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -12033,8 +12439,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
@@ -12200,8 +12613,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 similarity_parameters is a reference to a hash where the following keys are defined:
 	annotate_hypothetical_only has a value which is an int
 
@@ -12431,8 +12851,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -12608,8 +13035,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -12849,8 +13283,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -13018,8 +13459,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -13251,8 +13699,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 resolve_overlapping_features_parameters is a reference to a hash where the following keys are defined:
 	placeholder has a value which is an int
 
@@ -13418,8 +13873,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 resolve_overlapping_features_parameters is a reference to a hash where the following keys are defined:
 	placeholder has a value which is an int
 
@@ -13649,8 +14111,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
 	min_rna_pct_coverage has a value which is a float
 
@@ -13816,8 +14285,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 propagate_genbank_feature_metadata_parameters is a reference to a hash where the following keys are defined:
 	min_rna_pct_coverage has a value which is a float
 
@@ -14047,8 +14523,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -14224,8 +14707,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v1_parameters is a reference to a hash where the following keys are defined:
 	kmer_size has a value which is an int
 	dataset_name has a value which is a string
@@ -14465,8 +14955,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -14634,8 +15131,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 kmer_v2_parameters is a reference to a hash where the following keys are defined:
 	min_hits has a value which is an int
 	max_gap has a value which is an int
@@ -14935,8 +15439,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 special_protein_hit is a reference to a list containing 7 items:
 	0: (protein_id) a string
 	1: (database_name) a string
@@ -15108,8 +15619,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 special_protein_hit is a reference to a list containing 7 items:
 	0: (protein_id) a string
 	1: (database_name) a string
@@ -15344,8 +15862,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -15508,8 +16033,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -15735,8 +16267,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -15899,8 +16438,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -16126,8 +16672,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -16290,8 +16843,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -16517,8 +17077,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -16681,8 +17248,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -16908,8 +17482,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -17072,8 +17653,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -17299,8 +17887,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 cdd_hit is a reference to a list containing 16 items:
 	0: (protein_id) a string
 	1: (domain_id) a string
@@ -17480,8 +18075,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 cdd_hit is a reference to a list containing 16 items:
 	0: (protein_id) a string
 	1: (domain_id) a string
@@ -17724,8 +18326,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -17888,8 +18497,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -18115,8 +18731,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -18279,8 +18902,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -18506,8 +19136,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -18670,8 +19307,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -18897,8 +19541,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -19061,8 +19712,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -19288,8 +19946,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -19452,8 +20117,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -19679,8 +20351,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -19843,8 +20522,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -20074,8 +20760,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -20242,8 +20935,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -20471,8 +21171,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -20635,8 +21342,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -20863,8 +21577,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -21027,8 +21748,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -21256,8 +21984,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 </pre>
 
@@ -21422,8 +22157,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 
 
 =end text
@@ -22348,8 +23090,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 workflow is a reference to a hash where the following keys are defined:
 	stages has a value which is a reference to a list where each element is a pipeline_stage
 pipeline_stage is a reference to a hash where the following keys are defined:
@@ -22547,8 +23296,15 @@ classifier is a reference to a hash where the following keys are defined:
 	area_under_roc_curve has a value which is a float
 	f1_score has a value which is a float
 	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
 	sensitivity has a value which is a string
 	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
 workflow is a reference to a hash where the following keys are defined:
 	stages has a value which is a reference to a list where each element is a pipeline_stage
 pipeline_stage is a reference to a hash where the following keys are defined:
@@ -24024,8 +24780,15 @@ accuracy has a value which is a float
 area_under_roc_curve has a value which is a float
 f1_score has a value which is a float
 sources has a value which is a string
+cumulative_adaboost_value has a value which is a float
 sensitivity has a value which is a string
 event_id has a value which is an analysis_event_id
+features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+0: (id) a feature_id
+1: (alpha) a float
+2: (round) an int
+3: (function) a string
+
 
 </pre>
 
@@ -24043,8 +24806,15 @@ accuracy has a value which is a float
 area_under_roc_curve has a value which is a float
 f1_score has a value which is a float
 sources has a value which is a string
+cumulative_adaboost_value has a value which is a float
 sensitivity has a value which is a string
 event_id has a value which is an analysis_event_id
+features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+0: (id) a feature_id
+1: (alpha) a float
+2: (round) an int
+3: (function) a string
+
 
 
 =end text
