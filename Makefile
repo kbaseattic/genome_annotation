@@ -35,7 +35,6 @@ TPAGE_ARGS = --define kb_top=$(TARGET) \
 	--define kb_runtime=$(DEPLOY_RUNTIME) \
 	--define kb_service_name=$(SERVICE) \
 	--define kb_service_port=$(SERVICE_PORT) \
-	--define kb_service_port=$(SERVICE_ALT_PORT) \
 	$(TPAGE_SERVICE_ALT_PORT) \
 	$(TPAGE_TEMPDIR)
 
