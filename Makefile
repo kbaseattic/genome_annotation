@@ -9,6 +9,7 @@ SERVICE_MODULE = lib/Bio/KBase/GenomeAnnotation/Service.pm
 
 SERVICE = genome_annotation
 SERVICE_PORT = 7050
+SERVICE_ALT_PORT = 7136
 
 SERVICE_URL = https://kbase.us/services/$(SERVICE)
 
@@ -26,10 +27,16 @@ ifdef TEMPDIR
 TPAGE_TEMPDIR = --define kb_tempdir=$(TEMPDIR)
 endif
 
+ifdef SERVICE_ALT_PORT
+TPAGE_SERVICE_ALT_PORT = --define kb_service_alt_port=$(SERVICE_ALT_PORT) 
+endif
+
 TPAGE_ARGS = --define kb_top=$(TARGET) \
 	--define kb_runtime=$(DEPLOY_RUNTIME) \
 	--define kb_service_name=$(SERVICE) \
 	--define kb_service_port=$(SERVICE_PORT) \
+	--define kb_service_port=$(SERVICE_ALT_PORT) \
+	$(TPAGE_SERVICE_ALT_PORT) \
 	$(TPAGE_TEMPDIR)
 
 TESTS = $(wildcard t/client-tests/*.t)

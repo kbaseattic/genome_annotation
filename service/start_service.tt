@@ -35,5 +35,19 @@ starman_params="$starman_params --access-log $KB_SERVICE_DIR/access.log"
 
 starman_params="$starman_params --daemonize"
 
-exec $KB_RUNTIME/bin/perl $KB_RUNTIME/bin/starman $starman_params $KB_TOP/lib/GenomeAnnotation.psgi
+$KB_RUNTIME/bin/perl $KB_RUNTIME/bin/starman $starman_params $KB_TOP/lib/GenomeAnnotation.psgi &
 
+[% IF kb_service_alt_port %]
+
+pid_file=$KB_SERVICE_DIR/service.alt.pid
+
+starman_params="--listen :[% kb_service_alt_port %] --pid $pid_file $workers $max_requests"
+
+starman_params="$starman_params --error-log $KB_SERVICE_DIR/error.alt.log"
+starman_params="$starman_params --access-log $KB_SERVICE_DIR/access.alt.log"
+
+starman_params="$starman_params --daemonize"
+
+$KB_RUNTIME/bin/perl $KB_RUNTIME/bin/starman $starman_params $KB_TOP/lib/GenomeAnnotation.psgi &
+
+[% END %]

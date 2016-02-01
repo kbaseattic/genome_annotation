@@ -9,15 +9,36 @@ pid_file=$KB_SERVICE_DIR/service.pid
 
 if [ ! -f $pid_file ] ; then
 	echo "No pid file $pid_file found for service [% kb_service_name %]" 1>&2
-	exit 1
+else
+
+	pid=`cat $pid_file`
+
+	kill -QUIT $pid
+
+	while kill -0 $pid ; do 
+		echo "Waiting for $pid to complete"
+		pstree -p -a $pid
+		sleep 3
+	done
 fi
 
-pid=`cat $pid_file`
+[% IF kb_service_alt_port %]
 
-kill -QUIT $pid
+pid_file=$KB_SERVICE_DIR/service.alt.pid
 
-while kill -0 $pid ; do 
-	echo "Waiting for $pid to complete"
-	pstree -p -a $pid
-	sleep 3
-done
+if [ ! -f $pid_file ] ; then
+	echo "No pid file $pid_file found for service [% kb_service_name %]" 1>&2
+else
+
+	pid=`cat $pid_file`
+
+	kill -QUIT $pid
+
+	while kill -0 $pid ; do 
+		echo "Waiting for $pid to complete"
+		pstree -p -a $pid
+		sleep 3
+	done
+fi
+
+[% END %]
