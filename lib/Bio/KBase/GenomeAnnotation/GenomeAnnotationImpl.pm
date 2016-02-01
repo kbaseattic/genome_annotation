@@ -11121,7 +11121,7 @@ sub call_features_CDS_genemark
     {
 	$id_prefix = "fig|$id_prefix";
     }
-    my $typed_prefix = join(".", $id_prefix, $type);
+    my $typed_prefix = join(".", $id_prefix, $self->{cds_id_type});
 
     my $count = int(%by_gene);
     my $idc = IDclient->new($genome_in);
