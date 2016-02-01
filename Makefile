@@ -9,7 +9,7 @@ SERVICE_MODULE = lib/Bio/KBase/GenomeAnnotation/Service.pm
 
 SERVICE = genome_annotation
 SERVICE_PORT = 7050
-SERVICE_ALT_PORT = 7136
+# SERVICE_ALT_PORT = 7136
 
 SERVICE_URL = https://kbase.us/services/$(SERVICE)
 
