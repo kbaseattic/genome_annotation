@@ -19227,42 +19227,50 @@ sub annotate_strain_type_MLST
     #BEGIN annotate_strain_type_MLST
 
     $genome_in = GenomeTypeObject->initialize($genome_in);
-    my $contigs = $genome_in->extract_contig_sequences_to_temp_file();
-    my $tmp_out = File::Temp->new();
 
-    my $event = {
-	tool_name => "assign_st_to_genome",
-	execution_time => scalar gettimeofday,
-	hostname => $self->{hostname},
-    };
-    my $event_id = $genome_in->add_analysis_event($event);
-
-    my @cmd = ("assign_st_to_genome",
-	       "-s", 1, 
-	       "-m", $self->{patric_mlst_dbdir},
-	       "--org", $genome_in->{scientific_name});
-    $ctx->stderr->log_cmd(@cmd);
-    my $ok = run(\@cmd,
-		 "<", $contigs,
-		 ">", $tmp_out,
-		 $ctx->stderr->redirect);
-
-    close($tmp_out);
-    unlink($contigs);
-
-    if (open(my $fh, "<", $tmp_out))
+    if (!defined($genome_in->{scientific_name}))
     {
-	while (<$fh>)
+	warn "No scientific name defined in annotate_strain_type_MLST";
+    }
+    else
+    {
+	my $contigs = $genome_in->extract_contig_sequences_to_temp_file();
+	my $tmp_out = File::Temp->new();
+	
+	my $event = {
+	    tool_name => "assign_st_to_genome",
+	    execution_time => scalar gettimeofday,
+	    hostname => $self->{hostname},
+	};
+	my $event_id = $genome_in->add_analysis_event($event);
+	
+	my @cmd = ("assign_st_to_genome",
+		   "-s", 1, 
+		   "-m", $self->{patric_mlst_dbdir},
+		   "--org", $genome_in->{scientific_name});
+	$ctx->stderr->log_cmd(@cmd);
+	my $ok = run(\@cmd,
+		     "<", $contigs,
+		     ">", $tmp_out,
+		     $ctx->stderr->redirect);
+	
+	close($tmp_out);
+	unlink($contigs);
+	
+	if (open(my $fh, "<", $tmp_out))
 	{
-	    chomp;
-	    my($org, $db, $sids, $type, $coords, $loci, $profile, $tag) = split(/\t/);
-	    push(@{$genome_in->{typing}},
-	     {
-		 typing_method => 'MLST',
-		 database => $db,
-		 tag => $tag,
-		 event_id => $event_id,
-	     });
+	    while (<$fh>)
+	    {
+		chomp;
+		my($org, $db, $sids, $type, $coords, $loci, $profile, $tag) = split(/\t/);
+		push(@{$genome_in->{typing}},
+		 {
+		     typing_method => 'MLST',
+		     database => $db,
+		     tag => $tag,
+		     event_id => $event_id,
+		 });
+	    }
 	}
     }
     
@@ -25010,7 +25018,7 @@ sub run_pipeline
 	}
 	if ($self->can($method))
 	{
-	    print STDERR "Call $method with @params\n";
+	    print STDERR "Call $method with " . Dumper(\@params);
 	    print STDERR Dumper($stage);
 	    my $out;
 	    eval {
