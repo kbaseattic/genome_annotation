@@ -463,6 +463,15 @@ module GenomeAnnotation
 
     typedef structure
     {
+	int annotate_hypothetical_only;
+    } phage_parameters;
+    /*
+     * Annotate based on similarity to the phage annotation daatabase.
+     */
+    funcdef annotate_proteins_phage(genomeTO, phage_parameters params) returns (genomeTO);
+
+    typedef structure
+    {
 	int kmer_size;
 	string dataset_name;
 	int return_scores_for_all_proteins;

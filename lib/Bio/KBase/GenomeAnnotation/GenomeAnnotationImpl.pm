@@ -204,6 +204,17 @@ sub new
 	
     $self->{nr_annotation_directory} = $dir;
 
+    my $phage_files = $cfg->setting("phage-annotation-files");
+    if (!$phage_files)
+    {
+	$phage_files = [];
+    }
+    elsif (!ref($phage_files))
+    {
+	$phage_files = [$phage_files];
+    }
+    $self->{phage_annotation_files} = $phage_files;
+
     $self->{special_protein_dbdir} = $cfg->setting("special_protein_dbdir");
     $self->{special_protein_cache_db} = $cfg->setting("special_protein_cache_db");
     $self->{special_protein_cache_dbhost} = $cfg->setting("special_protein_cache_dbhost");
@@ -13769,6 +13780,448 @@ sub annotate_proteins_similarity
 
 
 
+=head2 annotate_proteins_phage
+
+  $return = $obj->annotate_proteins_phage($genomeTO, $params)
+
+=over 4
+
+=item Parameter and return types
+
+=begin html
+
+<pre>
+$genomeTO is a genomeTO
+$params is a phage_parameters
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 4 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+	3: (db_version) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+strain_type is a reference to a hash where the following keys are defined:
+	typing_method has a value which is a string
+	database has a value which is a string
+	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
+	sensitivity has a value which is a string
+	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
+phage_parameters is a reference to a hash where the following keys are defined:
+	annotate_hypothetical_only has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+$genomeTO is a genomeTO
+$params is a phage_parameters
+$return is a genomeTO
+genomeTO is a reference to a hash where the following keys are defined:
+	id has a value which is a genome_id
+	scientific_name has a value which is a string
+	domain has a value which is a string
+	genetic_code has a value which is an int
+	source has a value which is a string
+	source_id has a value which is a string
+	taxonomy has a value which is a string
+	ncbi_taxonomy_id has a value which is an int
+	owner has a value which is a string
+	quality has a value which is a genome_quality_measure
+	contigs has a value which is a reference to a list where each element is a contig
+	contigs_handle has a value which is a Handle
+	features has a value which is a reference to a list where each element is a feature
+	close_genomes has a value which is a reference to a list where each element is a close_genome
+	analysis_events has a value which is a reference to a list where each element is an analysis_event
+	typing has a value which is a reference to a list where each element is a strain_type
+	classifications has a value which is a reference to a list where each element is a classifier
+genome_id is a string
+genome_quality_measure is a reference to a hash where the following keys are defined:
+	frameshift_error_rate has a value which is a float
+	sequence_error_rate has a value which is a float
+contig is a reference to a hash where the following keys are defined:
+	id has a value which is a contig_id
+	dna has a value which is a string
+	genetic_code has a value which is an int
+	cell_compartment has a value which is a string
+	replicon_type has a value which is a string
+	replicon_geometry has a value which is a string
+	complete has a value which is a bool
+	genbank_locus has a value which is a genbank_locus
+contig_id is a string
+bool is an int
+genbank_locus is a reference to a hash where the following keys are defined:
+	accession has a value which is a reference to a list where each element is a string
+	comment has a value which is a reference to a list where each element is a string
+	date has a value which is a string
+	dblink has a value which is a reference to a list where each element is a string
+	dbsource has a value which is a reference to a list where each element is a string
+	definition has a value which is a string
+	division has a value which is a string
+	geometry has a value which is a string
+	gi has a value which is an int
+	keywords has a value which is a reference to a list where each element is a string
+	locus has a value which is a string
+	organism has a value which is a string
+	origin has a value which is a string
+	references has a value which is a reference to a list where each element is a reference to a hash where the key is a string and the value is a string
+	source has a value which is a string
+	taxonomy has a value which is a reference to a list where each element is a string
+	version has a value which is a reference to a list where each element is a string
+Handle is a reference to a hash where the following keys are defined:
+	file_name has a value which is a string
+	id has a value which is a string
+	type has a value which is a string
+	url has a value which is a string
+	remote_md5 has a value which is a string
+	remote_sha1 has a value which is a string
+feature is a reference to a hash where the following keys are defined:
+	id has a value which is a feature_id
+	location has a value which is a location
+	type has a value which is a feature_type
+	function has a value which is a string
+	function_id has a value which is a string
+	protein_translation has a value which is a string
+	aliases has a value which is a reference to a list where each element is a string
+	alias_pairs has a value which is a reference to a list where each element is a reference to a list containing 2 items:
+	0: (source) a string
+	1: (alias) a string
+
+	annotations has a value which is a reference to a list where each element is an annotation
+	quality has a value which is a feature_quality_measure
+	feature_creation_event has a value which is an analysis_event_id
+	family_assignments has a value which is a reference to a list where each element is a protein_family_assignment
+	similarity_associations has a value which is a reference to a list where each element is a similarity_association
+	proposed_functions has a value which is a reference to a list where each element is a proposed_function
+	genbank_type has a value which is a string
+	genbank_feature has a value which is a genbank_feature
+feature_id is a string
+location is a reference to a list where each element is a region_of_dna
+region_of_dna is a reference to a list containing 4 items:
+	0: a contig_id
+	1: (begin) an int
+	2: (strand) a string
+	3: (length) an int
+feature_type is a string
+annotation is a reference to a list containing 4 items:
+	0: (comment) a string
+	1: (annotator) a string
+	2: (annotation_time) a float
+	3: an analysis_event_id
+analysis_event_id is a string
+feature_quality_measure is a reference to a hash where the following keys are defined:
+	truncated_begin has a value which is a bool
+	truncated_end has a value which is a bool
+	existence_confidence has a value which is a float
+	frameshifted has a value which is a bool
+	selenoprotein has a value which is a bool
+	pyrrolysylprotein has a value which is a bool
+	overlap_rules has a value which is a reference to a list where each element is a string
+	existence_priority has a value which is a float
+	hit_count has a value which is a float
+	weighted_hit_count has a value which is a float
+	genemark_score has a value which is a float
+protein_family_assignment is a reference to a list containing 4 items:
+	0: (db) a string
+	1: (id) a string
+	2: (function) a string
+	3: (db_version) a string
+similarity_association is a reference to a list containing 6 items:
+	0: (source) a string
+	1: (source_id) a string
+	2: (query_coverage) a float
+	3: (subject_coverage) a float
+	4: (identity) a float
+	5: (e_value) a float
+proposed_function is a reference to a hash where the following keys are defined:
+	id has a value which is a string
+	function has a value which is a string
+	user has a value which is a string
+	score has a value which is a float
+	event_id has a value which is an analysis_event_id
+	timestamp has a value which is an int
+genbank_feature is a reference to a hash where the following keys are defined:
+	genbank_type has a value which is a string
+	genbank_location has a value which is a string
+	values has a value which is a reference to a hash where the key is a string and the value is a reference to a list where each element is a string
+close_genome is a reference to a hash where the following keys are defined:
+	genome has a value which is a genome_id
+	genome_name has a value which is a string
+	closeness_measure has a value which is a float
+	analysis_method has a value which is a string
+analysis_event is a reference to a hash where the following keys are defined:
+	id has a value which is an analysis_event_id
+	tool_name has a value which is a string
+	execution_time has a value which is a float
+	parameters has a value which is a reference to a list where each element is a string
+	hostname has a value which is a string
+strain_type is a reference to a hash where the following keys are defined:
+	typing_method has a value which is a string
+	database has a value which is a string
+	tag has a value which is a string
+	event_id has a value which is an analysis_event_id
+classifier is a reference to a hash where the following keys are defined:
+	name has a value which is a string
+	version has a value which is a string
+	description has a value which is a string
+	comment has a value which is a string
+	antibiotics has a value which is a reference to a list where each element is a string
+	accuracy has a value which is a float
+	area_under_roc_curve has a value which is a float
+	f1_score has a value which is a float
+	sources has a value which is a string
+	cumulative_adaboost_value has a value which is a float
+	sensitivity has a value which is a string
+	event_id has a value which is an analysis_event_id
+	features has a value which is a reference to a list where each element is a reference to a list containing 4 items:
+	0: (id) a feature_id
+	1: (alpha) a float
+	2: (round) an int
+	3: (function) a string
+
+phage_parameters is a reference to a hash where the following keys are defined:
+	annotate_hypothetical_only has a value which is an int
+
+
+=end text
+
+
+
+=item Description
+
+Annotate based on similarity to the phage annotation daatabase.
+
+=back
+
+=cut
+
+sub annotate_proteins_phage
+{
+    my $self = shift;
+    my($genomeTO, $params) = @_;
+
+    my @_bad_arguments;
+    (ref($genomeTO) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"genomeTO\" (value was \"$genomeTO\")");
+    (ref($params) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"params\" (value was \"$params\")");
+    if (@_bad_arguments) {
+	my $msg = "Invalid arguments passed to annotate_proteins_phage:\n" . join("", map { "\t$_\n" } @_bad_arguments);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_proteins_phage');
+    }
+
+    my $ctx = $Bio::KBase::GenomeAnnotation::Service::CallContext;
+    my($return);
+    #BEGIN annotate_proteins_phage
+
+    my $coder = _get_coder();
+    my $stderr = $ctx->stderr;
+    
+    my $files = $self->{phage_annotation_files};
+    if (!ref($files) || @$files == 0)
+    {
+	warn "No phage annotation files found\n";
+	$return = $genomeTO;
+    }
+    else
+    {
+	my $tmpcur = File::Temp->new();
+	print $tmpcur $coder->encode($genomeTO);
+	close($tmpcur);
+
+	undef $genomeTO;
+
+	for my $pfile (@$files)
+	{
+	    my $tmpout = File::Temp->new();
+	    close($tmpout);
+		
+	    print STDERR "Starting phage annotation $pfile < $tmpcur > $tmpout\n";
+	    my @cmd = ('rast_annotate_proteins_similarity',
+		       "--nr-file", $pfile,
+		       ($params->{annotate_hypothetical_only} ? ("-H") : ()),
+		       '--input', $tmpcur,
+		       '--output', $tmpout);
+	    
+	    my $ok = run(\@cmd,
+			 $stderr->redirect);
+
+	    if (!$ok)
+	    {
+		die "rast_annotate_proteins_similarity failed during phage annotation ($?) cmd=@cmd:\n" . $stderr->text_value;
+	    }
+
+	    undef $tmpcur;
+	    $tmpcur = $tmpout;
+	}
+
+	$return = $coder->decode(scalar read_file("" . $tmpcur));
+    }
+
+    #END annotate_proteins_phage
+    my @_bad_returns;
+    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
+    if (@_bad_returns) {
+	my $msg = "Invalid returns passed to annotate_proteins_phage:\n" . join("", map { "\t$_\n" } @_bad_returns);
+	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
+							       method_name => 'annotate_proteins_phage');
+    }
+    return($return);
+}
+
+
+
+
 =head2 annotate_proteins_kmer_v1
 
   $return = $obj->annotate_proteins_kmer_v1($genomeTO, $params)
@@ -25030,7 +25483,7 @@ sub run_pipeline
 		if ($stage->{failure_is_not_fatal})
 		{
 		    warn "Error invoking method $method: $@\nContinuing because failure_is_not_fatal flag is set";
-		    
+		    $cur = $cur->prepare_for_return;
 		}
 		else
 		{
@@ -27260,6 +27713,36 @@ min_length has a value which is an int
 
 
 =head2 similarity_parameters
+
+=over 4
+
+
+
+=item Definition
+
+=begin html
+
+<pre>
+a reference to a hash where the following keys are defined:
+annotate_hypothetical_only has a value which is an int
+
+</pre>
+
+=end html
+
+=begin text
+
+a reference to a hash where the following keys are defined:
+annotate_hypothetical_only has a value which is an int
+
+
+=end text
+
+=back
+
+
+
+=head2 phage_parameters
 
 =over 4
 
