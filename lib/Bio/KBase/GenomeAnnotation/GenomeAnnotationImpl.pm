@@ -53,6 +53,7 @@ use overlap_resolution;
 use PropagateGBMetadata;
 use Capture::Tiny 'capture_stderr';
 use AdaboostClassify;
+use MongoDB;
 
 use Bio::KBase::DeploymentConfig;
 
@@ -99,6 +100,42 @@ sub _call_using_strep_repeats
 
     return $genome_in;
 }
+
+sub _allocate_local_genome_id
+{
+    my($self, $taxon_id, $mongo_host, $mongo_db) = @_;
+
+    $mongo_db //= "seed-genome-allocation";
+    my $client = MongoDB::MongoClient->new(host => $mongo_host, query_timeout => $query_timeout,
+					   timeout => $connection_timeout,
+					   auto_reconnect => 1,
+					   auto_connect => 1);
+
+    my $db = $client->get_database($mongo_db);
+    my $coll_next = $db->get_collection('next');
+
+    $coll_next->ensure_index({prefix => 1});
+    my $res = $db->run_command({ findAndModify => 'next',
+				 query => { taxon => $taxon_i },
+				 update => { '$inc' => { next_val => 1 } },
+				 upsert => 1
+			       });
+    if (!ref($res))
+    {
+	die "MongoDB error: $res";
+    }
+
+    if (!$res->{ok})
+    {
+	die "MongoDB error $res->{err}";
+    }
+
+    print Dumper($res);
+    my $val = $res->{value}->{next_val};
+
+    return "$taxon_id.0$val";
+}
+
 
 sub _allocate_seed_genome_id
 {
@@ -231,6 +268,9 @@ sub new
     $self->{patric_annotate_families_url} = $cfg->setting("patric_annotate_families_url");
     $self->{patric_annotate_families_kmers} = $cfg->setting("patric_annotate_families_kmers");
 
+    $self->{mongo_allocate_id_host} = $cfg->setting("mongo-allocate-id-host");
+    $self->{mongo_allocate_id_db} = $cfg->setting("mongo-allocate-id-db");
+
     $self->{patric_mlst_dbdir} = $cfg->setting("patric_mlst_dbdir");
 
     #
@@ -250,7 +290,15 @@ sub new
     #
     $iurl = 'https://kbase.us/services/idserver' if !defined($iurl);
 
-    if ($surl)
+    if ($self->{mongo_allocate_id_host})
+    {
+	print STDERR "Using local mongo for id allocation\n";
+	$self->{allocate_genome_id} = sub {
+	    my($taxon_id) = @_;
+	    $self->_allocate_local_genome_id($taxon_id, $self->{mongo_allocate_id_host}, $self->{mongo_allocate_id_db});
+	};
+    }
+    elsif ($surl)
     {
 	print STDERR "Using SEED id allocation from $surl\n";
 	$self->{allocate_genome_id} = sub { my($taxon_id) = @_;
