@@ -105,6 +105,9 @@ sub _allocate_local_genome_id
 {
     my($self, $taxon_id, $mongo_host, $mongo_db) = @_;
 
+    my $query_timeout = -1;
+    my $connection_timeout = 0;
+
     $mongo_db //= "seed-genome-allocation";
     my $client = MongoDB::MongoClient->new(host => $mongo_host, query_timeout => $query_timeout,
 					   timeout => $connection_timeout,
