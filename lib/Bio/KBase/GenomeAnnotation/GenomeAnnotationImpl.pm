@@ -121,7 +121,7 @@ sub _allocate_local_genome_id
 
     $coll_next->ensure_index({prefix => 1});
 
-    my $res = $coll_next->find_one_and_update({ taxon => $taxon_id }, { '$inc' => { next_val => 1 } }, { upsert => 1 });
+    my $res = $coll_next->find_one_and_update({ taxon => $taxon_id }, { '$inc' => { next_val => 1 } }, { upsert => 1, new => 1 });
     #print Dumper($res);
 
     if (!ref($res))
