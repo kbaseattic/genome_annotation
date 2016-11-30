@@ -250,6 +250,7 @@ sub new
     }
     $self->{phage_annotation_files} = $phage_files;
 
+    $self->{special_protein_threads} = $cfg->setting("special_protein_threads") // 1;
     $self->{special_protein_dbdir} = $cfg->setting("special_protein_dbdir");
     $self->{special_protein_cache_db} = $cfg->setting("special_protein_cache_db");
     $self->{special_protein_cache_dbhost} = $cfg->setting("special_protein_cache_dbhost");
@@ -18011,6 +18012,7 @@ sub annotate_special_proteins
     my $out = File::Temp->new();
 
     my @opts;
+    push(@opts, "--parallel", $self->{special_protein_threads});
     if ($self->{special_protein_cache_db})
     {
 	push(@opts, "--cache-db", $self->{special_protein_cache_db});
