@@ -31,12 +31,25 @@ ifdef SERVICE_ALT_PORT
 TPAGE_SERVICE_ALT_PORT = --define kb_service_alt_port=$(SERVICE_ALT_PORT) 
 endif
 
+KSER_PORT = 6100
+KSER_DATA = /tmp/data
+KSER_LOAD_THREADS = 8
+KSER_KMER_THREADS = 12
+KSER_FAMILY_THREADS = 4
+KSER_INSERTER_THREADS = 4
+
 TPAGE_ARGS = --define kb_top=$(TARGET) \
 	--define kb_runtime=$(DEPLOY_RUNTIME) \
 	--define kb_service_name=$(SERVICE) \
 	--define kb_service_port=$(SERVICE_PORT) \
 	$(TPAGE_SERVICE_ALT_PORT) \
-	$(TPAGE_TEMPDIR)
+	$(TPAGE_TEMPDIR) \
+	--define kser_port=$(KSER_PORT) \
+	--define kser_data=$(KSER_DATA) \
+	--define kser_load_threads=$(KSER_LOAD_THREADS) \
+	--define kser_kmer_threads=$(KSER_KMER_THREADS) \
+	--define kser_family_threads=$(KSER_FAMILY_THREADS) \
+	--define kser_inserter_threads=$(KSER_INSERTER_THREADS) 
 
 TESTS = $(wildcard t/client-tests/*.t)
 
@@ -111,10 +124,11 @@ deploy-guts: deploy-dir
 	cp $(BIN_DIR)/kmer_guts $(TARGET)/services/$(SERVICE)/bin/kmer_guts
 
 deploy-service: deploy-dir deploy-monit deploy-libs deploy-guts deploy-service-scripts
-	$(TPAGE) $(TPAGE_ARGS) service/start_service.tt > $(TARGET)/services/$(SERVICE)/start_service
-	chmod +x $(TARGET)/services/$(SERVICE)/start_service
-	$(TPAGE) $(TPAGE_ARGS) service/stop_service.tt > $(TARGET)/services/$(SERVICE)/stop_service
-	chmod +x $(TARGET)/services/$(SERVICE)/stop_service
+	for templ in service/*.tt ; do \
+		base=`basename $$templ .tt` ; \
+		$(TPAGE) $(TPAGE_ARGS) $$templ > $(TARGET)/services/$(SERVICE)/$$base ; \
+		chmod +x $(TARGET)/services/$(SERVICE)/$$base ; \
+	done
 
 deploy-service-scripts:
 	export KB_TOP=$(TARGET); \
