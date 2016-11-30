@@ -151,6 +151,7 @@ our @export_formats = ([genbank => "Genbank format"],
 		       [contig_fasta => "Contig DNA in fasta format"],
 		       [feature_dna => "Feature DNA sequences in fasta format"],
 		       [seed_dir => "SEED directory"],
+		       [patric_features => "PATRIC features.tab format"],
 		       [gff => "GFF format"],
 		       [embl => "EMBL format"]);
 
