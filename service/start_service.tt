@@ -10,6 +10,9 @@ export KB_DEPLOYMENT_CONFIG="$KB_TOP/deployment.cfg"
 # For phispy
 export R_LIBS="$KB_TOP/lib"
 
+if [ -f $KB_TOP/setenv.sh ] ; then
+  . $KB_TOP/setenv.sh
+fi
 if [ -f $KB_SERVICE_DIR/setenv.sh ] ; then
   . $KB_SERVICE_DIR/setenv.sh
 fi

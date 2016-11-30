@@ -17573,6 +17573,11 @@ sub compute_special_proteins
 
     my @dbargs = map { ("--db", $_) } @$database_names;
 
+    if (!$self->{special_protein_cache_db})
+    {
+	push(@dbargs, "--no-cache");
+    }
+
     my @cmd = ('rast_compute_specialty_genes',
 	       "--in", $prots,
 	       "--db-dir", $dir,
@@ -18005,14 +18010,25 @@ sub annotate_special_proteins
 
     my $out = File::Temp->new();
 
+    my @opts;
+    if ($self->{special_protein_cache_db})
+    {
+	push(@opts, "--cache-db", $self->{special_protein_cache_db});
+	push(@opts,
+	     $self->{special_protein_cache_dbhost} ? ("--cache-host", $self->{special_protein_cache_dbhost}) : (),
+	     $self->{special_protein_cache_dbuser} ? ("--cache-user", $self->{special_protein_cache_dbuser}) : (),
+	     $self->{special_protein_cache_dbpass} ? ("--cache-pass", $self->{special_protein_cache_dbpass}) : ());
+    }
+    else
+    {
+	push(@opts, "--no-cache");
+    }
+
     my @cmd = ('rast_compute_specialty_genes',
 	       "--in", $prots,
 	       "--db-dir", $dir,
-	       $self->{special_protein_cache_db} ? ("--cache-db", $self->{special_protein_cache_db}) : (),
-	       $self->{special_protein_cache_dbhost} ? ("--cache-host", $self->{special_protein_cache_dbhost}) : (),
-	       $self->{special_protein_cache_dbuser} ? ("--cache-user", $self->{special_protein_cache_dbuser}) : (),
-	       $self->{special_protein_cache_dbpass} ? ("--cache-pass", $self->{special_protein_cache_dbpass}) : ());
-
+	       @opts);
+    
     $ctx->stderr->log_cmd(@cmd);
     my $ok = run(\@cmd, '>', $out, $ctx->stderr->redirect);
     close($out);

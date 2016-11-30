@@ -7,6 +7,9 @@ export KB_SERVICE_NAME="[% kb_service_name %]"
 export KB_SERVICE_DIR="$KB_TOP/services/[% kb_service_name %]"
 export KB_DEPLOYMENT_CONFIG="$KB_TOP/deployment.cfg"
 
+if [ -f $KB_TOP/setenv.sh ] ; then
+  . $KB_TOP/setenv.sh
+fi
 if [ -f $KB_SERVICE_DIR/setenv.sh ] ; then
   . $KB_SERVICE_DIR/setenv.sh
 fi
@@ -15,7 +18,7 @@ fi
 export TMPDIR=[% kb_tempdir %]
 export TEMPDIR=[% kb_tempdir %]
 [% END %]
-pid_file=$KB_SERVICE_DIR/service.pid
+pid_file=$KB_SERVICE_DIR/kser.pid
 
 $KB_RUNTIME/bin/kser --n-family-file-threads [% kser_family_threads %] \
 		     --n-inserter-threads [% kser_inserter_threads %] \
@@ -23,4 +26,4 @@ $KB_RUNTIME/bin/kser --n-family-file-threads [% kser_family_threads %] \
 		     --n-kmer-threads [% kser_kmer_threads %] \
 		     --pid-file $pid_file \
 		     --daemonize \
-		     [% kser_port %] [% kser_data %]
+		     [% kser_port %] [% kser_data %] > $KB_SERVICE_DIR/kser.out 2> $KB_SERVICE_DIR/kser.err
