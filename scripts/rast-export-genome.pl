@@ -53,6 +53,8 @@ rast-export-genome [-hio] [long options...] format < input > output
 	  contig_fasta    Contig DNA in fasta format
 	  feature_dna     Feature DNA sequences in fasta format
 	  patric_features PATRIC features.tab format
+          patric_specialty_genes PATRIC spgenes.tab format
+          patric_genome_metadata PATRIC genome metadata format
 	  gff             GFF format
 	  embl            EMBL format
 
