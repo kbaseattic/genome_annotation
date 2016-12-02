@@ -252,6 +252,7 @@ sub new
 
     $self->{special_protein_threads} = $cfg->setting("special_protein_threads") // 1;
     $self->{special_protein_dbdir} = $cfg->setting("special_protein_dbdir");
+    $self->{special_protein_lookup_db} = $cfg->setting("special_protein_lookup_db");
     $self->{special_protein_cache_db} = $cfg->setting("special_protein_cache_db");
     $self->{special_protein_cache_dbhost} = $cfg->setting("special_protein_cache_dbhost");
     $self->{special_protein_cache_dbuser} = $cfg->setting("special_protein_cache_dbuser");
@@ -24314,6 +24315,11 @@ sub export_genome
     close($tmp_out);
 
     my @type_flag = map { ("--feature-type", $_) } @$feature_types;
+
+    if ($self->{special_protein_lookup_db})
+    {
+	push(@type_flag, "--specialty-gene-lookup-db", $self->{special_protein_lookup_db});
+    }
 
     my @cmd = ("rast_export_genome", @type_flag, "--input", $tmp_in, "--output", $tmp_out, $format);
 
