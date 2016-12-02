@@ -16,7 +16,7 @@ if (@ARGV != 1)
 
 my $dir = shift;
 
-my $idx_file = "$dir/spgenes.indx";
+my $idx_file = "$dir/spgenes.idx";
 
 my $t1 = File::Temp->new;
 my $t2 = File::Temp->new;
