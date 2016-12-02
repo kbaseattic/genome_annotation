@@ -1,7 +1,6 @@
 use strict;
 use Data::Dumper;
 use Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl;
-use Bio::KBase::HandleService;
 use JSON::XS;
 use File::Slurp qw(read_file write_file);
 use File::Temp ':POSIX';
@@ -39,6 +38,8 @@ else
     $out_fh = \*STDOUT;
 }
 
+
+$ENV{KB_DEPLOYMENT_CONFIG} //= "$ENV{KB_TOP}/deployment.cfg";
 my $ctx = ContextObj->new;
 my $impl = Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl->new();
 $Bio::KBase::GenomeAnnotation::Service::CallContext = $ctx;
@@ -55,7 +56,7 @@ else
     $wf_obj = $impl->default_workflow();
 }
      
-print STDERR Dumper($wobj);
+print STDERR Dumper($wf_obj);
     
 my $gtext = read_file($in_fh);
 my $gobj = $json->decode($gtext);
@@ -63,7 +64,7 @@ $gobj or die "Cannot parse input genome object\n";
 
 my $out;
 eval {
-    $out = $impl->run_pipeline($gobj, $wobj);
+    $out = $impl->run_pipeline($gobj, $wf_obj);
 };
 if ($@)
 {
