@@ -38,10 +38,15 @@ KSER_KMER_THREADS = 12
 KSER_FAMILY_THREADS = 4
 KSER_INSERTER_THREADS = 4
 
+ANNO_WORKERS = 6
+ANNO_MAX_REQUESTS = 100
+
 TPAGE_ARGS = --define kb_top=$(TARGET) \
 	--define kb_runtime=$(DEPLOY_RUNTIME) \
 	--define kb_service_name=$(SERVICE) \
 	--define kb_service_port=$(SERVICE_PORT) \
+	--define kb_starman_workers=$(ANNO_WORKERS) \
+	--define kb_starman_max_requests$(ANNO_MAX_REQUESTS) \
 	$(TPAGE_SERVICE_ALT_PORT) \
 	$(TPAGE_TEMPDIR) \
 	--define kser_port=$(KSER_PORT) \
