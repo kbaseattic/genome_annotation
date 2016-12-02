@@ -69,7 +69,7 @@ my($opt, $usage) = describe_options("rast-export-genome %o format < input > outp
 				    @options);
 
 print($usage->text), exit  if $opt->help;
-print($usage->text), exit 1  unless @ARGV == 1;
+die($usage->text) unless @ARGV == 1;
 
 my $format = lc(shift);
 $format =~ s/-/_/g;
