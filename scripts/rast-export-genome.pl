@@ -52,6 +52,9 @@ rast-export-genome [-hio] [long options...] format < input > output
 	  protein_fasta   Protein translations in fasta format
 	  contig_fasta    Contig DNA in fasta format
 	  feature_dna     Feature DNA sequences in fasta format
+	  patric_features PATRIC features.tab format
+          patric_specialty_genes PATRIC spgenes.tab format
+          patric_genome_metadata PATRIC genome metadata format
 	  gff             GFF format
 	  embl            EMBL format
 
@@ -66,7 +69,7 @@ my($opt, $usage) = describe_options("rast-export-genome %o format < input > outp
 				    @options);
 
 print($usage->text), exit  if $opt->help;
-print($usage->text), exit 1  unless @ARGV == 1;
+die($usage->text) unless @ARGV == 1;
 
 my $format = lc(shift);
 $format =~ s/-/_/g;

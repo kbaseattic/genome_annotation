@@ -53,6 +53,7 @@ use overlap_resolution;
 use PropagateGBMetadata;
 use Capture::Tiny 'capture_stderr';
 use AdaboostClassify;
+use MongoDB;
 
 use Bio::KBase::DeploymentConfig;
 
@@ -99,6 +100,40 @@ sub _call_using_strep_repeats
 
     return $genome_in;
 }
+
+sub _allocate_local_genome_id
+{
+    my($self, $taxon_id, $mongo_host, $mongo_db) = @_;
+
+    my $query_timeout = -1;
+    my $connection_timeout = 120;
+
+    $mongo_db //= "seed-genome-allocation";
+ 
+    my $client = MongoDB->connect($mongo_host);
+    #my $client = MongoDB::MongoClient->new(host => $mongo_host, query_timeout => $query_timeout,
+#					   timeout => $connection_timeout,
+#					   auto_reconnect => 1,
+#					   auto_connect => 1);
+#
+    my $db = $client->get_database($mongo_db);
+    my $coll_next = $db->get_collection('next');
+
+    $coll_next->ensure_index({prefix => 1});
+
+    my $res = $coll_next->find_one_and_update({ taxon => $taxon_id }, { '$inc' => { next_val => 1 } }, { upsert => 1, new => 1 });
+    #print Dumper($res);
+
+    if (!ref($res))
+    {
+	die "MongoDB error: $res";
+    }
+
+    my $val = $res->{next_val};
+
+    return "$taxon_id.0$val";
+}
+
 
 sub _allocate_seed_genome_id
 {
@@ -215,7 +250,9 @@ sub new
     }
     $self->{phage_annotation_files} = $phage_files;
 
+    $self->{special_protein_threads} = $cfg->setting("special_protein_threads") // 1;
     $self->{special_protein_dbdir} = $cfg->setting("special_protein_dbdir");
+    $self->{special_protein_lookup_db} = $cfg->setting("special_protein_lookup_db");
     $self->{special_protein_cache_db} = $cfg->setting("special_protein_cache_db");
     $self->{special_protein_cache_dbhost} = $cfg->setting("special_protein_cache_dbhost");
     $self->{special_protein_cache_dbuser} = $cfg->setting("special_protein_cache_dbuser");
@@ -230,6 +267,9 @@ sub new
 
     $self->{patric_annotate_families_url} = $cfg->setting("patric_annotate_families_url");
     $self->{patric_annotate_families_kmers} = $cfg->setting("patric_annotate_families_kmers");
+
+    $self->{mongo_allocate_id_host} = $cfg->setting("mongo-allocate-id-host");
+    $self->{mongo_allocate_id_db} = $cfg->setting("mongo-allocate-id-db");
 
     $self->{patric_mlst_dbdir} = $cfg->setting("patric_mlst_dbdir");
 
@@ -250,7 +290,15 @@ sub new
     #
     $iurl = 'https://kbase.us/services/idserver' if !defined($iurl);
 
-    if ($surl)
+    if ($self->{mongo_allocate_id_host})
+    {
+	print STDERR "Using local mongo for id allocation\n";
+	$self->{allocate_genome_id} = sub {
+	    my($taxon_id) = @_;
+	    $self->_allocate_local_genome_id($taxon_id, $self->{mongo_allocate_id_host}, $self->{mongo_allocate_id_db});
+	};
+    }
+    elsif ($surl)
     {
 	print STDERR "Using SEED id allocation from $surl\n";
 	$self->{allocate_genome_id} = sub { my($taxon_id) = @_;
@@ -17527,6 +17575,11 @@ sub compute_special_proteins
 
     my @dbargs = map { ("--db", $_) } @$database_names;
 
+    if (!$self->{special_protein_cache_db})
+    {
+	push(@dbargs, "--no-cache");
+    }
+
     my @cmd = ('rast_compute_specialty_genes',
 	       "--in", $prots,
 	       "--db-dir", $dir,
@@ -17959,14 +18012,26 @@ sub annotate_special_proteins
 
     my $out = File::Temp->new();
 
+    my @opts;
+    push(@opts, "--parallel", $self->{special_protein_threads});
+    if ($self->{special_protein_cache_db})
+    {
+	push(@opts, "--cache-db", $self->{special_protein_cache_db});
+	push(@opts,
+	     $self->{special_protein_cache_dbhost} ? ("--cache-host", $self->{special_protein_cache_dbhost}) : (),
+	     $self->{special_protein_cache_dbuser} ? ("--cache-user", $self->{special_protein_cache_dbuser}) : (),
+	     $self->{special_protein_cache_dbpass} ? ("--cache-pass", $self->{special_protein_cache_dbpass}) : ());
+    }
+    else
+    {
+	push(@opts, "--no-cache");
+    }
+
     my @cmd = ('rast_compute_specialty_genes',
 	       "--in", $prots,
 	       "--db-dir", $dir,
-	       $self->{special_protein_cache_db} ? ("--cache-db", $self->{special_protein_cache_db}) : (),
-	       $self->{special_protein_cache_dbhost} ? ("--cache-host", $self->{special_protein_cache_dbhost}) : (),
-	       $self->{special_protein_cache_dbuser} ? ("--cache-user", $self->{special_protein_cache_dbuser}) : (),
-	       $self->{special_protein_cache_dbpass} ? ("--cache-pass", $self->{special_protein_cache_dbpass}) : ());
-
+	       @opts);
+    
     $ctx->stderr->log_cmd(@cmd);
     my $ok = run(\@cmd, '>', $out, $ctx->stderr->redirect);
     close($out);
@@ -24250,6 +24315,11 @@ sub export_genome
     close($tmp_out);
 
     my @type_flag = map { ("--feature-type", $_) } @$feature_types;
+
+    if ($self->{special_protein_lookup_db})
+    {
+	push(@type_flag, "--specialty-gene-lookup-db", $self->{special_protein_lookup_db});
+    }
 
     my @cmd = ("rast_export_genome", @type_flag, "--input", $tmp_in, "--output", $tmp_out, $format);
 

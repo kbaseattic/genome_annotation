@@ -110,6 +110,7 @@ my @options = (['output-format=s@', 'Output format. This option may be repeated 
 	       ['batch-input-directory=s', 'Process a batch of genomes from the given directory.'],
 	       ['batch-input-file=s', 'Process a batch of genomes defined by the given file.'],
 	       ['workflow=s', 'Workflow definition for this genome or batch.'],
+	       ['timeout=s', 'Maximum time in seconds to wait for the job to complete.'],
 	       );
 
 push(@options, options_common(), [], options_export_formats());
