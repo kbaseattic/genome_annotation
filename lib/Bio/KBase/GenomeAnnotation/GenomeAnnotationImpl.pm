@@ -11161,7 +11161,7 @@ sub call_features_CDS_genemark
 	$l = <$fh>;
     }
 
-    print STDERR Dumper(\%by_gene);
+    # print STDERR Dumper(\%by_gene);
    
 
     close($fh);
@@ -11199,11 +11199,11 @@ sub call_features_CDS_genemark
 	    $cur_type = $1;
 	    $cur = $2;
 	    $cur_prot = '';
-	    print STDERR "Set cur_type=$cur_type  cur=$cur\n";
+	    # print STDERR "Set cur_type=$cur_type  cur=$cur\n";
 	}
 	elsif ($l =~ /^\#\#end-(\S+)/)
 	{
-	    print "End: 1=$1 cur=$cur cur_type=$cur_type\n";
+	    # print "End: 1=$1 cur=$cur cur_type=$cur_type\n";
 	    if ($1 eq 'Protein' && $cur_type eq 'Protein')
 	    {
 		my $info = $by_gene{$cur};
