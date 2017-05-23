@@ -11088,7 +11088,7 @@ sub call_features_CDS_genemark
 	       "-o", "$tmp_out",
 	       $tmp_in);
 
-    $ctx->stderr->log(join(" ", @cmd));
+    $ctx->stderr->log(join(" ", @cmd)) if $ctx;
 
     my @cmds = (\@cmd,
 		init => sub {
@@ -11104,11 +11104,11 @@ sub call_features_CDS_genemark
     my $event_id = $genome_in->add_analysis_event($event);
     my $type = 'CDS';
 
-    my $ok = run(@cmds, $ctx->stderr->redirect);
+    my $ok = run(@cmds, ($ctx ? $ctx->stderr->redirect : ()));
 
     if (!$ok)
     {
-	die "Error running pipeline: @cmd\n" . $ctx->stderr->text_value . "\n";
+	die "Error running pipeline: @cmd\n" . $ctx->stderr->text_value . "\n" if $ctx;
     }
 
     my $fh;
@@ -11128,7 +11128,9 @@ sub call_features_CDS_genemark
     {
 	next if $l =~ /^\s*$/;
 	next if $l =~ /^\#/;
-	
+
+	chomp $l;
+
 	my(@fields) = split(/\t/, $l);
 
 	@fields == 9 or die "Invalid GFF at line $.";
@@ -11197,9 +11199,11 @@ sub call_features_CDS_genemark
 	    $cur_type = $1;
 	    $cur = $2;
 	    $cur_prot = '';
+	    # print STDERR "Set cur_type=$cur_type  cur=$cur\n";
 	}
 	elsif ($l =~ /^\#\#end-(\S+)/)
 	{
+	    # print "End: 1=$1 cur=$cur cur_type=$cur_type\n";
 	    if ($1 eq 'Protein' && $cur_type eq 'Protein')
 	    {
 		my $info = $by_gene{$cur};
@@ -19790,8 +19794,7 @@ sub annotate_strain_type_MLST
 		 });
 	    }
 	}
-    }
-    
+    }	
     $genome_out = $genome_in->prepare_for_return();
     
     #END annotate_strain_type_MLST
