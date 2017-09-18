@@ -562,6 +562,7 @@ long long lookup_hash_entry(sig_kmer_t sig_kmers[],unsigned long long encodedK) 
     // printf("%lld\n", size_hash);
     if (debug >= 2)
       tot_lookups++;
+
     while ((sig_kmers[hash_entry].which_kmer <= MAX_ENCODED) && (sig_kmers[hash_entry].which_kmer != encodedK)) {
       if (debug >= 2)
 	retry++;
