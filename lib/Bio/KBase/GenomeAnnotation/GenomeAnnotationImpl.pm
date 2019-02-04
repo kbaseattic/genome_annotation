@@ -25594,7 +25594,7 @@ sub complete_workflow_template
 	      { name => 'resolve_overlapping_features', resolve_overlapping_features_parameters => {} },
 	      { name => 'renumber_features' },
 	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
-	      { name => 'call_features_prophage_phispy' },
+	      { name => 'call_features_prophage_phispy', failure_is_not_fatal => 1 },
 		 );
     $return = { stages => \@stages };
 
