@@ -26114,18 +26114,19 @@ sub run_pipeline
 
 	    if ($@)
 	    {
-		if ($stage->{failure_is_not_fatal})
-		{
-		    warn "Error invoking method $method: $@\nContinuing because failure_is_not_fatal flag is set";
+#		if ($stage->{failure_is_not_fatal})
+#		{
+#		    warn "Error invoking method $method: $@\nContinuing because failure_is_not_fatal flag is set";
+		    warn "Error invoking method $method: $@\nThere may not be any $method predictions.\nContinuing wih next analysis\n\n";
 		    if (ref($cur) && ref($cur) ne 'HASH')
 		    {
 			$cur = $cur->prepare_for_return;
 		    }
-		}
-		else
-		{
-		    die "Error invoking method $method: $@";
-		}
+#		}
+#		else
+#		{
+#		    die "Error invoking method $method: $@";
+#		}
 	    }
 	    else
 	    {
