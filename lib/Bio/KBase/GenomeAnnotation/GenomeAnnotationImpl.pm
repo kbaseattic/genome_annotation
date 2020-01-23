@@ -25594,7 +25594,7 @@ sub complete_workflow_template
 	      { name => 'resolve_overlapping_features', resolve_overlapping_features_parameters => {} },
 	      { name => 'renumber_features' },
 	      { name => 'find_close_neighbors', failure_is_not_fatal => 1 },
-	      { name => 'call_features_prophage_phispy' },
+	      { name => 'call_features_prophage_phispy', failure_is_not_fatal => 1 },
 		 );
     $return = { stages => \@stages };
 
@@ -26114,18 +26114,11 @@ sub run_pipeline
 
 	    if ($@)
 	    {
-		if ($stage->{failure_is_not_fatal})
-		{
-		    warn "Error invoking method $method: $@\nContinuing because failure_is_not_fatal flag is set";
+		    warn "Error invoking method $method: $@\nThere may not be any $method predictions.\nContinuing wih next analysis\n\n";
 		    if (ref($cur) && ref($cur) ne 'HASH')
 		    {
 			$cur = $cur->prepare_for_return;
 		    }
-		}
-		else
-		{
-		    die "Error invoking method $method: $@";
-		}
 	    }
 	    else
 	    {
